@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/03/2018 15:31:53
--- Generated from EDMX file: C:\OFFICEtrainer\officeTrainner\Datos\Model.edmx
+-- Date Created: 05/09/2018 19:56:39
+-- Generated from EDMX file: C:\OfficeTrainner\officeTrainer\officeTrainner\Datos\Model.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -26,6 +26,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ExamenArrayOrdenPreguntas]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ArrayOrdenPreguntas] DROP CONSTRAINT [FK_ExamenArrayOrdenPreguntas];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PuntajePreguntaExamen]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PuntajePreguntas] DROP CONSTRAINT [FK_PuntajePreguntaExamen];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -42,6 +45,9 @@ IF OBJECT_ID(N'[dbo].[DetalleExamenes]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ArrayOrdenPreguntas]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ArrayOrdenPreguntas];
+GO
+IF OBJECT_ID(N'[dbo].[PuntajePreguntas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PuntajePreguntas];
 GO
 
 -- --------------------------------------------------

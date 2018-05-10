@@ -24,12 +24,14 @@ namespace Vista
         Excel.Workbook wbook;
 
         PowerPoint.Application ObjPowerPoint;
+        //PowerPoint.Presentations ppts;
+        PowerPoint.Presentation ppt;
 
         int examenIdExamen;
         string ExamenSeleccionado;
 
-        Process[] excelProcsOld;//para capturar todos los excel abiertos
-
+        Process[] excelProcsOld;//para capturar todos los excel abiertos antes de iniciar el programa
+        Process[] powerPointProcsOld;//para capturar todos los power points abiertos antes de iniciar el programa
         #endregion
 
         public FormQuestionsPanel()
@@ -41,6 +43,7 @@ namespace Vista
         private void FormQuestionsPanel_Load(object sender, EventArgs e)
         {
             excelProcsOld = Process.GetProcessesByName("EXCEL");
+            powerPointProcsOld = Process.GetProcessesByName("POWERPNT");
 
             ExamenSeleccionado = FormStartExam.ExamenSeleccionado;
             
@@ -68,14 +71,20 @@ namespace Vista
             MostrarPreguntaYEjercicio();
         }
 
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+           // wbook.Close();
+            ObjExcel.Quit();
+            int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance-1]; // - 1
+            AbrirEjercicioExcel(numeroDePregunta);
+        }
+        #endregion
+
+        #region Methods
+
+
         private void CerrarExcels()
         {
-            /*
-            wbook.Close(false, Type.Missing, Type.Missing);
-            ObjExcel.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(wbook);
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(ObjExcel);*/
-            
             Process[] excelProcsNew = Process.GetProcessesByName("EXCEL");
             foreach (Process procNew in excelProcsNew)
             {
@@ -93,17 +102,28 @@ namespace Vista
                 }
             }
         }
-
-        private void BtnReset_Click(object sender, EventArgs e)
-        {
-           // wbook.Close();
-            ObjExcel.Quit();
-            int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance-1]; // - 1
-            AbrirEjercicioExcel(numeroDePregunta);
+        private void CerrarPowerPoints()
+        {/*
+            Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
+            foreach (Process procNew in powerPointProcsNew)
+            {
+                int exist = 0;
+                foreach (Process procOld in powerPointProcsOld)
+                {
+                    if (procNew.Id == procOld.Id)
+                    {
+                        exist++;
+                    }
+                }
+                if (exist == 0)
+                {
+                    procNew.Kill();
+                }
+            }*/
+            ppt.Close();
+            ObjPowerPoint.Quit();
         }
-        #endregion
 
-        #region Methods
         private void ComprobarCorrectoIncorrecto()
         {
             switch (ExamenSeleccionado)
@@ -135,7 +155,7 @@ namespace Vista
             wbook.SaveAs(ruta, Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
             false, false, Excel.XlSaveAsAccessMode.xlNoChange,
             Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-            //wbook.Close();
+            
             CerrarExcels();
 
             //comparar cambio en los archivos ejercicio y respuesta
@@ -147,7 +167,21 @@ namespace Vista
         }
         private void ComprobarCorrectoIncorrectoPowerPoint()
         {
+            string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
 
+            if (System.IO.File.Exists(ruta))
+            {
+                System.IO.File.Delete(ruta);
+            }
+
+            ppt.SaveCopyAs (ruta, PowerPoint.PpSaveAsFileType.ppSaveAsDefault, Microsoft.Office.Core.MsoTriState.msoFalse);
+
+            CerrarPowerPoints();
+
+            //comparar cambio en los archivos ejercicio y respuesta
+            int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
+            PreguntasPowerPoint preguntasPowerPoint = new PreguntasPowerPoint();
+            preguntasPowerPoint.Pregunta(numeroDePregunta, examenIdExamen);
         }
         private void GuardarAvance()
         {
@@ -251,13 +285,14 @@ namespace Vista
             int HeightScreen = screen.Bounds.Height;
             int newHeightScreen = HeightScreen - HeightScreen * 200 / 1080;
             ObjPowerPoint = new PowerPoint.Application();
-            PowerPoint.Presentations ppts = ObjPowerPoint.Presentations;
+           // ppts = ObjPowerPoint.Presentations;
 
             string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
             if (System.IO.File.Exists(ruta))
             {
-                PowerPoint.Presentation ppt = ppts.Open(ruta);
-
+                
+                ppt = ObjPowerPoint.Presentations.Open(ruta);
+                
                 ObjPowerPoint.ActiveWindow.Height = 811 * newHeightScreen / 1080;
                 ObjPowerPoint.ActiveWindow.Width = WidthScreen;
                 ObjPowerPoint.ActiveWindow.Left = 0;
