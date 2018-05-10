@@ -153,16 +153,31 @@ namespace Preguntas
             Process.Start(info);
         }
 
+        private void ComprobarDescompresion()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio\ppt\presentation.xml";
+
+                if (!System.IO.File.Exists(ruta))
+                {
+                    Thread.Sleep(500); //para esperar a que el zip se descomprima totalmente
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
         private void Pregunta1()
         {
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-            Task.WaitAll(task1);
 
-            Thread.Sleep(2000); //para esperar a que el zip se descomprima totalmente
+            ComprobarDescompresion();
+
             string cadenaAchequear1 = "<p:transition spd=\"slow\"><p:randomBar dir=\"vert\"/></p:transition>";
-            //string cadenaAchequear2 = "prst=\"horzBrick\"";
 
             String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"Ejercicio\ppt\slides\slide2.xml"));
             if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
@@ -190,12 +205,56 @@ namespace Preguntas
 
         private void Pregunta2()
         {
-            CerrarPowerPoints();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\ppt\slides\";
+
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "<p:cNvPr id=\"4\" name=\"3 Imagen\" descr=\"imagesCALRA574.jpg\"/>";                                      
+            string cadenaAchequear2 = "<p:animEffect transition=\"in\" filter=\"checkerboard(across)\">";            
+            string cadenaAchequear3 = "<a:t>pasar por casillas controladas por piezas contrarias.</a:t>";
+            string cadenaAchequear4 = "<a:t>, conocido como tablas o </a";
+            string cadenaAchequear5 = "<a:t>, de forma que una de ellas será necesariamente capturada.</a:t>";
+            string cadenaAchequear6 = "<a:t> Consisten en elegir cuál entre todos los elementos es el más importante.</a:t>";
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide6.xml"));
+            String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide7.xml"));
+            String[] contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide8.xml"));
+            String[] contenidoDeArchivo4 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide9.xml"));
+            String[] contenidoDeArchivo5 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide10.xml"));
+            String[] contenidoDeArchivo6 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide11.xml"));
+
+            if (File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")))
+            {
+                if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) && contenidoDeArchivo2[1].Contains(cadenaAchequear2) && contenidoDeArchivo3[1].Contains(cadenaAchequear3) && contenidoDeArchivo4[1].Contains(cadenaAchequear4) && contenidoDeArchivo5[1].Contains(cadenaAchequear5) && contenidoDeArchivo6[1].Contains(cadenaAchequear6))
+                    p1 = "CORRECTO";
+            }
+            else
+            {
+                p1 = "INCORRECTO";
+            }                
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = p2,
+                sp3 = p3,
+                sp4 = p4,
+                sp5 = p5,
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+           BorrarTemporales();
         }
 
         private void Pregunta3()
         {
-            CerrarPowerPoints();
+
         }
         private void Pregunta4()
         {
