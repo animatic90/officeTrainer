@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Microsoft.Office.Core;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using Datos;
+using System.Text.RegularExpressions;
 
 namespace Preguntas
 {
@@ -366,6 +367,35 @@ namespace Preguntas
         }
         private void Pregunta8()
         {
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "<p:cNvPr id=\"6\" name=\"Imagen 5\"/><p:cNvPicPr><a:picLocks noChangeAspect=\"1\"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed=\"rId2\"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x=\"5867400\" y=\"1563624\"/><a:ext cx=\"2517866\" cy=\"2243522\"/><";
+            string cadenaAchequear2 = "a:gridCol";
+            string cadenaAchequear3 = "<a:tc><a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+            
+            MatchCollection numColumnas = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear2);
+            MatchCollection numFilas = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear3);
+
+
+            if(contenidoDeArchivo[1].Contains(cadenaAchequear1) && numFilas.Count == 20)
+            {
+                if (numColumnas.Count == 5 || numColumnas.Count == 10)
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+             
+
+            GuardarPuntaje();
+            BorrarTemporales();
 
         }
         private void Pregunta9()
