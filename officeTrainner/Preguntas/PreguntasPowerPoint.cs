@@ -495,9 +495,70 @@ namespace Preguntas
         }
         private void Pregunta16()
         {
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+
+            ComprobarDescompresion();
+            //
+            string cadenaAchequear1 = "spc=\"300\" dirty=\"0\" smtClean=\"0\"><a:effectLst><a:outerShdw blurRad=\"38100\" dist=\"38100\" dir=\"2700000\" algn=\"tl\"><a:srgbClr val=\"000000\"><a:alpha val=\"43137\"";
+            string cadenaAchequear2 = "spc=\"300\" dirty=\"0\"><a:effectLst><a:outerShdw blurRad=\"38100\" dist=\"38100\" dir=\"2700000\" algn=\"tl\"><a:srgbClr val=\"000000\">";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide1.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta17()
         {
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            ComprobarDescompresion();
+           /*************chartex**************/
+            string cadenaAchequear1 = "<cx:numDim type=\"val\">";
+            string cadenaAchequear2 = "Categoría";
+
+            /***************slide6****************/
+            string cadenaAchequear3 = "id=\"3\" name=\"Marcador de contenido 2\"";
+            string cadenaAchequear4 = "schemas.microsoft.com/office/drawing/2014/chartex";
+
+            /***********style***********/
+            string cadenaAchequear5 = "schemas.openxmlformats.org/drawingml/2006/main\" id=\"366\"";
+
+            //schemas.openxmlformats.org/drawingml/2006/main\" id=\"366\"  style1
+            //<cx:numDim type=\"val\"> chartex
+            //Categoría  no en chartex
+
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
+
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml")))
+            {
+                String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml"));
+                String[] contenidoDeArchivo3 = new String[1];
+                if(File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\chartEx1.xml")))
+                    contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\chartE1.xml"));
+                if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\chart1.xml")))
+                    contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\chart1.xml"));
+
+                if (!contenidoDeArchivo1[1].Contains(cadenaAchequear3) && contenidoDeArchivo1[1].Contains(cadenaAchequear4) && contenidoDeArchivo2[0].Contains(cadenaAchequear5)  && contenidoDeArchivo3[0].Contains(cadenaAchequear1) && !contenidoDeArchivo3[0].Contains(cadenaAchequear2))
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+            {
+                p1 = "INCORRECTO";
+            }
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta18()
         {
