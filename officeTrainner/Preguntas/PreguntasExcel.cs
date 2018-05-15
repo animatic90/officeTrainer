@@ -586,6 +586,35 @@ namespace Preguntas
         }
         private void Pregunta15()
         {
+            p1 = "INCORRECTO";
+
+            
+           if (wsheetAlumno.ListObjects.Count >= 1)
+            {
+                if (!(wsheetAlumno.ListObjects.get_Item(1).Name == "Resumen"))
+                    p1 = "CORRECTO";
+            }
+            else
+                p1 = "CORRECTO";
+
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            CerrarExcels();
+            BorrarTemporales();
         }
         private void Pregunta16()
         {
