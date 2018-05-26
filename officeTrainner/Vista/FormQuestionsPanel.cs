@@ -14,7 +14,9 @@ namespace Vista
     public partial class FormQuestionsPanel : Form
     {
         #region atributes
-        Screen screen = Screen.PrimaryScreen;
+        Screen screenExcel = Screen.PrimaryScreen;
+        Screen screenPowerPoint = Screen.PrimaryScreen;
+
         int[] arrayOrdenPreguntas;
         int contadorDeAvance;
         string rutaPregunta;
@@ -45,12 +47,13 @@ namespace Vista
             excelProcsOld = Process.GetProcessesByName("EXCEL");
             powerPointProcsOld = Process.GetProcessesByName("POWERPNT");
 
-            ExamenSeleccionado = FormStartExam.ExamenSeleccionado;
+            ExamenSeleccionado = FormMain.ExamenSeleccionado;
             
             examenIdExamen = FormMain.idExamenActual;
+
             CargarArrayOrdenPreguntas();
-            //contadorDeAvance=0;
             ObtenerContadorDeAvance();
+            RellenarLabelPregunta();
             MostrarPreguntaYEjercicio();            
         }
 
@@ -62,26 +65,69 @@ namespace Vista
 
         private void BtNext_Click(object sender, EventArgs e)
         {            
-            //FormStartExam.NUMERO_DE_PREGUNTAS;
+
             GuardarAvance();
             ComprobarCorrectoIncorrecto();
-            //wbook.Close();
-            //ObjExcel.Quit();
-            //CerrarExcels();
+            RellenarLabelPregunta();
             MostrarPreguntaYEjercicio();
         }
 
         private void BtnReset_Click(object sender, EventArgs e)
         {
-           // wbook.Close();
-            ObjExcel.Quit();
-            int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance-1]; // - 1
-            AbrirEjercicioExcel(numeroDePregunta);
+            //cerrar los archivos abiertos
+            
+            int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1]; // - 1
+            switch (ExamenSeleccionado)
+            {
+                case "Word":
+                    break;
+                case "Excel":
+                    CerrarExcels();
+                    AbrirEjercicioExcel(numeroDePregunta);
+                   break;
+                case "Power Point":
+                    CerrarPowerPoints();
+                    AbrirEjercicioPowerPoint(numeroDePregunta);
+                    break;
+            }
+
         }
+
+        private void BtnOptions_Click(object sender, EventArgs e)
+        {
+            TxtQuestion.Visible = !TxtQuestion.Visible;
+            PnlOptions.Visible = !PnlOptions.Visible;
+        }
+        private void BtnAcept_Click(object sender, EventArgs e)
+        {
+           if (RbContineLatter.Checked == true)
+            {
+                using (ModelContainer conexion = new ModelContainer())
+                {
+                    var examen = conexion.Examenes
+                        .Where(p => p.IdExamen == examenIdExamen).
+                        FirstOrDefault();
+                    examen.banderaReanudar= true;
+                    conexion.SaveChanges();
+                }
+                Application.Exit();
+            }
+           if(RbFinishQuestions.Checked == true)
+            {
+                contadorDeAvance = FormMain.NUMERO_DE_PREGUNTAS -1;
+                Application.Exit();
+            }            
+        }
+
+
         #endregion
 
         #region Methods
-
+        private void RellenarLabelPregunta()
+        {
+            LblQuestions.Text = FormMain.NUMERO_DE_PREGUNTAS.ToString();
+            LblNumberOfQuestion.Text = (contadorDeAvance+1).ToString();
+        }
 
         private void CerrarExcels()
         {
@@ -103,8 +149,8 @@ namespace Vista
             }
         }
         private void CerrarPowerPoints()
-        {/*
-            Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
+        {
+           /* Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
             foreach (Process procNew in powerPointProcsNew)
             {
                 int exist = 0;
@@ -143,8 +189,6 @@ namespace Vista
         private void ComprobarCorrectoIncorrectoExcel()
         {
 
-
-            //Guardar el exel. ObjExcel
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.xlsx";
 
             if (System.IO.File.Exists(ruta))
@@ -259,8 +303,8 @@ namespace Vista
 
         private bool AbrirEjercicioExcel(int numeroDePregunta)
         {
-            int WidthScreen = screen.Bounds.Width;
-            int HeightScreen = screen.Bounds.Height;
+            int WidthScreen = screenExcel.Bounds.Width;
+            int HeightScreen = screenExcel.Bounds.Height;
             int newHeightScreen = HeightScreen - HeightScreen * 200 / 1080;            
             ObjExcel = new Excel.Application();
             string ruta = Application.StartupPath + @"\Documentos\Excel\pregunta "+ numeroDePregunta + @"\Pregunta "+ numeroDePregunta + @" Ejercicio.xlsx";
@@ -281,8 +325,8 @@ namespace Vista
         }
         private bool AbrirEjercicioPowerPoint(int numeroDePregunta)
         {
-            int WidthScreen = screen.Bounds.Width;
-            int HeightScreen = screen.Bounds.Height;
+            int WidthScreen = screenPowerPoint.Bounds.Width;
+            int HeightScreen = screenPowerPoint.Bounds.Height;
             int newHeightScreen = HeightScreen - HeightScreen * 200 / 1080;
             ObjPowerPoint = new PowerPoint.Application();
            // ppts = ObjPowerPoint.Presentations;
@@ -290,13 +334,15 @@ namespace Vista
             string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
             if (System.IO.File.Exists(ruta))
             {
-                
+
                 ppt = ObjPowerPoint.Presentations.Open(ruta);
-                
+
+                ObjPowerPoint.ActiveWindow.WindowState = PowerPoint.PpWindowState.ppWindowNormal;
                 ObjPowerPoint.ActiveWindow.Height = 811 * newHeightScreen / 1080;
                 ObjPowerPoint.ActiveWindow.Width = WidthScreen;
                 ObjPowerPoint.ActiveWindow.Left = 0;
                 ObjPowerPoint.ActiveWindow.Top = 0;
+                
             }
             else
             {
@@ -308,7 +354,7 @@ namespace Vista
         private void CargarArrayOrdenPreguntas()
         {
 
-            arrayOrdenPreguntas = new int[FormMain.NUMERO_DE_PREGUNTAS];
+            arrayOrdenPreguntas = new int[50];//para un maximo de 50 preguntas
 
             int idExamen = FormMain.idExamenActual;
             using (ModelContainer conexion = new ModelContainer())
@@ -395,6 +441,9 @@ namespace Vista
             ObjDoc.Close();
             ObjWord.Quit();            
         }
+
         #endregion
+
+
     }
 }

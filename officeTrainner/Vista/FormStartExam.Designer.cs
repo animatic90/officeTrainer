@@ -32,7 +32,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.LblChangeType = new System.Windows.Forms.Label();
             this.PnlSelectExam = new System.Windows.Forms.Panel();
             this.BtnExcel = new Bunifu.Framework.UI.BunifuFlatButton();
             this.BtnPowerPoint = new Bunifu.Framework.UI.BunifuFlatButton();
@@ -40,7 +40,7 @@
             this.BtnBack = new Bunifu.Framework.UI.BunifuFlatButton();
             this.BtnShowExams = new Bunifu.Framework.UI.BunifuFlatButton();
             this.PnlSelectedExam = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.LblChangeExam = new System.Windows.Forms.Label();
             this.BtnSelectedExam = new Bunifu.Framework.UI.BunifuFlatButton();
             this.label4 = new System.Windows.Forms.Label();
             this.PnlNames = new System.Windows.Forms.Panel();
@@ -73,9 +73,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(67, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(-15, 13);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1011, 183);
+            this.pictureBox1.Size = new System.Drawing.Size(1282, 237);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -84,9 +85,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(268, 153);
+            this.label1.Location = new System.Drawing.Point(399, 138);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(330, 24);
+            this.label1.Size = new System.Drawing.Size(416, 29);
             this.label1.TabIndex = 1;
             this.label1.Text = "Seleccione una categoría de examen:";
             // 
@@ -95,22 +97,25 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(22, 24);
+            this.label2.Location = new System.Drawing.Point(29, 30);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(151, 24);
+            this.label2.Size = new System.Drawing.Size(189, 29);
             this.label2.TabIndex = 2;
             this.label2.Text = "Elija un examen:";
             // 
-            // label3
+            // LblChangeType
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Silver;
-            this.label3.Location = new System.Drawing.Point(458, 256);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 16);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "(Click para cambiar)";
+            this.LblChangeType.AutoSize = true;
+            this.LblChangeType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblChangeType.ForeColor = System.Drawing.Color.Silver;
+            this.LblChangeType.Location = new System.Drawing.Point(660, 238);
+            this.LblChangeType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LblChangeType.Name = "LblChangeType";
+            this.LblChangeType.Size = new System.Drawing.Size(161, 20);
+            this.LblChangeType.TabIndex = 9;
+            this.LblChangeType.Text = "(Click para cambiar)";
+            this.LblChangeType.Click += new System.EventHandler(this.LblChangeType_Click);
             // 
             // PnlSelectExam
             // 
@@ -118,10 +123,12 @@
             this.PnlSelectExam.Controls.Add(this.BtnPowerPoint);
             this.PnlSelectExam.Controls.Add(this.BtnWord);
             this.PnlSelectExam.Controls.Add(this.label2);
-            this.PnlSelectExam.Location = new System.Drawing.Point(715, 129);
+            this.PnlSelectExam.Location = new System.Drawing.Point(837, 110);
+            this.PnlSelectExam.Margin = new System.Windows.Forms.Padding(4);
             this.PnlSelectExam.Name = "PnlSelectExam";
-            this.PnlSelectExam.Size = new System.Drawing.Size(397, 295);
+            this.PnlSelectExam.Size = new System.Drawing.Size(434, 327);
             this.PnlSelectExam.TabIndex = 10;
+            this.PnlSelectExam.Visible = false;
             // 
             // BtnExcel
             // 
@@ -145,13 +152,14 @@
             this.BtnExcel.IconVisible = false;
             this.BtnExcel.IconZoom = 90D;
             this.BtnExcel.IsTab = false;
-            this.BtnExcel.Location = new System.Drawing.Point(26, 196);
+            this.BtnExcel.Location = new System.Drawing.Point(35, 241);
+            this.BtnExcel.Margin = new System.Windows.Forms.Padding(5);
             this.BtnExcel.Name = "BtnExcel";
             this.BtnExcel.Normalcolor = System.Drawing.Color.Navy;
             this.BtnExcel.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnExcel.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnExcel.selected = false;
-            this.BtnExcel.Size = new System.Drawing.Size(292, 41);
+            this.BtnExcel.Size = new System.Drawing.Size(268, 50);
             this.BtnExcel.TabIndex = 2;
             this.BtnExcel.Text = "Excel";
             this.BtnExcel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -181,13 +189,14 @@
             this.BtnPowerPoint.IconVisible = false;
             this.BtnPowerPoint.IconZoom = 90D;
             this.BtnPowerPoint.IsTab = false;
-            this.BtnPowerPoint.Location = new System.Drawing.Point(26, 149);
+            this.BtnPowerPoint.Location = new System.Drawing.Point(35, 183);
+            this.BtnPowerPoint.Margin = new System.Windows.Forms.Padding(5);
             this.BtnPowerPoint.Name = "BtnPowerPoint";
             this.BtnPowerPoint.Normalcolor = System.Drawing.Color.Navy;
             this.BtnPowerPoint.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnPowerPoint.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnPowerPoint.selected = false;
-            this.BtnPowerPoint.Size = new System.Drawing.Size(292, 41);
+            this.BtnPowerPoint.Size = new System.Drawing.Size(268, 50);
             this.BtnPowerPoint.TabIndex = 1;
             this.BtnPowerPoint.Text = "Power Point";
             this.BtnPowerPoint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -217,13 +226,14 @@
             this.BtnWord.IconVisible = false;
             this.BtnWord.IconZoom = 90D;
             this.BtnWord.IsTab = false;
-            this.BtnWord.Location = new System.Drawing.Point(26, 102);
+            this.BtnWord.Location = new System.Drawing.Point(35, 126);
+            this.BtnWord.Margin = new System.Windows.Forms.Padding(5);
             this.BtnWord.Name = "BtnWord";
             this.BtnWord.Normalcolor = System.Drawing.Color.Navy;
             this.BtnWord.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnWord.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnWord.selected = false;
-            this.BtnWord.Size = new System.Drawing.Size(292, 41);
+            this.BtnWord.Size = new System.Drawing.Size(268, 50);
             this.BtnWord.TabIndex = 0;
             this.BtnWord.Text = "Word";
             this.BtnWord.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -253,19 +263,20 @@
             this.BtnBack.IconVisible = false;
             this.BtnBack.IconZoom = 90D;
             this.BtnBack.IsTab = false;
-            this.BtnBack.Location = new System.Drawing.Point(13, 618);
-            this.BtnBack.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnBack.Location = new System.Drawing.Point(14, 565);
+            this.BtnBack.Margin = new System.Windows.Forms.Padding(5);
             this.BtnBack.Name = "BtnBack";
             this.BtnBack.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnBack.OnHovercolor = System.Drawing.Color.RoyalBlue;
             this.BtnBack.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnBack.selected = false;
-            this.BtnBack.Size = new System.Drawing.Size(105, 50);
+            this.BtnBack.Size = new System.Drawing.Size(140, 60);
             this.BtnBack.TabIndex = 11;
             this.BtnBack.Text = "<< VOLVER";
             this.BtnBack.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnBack.Textcolor = System.Drawing.Color.White;
             this.BtnBack.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // BtnShowExams
             // 
@@ -276,7 +287,7 @@
             this.BtnShowExams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.BtnShowExams.ButtonText = "Examenes para Ms Office";
             this.BtnShowExams.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnShowExams.DisabledColor = System.Drawing.Color.Gray;
+            this.BtnShowExams.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnShowExams.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnShowExams.Iconcolor = System.Drawing.Color.Transparent;
             this.BtnShowExams.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnShowExams.Iconimage")));
@@ -290,40 +301,45 @@
             this.BtnShowExams.IconVisible = false;
             this.BtnShowExams.IconZoom = 90D;
             this.BtnShowExams.IsTab = false;
-            this.BtnShowExams.Location = new System.Drawing.Point(242, 202);
-            this.BtnShowExams.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnShowExams.Location = new System.Drawing.Point(373, 172);
+            this.BtnShowExams.Margin = new System.Windows.Forms.Padding(5);
             this.BtnShowExams.Name = "BtnShowExams";
             this.BtnShowExams.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnShowExams.OnHovercolor = System.Drawing.Color.RoyalBlue;
             this.BtnShowExams.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnShowExams.selected = false;
-            this.BtnShowExams.Size = new System.Drawing.Size(344, 50);
+            this.BtnShowExams.Size = new System.Drawing.Size(458, 61);
             this.BtnShowExams.TabIndex = 12;
             this.BtnShowExams.Text = "Examenes para Ms Office";
             this.BtnShowExams.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnShowExams.Textcolor = System.Drawing.Color.White;
             this.BtnShowExams.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnShowExams.Click += new System.EventHandler(this.BtnShowExams_Click);
             // 
             // PnlSelectedExam
             // 
-            this.PnlSelectedExam.Controls.Add(this.label5);
+            this.PnlSelectedExam.Controls.Add(this.LblChangeExam);
             this.PnlSelectedExam.Controls.Add(this.BtnSelectedExam);
             this.PnlSelectedExam.Controls.Add(this.label4);
-            this.PnlSelectedExam.Location = new System.Drawing.Point(715, 443);
+            this.PnlSelectedExam.Location = new System.Drawing.Point(840, 98);
+            this.PnlSelectedExam.Margin = new System.Windows.Forms.Padding(4);
             this.PnlSelectedExam.Name = "PnlSelectedExam";
-            this.PnlSelectedExam.Size = new System.Drawing.Size(397, 295);
+            this.PnlSelectedExam.Size = new System.Drawing.Size(529, 219);
             this.PnlSelectedExam.TabIndex = 14;
+            this.PnlSelectedExam.Visible = false;
             // 
-            // label5
+            // LblChangeExam
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(231, 127);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(128, 16);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "(Click para cambiar)";
+            this.LblChangeExam.AutoSize = true;
+            this.LblChangeExam.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblChangeExam.ForeColor = System.Drawing.Color.Silver;
+            this.LblChangeExam.Location = new System.Drawing.Point(205, 140);
+            this.LblChangeExam.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LblChangeExam.Name = "LblChangeExam";
+            this.LblChangeExam.Size = new System.Drawing.Size(161, 20);
+            this.LblChangeExam.TabIndex = 15;
+            this.LblChangeExam.Text = "(Click para cambiar)";
+            this.LblChangeExam.Click += new System.EventHandler(this.LblCambiar_Click);
             // 
             // BtnSelectedExam
             // 
@@ -332,7 +348,7 @@
             this.BtnSelectedExam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BtnSelectedExam.BorderRadius = 0;
             this.BtnSelectedExam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BtnSelectedExam.ButtonText = "Examen elegido";
+            this.BtnSelectedExam.ButtonText = "";
             this.BtnSelectedExam.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnSelectedExam.DisabledColor = System.Drawing.Color.Gray;
             this.BtnSelectedExam.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -348,16 +364,15 @@
             this.BtnSelectedExam.IconVisible = false;
             this.BtnSelectedExam.IconZoom = 90D;
             this.BtnSelectedExam.IsTab = false;
-            this.BtnSelectedExam.Location = new System.Drawing.Point(15, 73);
-            this.BtnSelectedExam.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSelectedExam.Location = new System.Drawing.Point(12, 74);
+            this.BtnSelectedExam.Margin = new System.Windows.Forms.Padding(5);
             this.BtnSelectedExam.Name = "BtnSelectedExam";
             this.BtnSelectedExam.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.BtnSelectedExam.OnHovercolor = System.Drawing.Color.RoyalBlue;
+            this.BtnSelectedExam.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnSelectedExam.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnSelectedExam.selected = false;
-            this.BtnSelectedExam.Size = new System.Drawing.Size(344, 50);
+            this.BtnSelectedExam.Size = new System.Drawing.Size(354, 61);
             this.BtnSelectedExam.TabIndex = 13;
-            this.BtnSelectedExam.Text = "Examen elegido";
             this.BtnSelectedExam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnSelectedExam.Textcolor = System.Drawing.Color.White;
             this.BtnSelectedExam.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -367,9 +382,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Silver;
-            this.label4.Location = new System.Drawing.Point(22, 24);
+            this.label4.Location = new System.Drawing.Point(26, 41);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 24);
+            this.label4.Size = new System.Drawing.Size(189, 29);
             this.label4.TabIndex = 2;
             this.label4.Text = "Elija un examen:";
             // 
@@ -379,35 +395,40 @@
             this.PnlNames.Controls.Add(this.TxtLastName);
             this.PnlNames.Controls.Add(this.label7);
             this.PnlNames.Controls.Add(this.label6);
-            this.PnlNames.Location = new System.Drawing.Point(174, 278);
+            this.PnlNames.Location = new System.Drawing.Point(258, 258);
+            this.PnlNames.Margin = new System.Windows.Forms.Padding(4);
             this.PnlNames.Name = "PnlNames";
-            this.PnlNames.Size = new System.Drawing.Size(535, 107);
+            this.PnlNames.Size = new System.Drawing.Size(713, 112);
             this.PnlNames.TabIndex = 15;
+            this.PnlNames.Visible = false;
             // 
             // TxtFirstName
             // 
             this.TxtFirstName.BorderColor = System.Drawing.Color.SeaGreen;
-            this.TxtFirstName.Location = new System.Drawing.Point(18, 59);
+            this.TxtFirstName.Location = new System.Drawing.Point(24, 73);
+            this.TxtFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.TxtFirstName.Name = "TxtFirstName";
-            this.TxtFirstName.Size = new System.Drawing.Size(233, 20);
-            this.TxtFirstName.TabIndex = 6;
+            this.TxtFirstName.Size = new System.Drawing.Size(309, 22);
+            this.TxtFirstName.TabIndex = 1;
             // 
             // TxtLastName
             // 
             this.TxtLastName.BorderColor = System.Drawing.Color.SeaGreen;
-            this.TxtLastName.Location = new System.Drawing.Point(287, 59);
+            this.TxtLastName.Location = new System.Drawing.Point(383, 73);
+            this.TxtLastName.Margin = new System.Windows.Forms.Padding(4);
             this.TxtLastName.Name = "TxtLastName";
-            this.TxtLastName.Size = new System.Drawing.Size(233, 20);
-            this.TxtLastName.TabIndex = 5;
+            this.TxtLastName.Size = new System.Drawing.Size(309, 22);
+            this.TxtLastName.TabIndex = 2;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(283, 17);
+            this.label7.Location = new System.Drawing.Point(377, 21);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(93, 24);
+            this.label7.Size = new System.Drawing.Size(120, 29);
             this.label7.TabIndex = 3;
             this.label7.Text = "Apellidos:";
             // 
@@ -416,9 +437,10 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(14, 17);
+            this.label6.Location = new System.Drawing.Point(19, 21);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(93, 24);
+            this.label6.Size = new System.Drawing.Size(119, 29);
             this.label6.TabIndex = 2;
             this.label6.Text = "Nombres:";
             // 
@@ -427,9 +449,10 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(46, 20);
+            this.label9.Location = new System.Drawing.Point(61, 25);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(216, 20);
+            this.label9.Size = new System.Drawing.Size(265, 25);
             this.label9.TabIndex = 17;
             this.label9.Text = "Orden de preguntas aleatorio";
             // 
@@ -441,19 +464,21 @@
             this.ChbOrdenPregAle.Checked = false;
             this.ChbOrdenPregAle.CheckedOnColor = System.Drawing.Color.Transparent;
             this.ChbOrdenPregAle.ForeColor = System.Drawing.Color.White;
-            this.ChbOrdenPregAle.Location = new System.Drawing.Point(20, 20);
+            this.ChbOrdenPregAle.Location = new System.Drawing.Point(27, 25);
+            this.ChbOrdenPregAle.Margin = new System.Windows.Forms.Padding(5);
             this.ChbOrdenPregAle.Name = "ChbOrdenPregAle";
             this.ChbOrdenPregAle.Size = new System.Drawing.Size(20, 20);
-            this.ChbOrdenPregAle.TabIndex = 18;
+            this.ChbOrdenPregAle.TabIndex = 3;
             // 
             // label222
             // 
             this.label222.AutoSize = true;
             this.label222.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label222.ForeColor = System.Drawing.Color.White;
-            this.label222.Location = new System.Drawing.Point(46, 49);
+            this.label222.Location = new System.Drawing.Point(61, 60);
+            this.label222.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label222.Name = "label222";
-            this.label222.Size = new System.Drawing.Size(155, 20);
+            this.label222.Size = new System.Drawing.Size(190, 25);
             this.label222.TabIndex = 19;
             this.label222.Text = "Habilitar Cronómetro";
             // 
@@ -465,19 +490,21 @@
             this.ChbCronometro.Checked = false;
             this.ChbCronometro.CheckedOnColor = System.Drawing.Color.Transparent;
             this.ChbCronometro.ForeColor = System.Drawing.Color.White;
-            this.ChbCronometro.Location = new System.Drawing.Point(20, 49);
+            this.ChbCronometro.Location = new System.Drawing.Point(27, 60);
+            this.ChbCronometro.Margin = new System.Windows.Forms.Padding(5);
             this.ChbCronometro.Name = "ChbCronometro";
             this.ChbCronometro.Size = new System.Drawing.Size(20, 20);
-            this.ChbCronometro.TabIndex = 20;
+            this.ChbCronometro.TabIndex = 5;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(313, 49);
+            this.label8.Location = new System.Drawing.Point(417, 60);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(146, 20);
+            this.label8.Size = new System.Drawing.Size(178, 25);
             this.label8.TabIndex = 23;
             this.label8.Text = "Guardar resultados";
             // 
@@ -489,19 +516,21 @@
             this.ChbGuardarResultados.Checked = false;
             this.ChbGuardarResultados.CheckedOnColor = System.Drawing.Color.Transparent;
             this.ChbGuardarResultados.ForeColor = System.Drawing.Color.White;
-            this.ChbGuardarResultados.Location = new System.Drawing.Point(287, 49);
+            this.ChbGuardarResultados.Location = new System.Drawing.Point(383, 60);
+            this.ChbGuardarResultados.Margin = new System.Windows.Forms.Padding(5);
             this.ChbGuardarResultados.Name = "ChbGuardarResultados";
             this.ChbGuardarResultados.Size = new System.Drawing.Size(20, 20);
-            this.ChbGuardarResultados.TabIndex = 24;
+            this.ChbGuardarResultados.TabIndex = 6;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Gray;
-            this.label11.Location = new System.Drawing.Point(313, 20);
+            this.label11.Location = new System.Drawing.Point(417, 25);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(176, 20);
+            this.label11.Size = new System.Drawing.Size(213, 25);
             this.label11.TabIndex = 21;
             this.label11.Text = "Habilitar Entrenamiento";
             // 
@@ -514,10 +543,11 @@
             this.ChbEntrenamiento.CheckedOnColor = System.Drawing.Color.Transparent;
             this.ChbEntrenamiento.Enabled = false;
             this.ChbEntrenamiento.ForeColor = System.Drawing.Color.White;
-            this.ChbEntrenamiento.Location = new System.Drawing.Point(287, 20);
+            this.ChbEntrenamiento.Location = new System.Drawing.Point(383, 25);
+            this.ChbEntrenamiento.Margin = new System.Windows.Forms.Padding(5);
             this.ChbEntrenamiento.Name = "ChbEntrenamiento";
             this.ChbEntrenamiento.Size = new System.Drawing.Size(20, 20);
-            this.ChbEntrenamiento.TabIndex = 22;
+            this.ChbEntrenamiento.TabIndex = 4;
             // 
             // PnlOptions
             // 
@@ -533,10 +563,12 @@
             this.PnlOptions.Controls.Add(this.ChbCronometro);
             this.PnlOptions.Controls.Add(this.ChbEntrenamiento);
             this.PnlOptions.Controls.Add(this.label222);
-            this.PnlOptions.Location = new System.Drawing.Point(174, 391);
+            this.PnlOptions.Location = new System.Drawing.Point(258, 357);
+            this.PnlOptions.Margin = new System.Windows.Forms.Padding(4);
             this.PnlOptions.Name = "PnlOptions";
-            this.PnlOptions.Size = new System.Drawing.Size(535, 224);
+            this.PnlOptions.Size = new System.Drawing.Size(713, 276);
             this.PnlOptions.TabIndex = 16;
+            this.PnlOptions.Visible = false;
             // 
             // bunifuFlatButton2
             // 
@@ -562,14 +594,14 @@
             this.bunifuFlatButton2.IconVisible = false;
             this.bunifuFlatButton2.IconZoom = 90D;
             this.bunifuFlatButton2.IsTab = false;
-            this.bunifuFlatButton2.Location = new System.Drawing.Point(169, 182);
-            this.bunifuFlatButton2.Margin = new System.Windows.Forms.Padding(4);
+            this.bunifuFlatButton2.Location = new System.Drawing.Point(225, 224);
+            this.bunifuFlatButton2.Margin = new System.Windows.Forms.Padding(5);
             this.bunifuFlatButton2.Name = "bunifuFlatButton2";
             this.bunifuFlatButton2.Normalcolor = System.Drawing.Color.Yellow;
             this.bunifuFlatButton2.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.bunifuFlatButton2.OnHoverTextColor = System.Drawing.Color.White;
             this.bunifuFlatButton2.selected = false;
-            this.bunifuFlatButton2.Size = new System.Drawing.Size(186, 22);
+            this.bunifuFlatButton2.Size = new System.Drawing.Size(247, 27);
             this.bunifuFlatButton2.TabIndex = 26;
             this.bunifuFlatButton2.Text = "Personalizar Examen >>";
             this.bunifuFlatButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -581,9 +613,10 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Silver;
-            this.label13.Location = new System.Drawing.Point(46, 158);
+            this.label13.Location = new System.Drawing.Point(61, 194);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(135, 20);
+            this.label13.Size = new System.Drawing.Size(169, 25);
             this.label13.TabIndex = 25;
             this.label13.Text = "haga click debajo:";
             // 
@@ -592,15 +625,16 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.Silver;
-            this.label12.Location = new System.Drawing.Point(46, 138);
+            this.label12.Location = new System.Drawing.Point(61, 170);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(381, 20);
+            this.label12.Size = new System.Drawing.Size(470, 25);
             this.label12.TabIndex = 17;
             this.label12.Text = "Para crear un examen con preguntas personalizadas";
             // 
             // BtnComenzarExamen
             // 
-            this.BtnComenzarExamen.Activecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnComenzarExamen.Activecolor = System.Drawing.Color.Yellow;
             this.BtnComenzarExamen.BackColor = System.Drawing.Color.Yellow;
             this.BtnComenzarExamen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BtnComenzarExamen.BorderRadius = 0;
@@ -621,15 +655,15 @@
             this.BtnComenzarExamen.IconVisible = false;
             this.BtnComenzarExamen.IconZoom = 90D;
             this.BtnComenzarExamen.IsTab = false;
-            this.BtnComenzarExamen.Location = new System.Drawing.Point(169, 91);
-            this.BtnComenzarExamen.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnComenzarExamen.Location = new System.Drawing.Point(225, 112);
+            this.BtnComenzarExamen.Margin = new System.Windows.Forms.Padding(5);
             this.BtnComenzarExamen.Name = "BtnComenzarExamen";
             this.BtnComenzarExamen.Normalcolor = System.Drawing.Color.Yellow;
             this.BtnComenzarExamen.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnComenzarExamen.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnComenzarExamen.selected = false;
-            this.BtnComenzarExamen.Size = new System.Drawing.Size(186, 22);
-            this.BtnComenzarExamen.TabIndex = 17;
+            this.BtnComenzarExamen.Size = new System.Drawing.Size(247, 27);
+            this.BtnComenzarExamen.TabIndex = 7;
             this.BtnComenzarExamen.Text = "Comenzar Examen >>";
             this.BtnComenzarExamen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnComenzarExamen.Textcolor = System.Drawing.Color.Black;
@@ -639,42 +673,51 @@
             // LblNumeroPregunta
             // 
             this.LblNumeroPregunta.BorderColor = System.Drawing.Color.SeaGreen;
-            this.LblNumeroPregunta.Location = new System.Drawing.Point(124, 232);
+            this.LblNumeroPregunta.Location = new System.Drawing.Point(40, 321);
+            this.LblNumeroPregunta.Margin = new System.Windows.Forms.Padding(4);
             this.LblNumeroPregunta.Name = "LblNumeroPregunta";
-            this.LblNumeroPregunta.Size = new System.Drawing.Size(21, 20);
-            this.LblNumeroPregunta.TabIndex = 7;
+            this.LblNumeroPregunta.Size = new System.Drawing.Size(27, 22);
+            this.LblNumeroPregunta.TabIndex = 0;
             this.LblNumeroPregunta.Text = "0";
+            this.LblNumeroPregunta.WordWrap = false;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(-2, 228);
+            this.label10.Location = new System.Drawing.Point(13, 297);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(120, 24);
+            this.label10.Size = new System.Drawing.Size(92, 20);
             this.label10.TabIndex = 7;
-            this.label10.Text = "Ir a pregunta:";
+            this.label10.Text = "Ir a Prgnta:";
             // 
             // FormStartExam
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Navy;
-            this.ClientSize = new System.Drawing.Size(1184, 681);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ControlBox = false;
+            this.Controls.Add(this.PnlNames);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.LblNumeroPregunta);
             this.Controls.Add(this.PnlOptions);
-            this.Controls.Add(this.PnlNames);
             this.Controls.Add(this.PnlSelectedExam);
             this.Controls.Add(this.BtnShowExams);
             this.Controls.Add(this.BtnBack);
             this.Controls.Add(this.PnlSelectExam);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.LblChangeType);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormStartExam";
-            this.Text = "FormStartExam";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "Start Exam";
+            this.Load += new System.EventHandler(this.FormStartExam_Load);
+            this.VisibleChanged += new System.EventHandler(this.FormStartExam_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.PnlSelectExam.ResumeLayout(false);
             this.PnlSelectExam.PerformLayout();
@@ -694,7 +737,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label LblChangeType;
         private System.Windows.Forms.Panel PnlSelectExam;
         private Bunifu.Framework.UI.BunifuFlatButton BtnWord;
         private Bunifu.Framework.UI.BunifuFlatButton BtnExcel;
@@ -702,7 +745,7 @@
         private Bunifu.Framework.UI.BunifuFlatButton BtnBack;
         private Bunifu.Framework.UI.BunifuFlatButton BtnShowExams;
         private System.Windows.Forms.Panel PnlSelectedExam;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label LblChangeExam;
         private Bunifu.Framework.UI.BunifuFlatButton BtnSelectedExam;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel PnlNames;

@@ -8,7 +8,7 @@
     public partial class FormStartExam : Form
     {
         #region Atributes        
-        public static string ExamenSeleccionado;
+        
         //****************************************************
         public static bool aleatorio;
         public static bool cronometro;
@@ -31,6 +31,10 @@
         }
 
         #region Events
+        private void FormStartExam_Load(object sender, EventArgs e)
+        {
+            LblChangeType_Click(sender, e);
+        }
         private void BtnComenzarExamen_Click(object sender, EventArgs e)
         {
 
@@ -57,23 +61,80 @@
                 CargarParametros();
                 formQuestionsPanel.Show();
             }
-
+            this.Hide();
 
         }
 
         private void BtnWord_Click(object sender, EventArgs e)
         {
-            ExamenSeleccionado = "Word";
+            FormMain.ExamenSeleccionado = "Word";
+            BtnSelectedExam.Text = "Word";
+            PnlSelectExam.Visible = false;
+            PnlSelectedExam.Visible = true;
+            
+            //PnlOptions.Visible = true; // descoemntar cuando se implementen preguntas para word
+            PnlNames.Visible = true;
         }
 
         private void BtnPowerPoint_Click(object sender, EventArgs e)
         {
-            ExamenSeleccionado = "Power Point";
+            FormMain.ExamenSeleccionado = "Power Point";
+            BtnSelectedExam.Text = "Power Point";
+            PnlSelectExam.Visible = false;            
+            PnlSelectedExam.Visible = true;
+
+            FormMain.NUMERO_DE_PREGUNTAS = 35;
+
+            PnlOptions.Visible = true;
+            PnlNames.Visible = true;
         }
 
         private void BtnExcel_Click(object sender, EventArgs e)
         {
-            ExamenSeleccionado = "Excel";
+            FormMain.ExamenSeleccionado = "Excel";
+            BtnSelectedExam.Text = "Excel";
+            PnlSelectExam.Visible = false;
+            PnlSelectedExam.Visible = true;
+
+            FormMain.NUMERO_DE_PREGUNTAS = 35;
+
+            PnlOptions.Visible = true;
+            PnlNames.Visible = true;
+        }
+
+        private void LblCambiar_Click(object sender, EventArgs e)
+        {
+            PnlSelectExam.Visible = true;
+            PnlSelectedExam.Visible = false;
+
+            PnlOptions.Visible = false;
+            PnlNames.Visible = false;
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            TxtFirstName.Text= "";
+            TxtLastName.Text = "";
+
+            FormMain.formStartExam.Hide();
+            FormMain.formMain.Left = this.Left;
+            FormMain.formMain.Top = this.Top;
+            FormMain.formMain.Show();            
+        }
+        private void BtnShowExams_Click(object sender, EventArgs e)
+        {
+            PnlSelectExam.Visible = true;
+            BtnShowExams.Enabled = false;
+        }
+
+        private void LblChangeType_Click(object sender, EventArgs e)
+        {
+            PnlSelectExam.Visible = false;
+            PnlSelectedExam.Visible = false;
+            BtnShowExams.Enabled = true;
+
+            PnlOptions.Visible = false;
+            PnlNames.Visible = false;
         }
         #endregion
 
@@ -115,8 +176,8 @@
                 DateTime today = DateTime.Today;
                 Examen examen = new Examen
                 {
-                    //NombreExamen = ExamenSeleccionado,
-                    nombreExamen = "Word",
+                    nombreExamen = FormMain.ExamenSeleccionado,
+                    //nombreExamen = "Word",
                     fecha = today,
                     avance = 0,
 
@@ -346,6 +407,11 @@
                 int id = conexion.DetalleExamenes.Max(u => u.IdDetalleExamen);
                 return id;
             }
+        }
+
+        private void FormStartExam_VisibleChanged(object sender, EventArgs e)
+        {
+            LblChangeType_Click(sender, e);
         }
         #endregion
     }

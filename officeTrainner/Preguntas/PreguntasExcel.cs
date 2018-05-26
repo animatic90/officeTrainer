@@ -24,6 +24,8 @@ namespace Preguntas
         Excel.Application ObjExcelResuelto;
         Excel.Worksheet wsheetResuelto;
         Excel.Workbook wbookResuelto;
+        /****Workbook Temporal****/
+        //Excel.Worksheet wsheetAlumno2;
         int idExamen;
         /***** *********/
         string p1 = "NO EXISTE";
@@ -313,7 +315,7 @@ namespace Preguntas
    
         private void Pregunta3()
         {
-            var borrar = (wsheetAlumno.Cells[2, 13] as Excel.Range).Formula;
+            //var borrar = (wsheetAlumno.Cells[2, 13] as Excel.Range).Formula;
             if ((wsheetAlumno.Cells[2, 13] as Excel.Range).Formula != (wsheetResuelto.Cells[2, 13] as Excel.Range).Formula)
             {
                 p1 = "INCORRECTO";
@@ -571,32 +573,122 @@ namespace Preguntas
         private void Pregunta10()
         {
             CerrarExcels();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZip());
+            Task.WaitAll(task1);
+
+            Thread.Sleep(2000); //para esperar a que el zip se descomprima totalmente
+            string cadenaAchequear1 = "tabColor";
+            string cadenaAchequear2 = "theme=\"5\"";
+            string cadenaAchequear3 = "tint=\"-0.249977111117893\""; //Con esto, probalbmente, se trabaja los otros parámetros que por ahora no comparamos
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"Ejercicio\xl\worksheets\sheet3.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta11()
         {
+            CerrarExcels();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZip());
+            Task.WaitAll(task1);
+
+            Thread.Sleep(2000); //para esperar a que el zip se descomprima totalmente
+            string cadenaAchequear1 = "state=\"hidden\"";            
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"Ejercicio\xl\workbook.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta12()
         {
+            CerrarExcels();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZip());
+            Task.WaitAll(task1);
+
+            Thread.Sleep(2000); //para esperar a que el zip se descomprima totalmente
+            string cadenaAchequear1 = "First Semester Report";
+            string cadenaAchequear2 = "Certificación";            
+            string cadenaAchequear3 = "<cp:revision>2</cp:revision>";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"Ejercicio\docProps\core.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta13()
         {
-        }
-        private void Pregunta14()
-        {
-        }
-        private void Pregunta15()
-        {
-            p1 = "INCORRECTO";
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+            var temp = (wsheetAlumno.Cells[5,3] as Excel.Range).Value;
 
-            
-           if (wsheetAlumno.ListObjects.Count >= 1)
+            if (temp != 54)
             {
-                if (!(wsheetAlumno.ListObjects.get_Item(1).Name == "Resumen"))
-                    p1 = "CORRECTO";
+                p1 = "INCORRECTO";
             }
             else
+            {
                 p1 = "CORRECTO";
-
+            }
 
             PuntajePregunta puntajePregunta = new PuntajePregunta
             {
@@ -614,47 +706,431 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             CerrarExcels();
+        }
+        private void Pregunta14()
+        {
+            //CerrarExcels();
+            //string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
+
+            //Task task1 = Task.Factory.StartNew(() => DescomprimirZip());
+            //Task.WaitAll(task1);
+
+            //Thread.Sleep(2000); //para esperar a que el zip se descomprima totalmente            
+
+            //String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"Ejercicio\xl\styles.xml"));
+            //String[] cadenaBuscada = File.ReadAllLines(Application.StartupPath + @"\Documentos\Excel\Pregunta 14\CadenaBuscada.txt");
+            //if (contenidoDeArchivo[1].Contains(cadenaBuscada[0]))
+            //    p1 = "CORRECTO";
+            //else
+            //    p1 = "INCORRECTO";
+
+            int maxCol = 5; // set maximum number of rows/columns to search
+            int maxRow = 13;
+            bool banderaSalirDelFor = false;
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1]; 
+
+            //this is pretty slow, since it has to interact with 10,000 cells in Excel
+            // just one example of how to access and set cell values       
+            for (int col = 1; col <= maxCol; col++)
+            {
+                for (int row = 3; row <= maxRow; row++)
+                {
+                    //var temp = (wsheetAlumno2.Cells[row, col] as Excel.Range).WrapText;
+
+                    if ((wsheetAlumno.Cells[row, col] as Excel.Range).WrapText != true)
+                    {
+                        banderaSalirDelFor = true;
+                        p1 = "INCORRECTO";
+                        break;
+                    }
+                }
+                if (banderaSalirDelFor)
+                    break;
+            }
+            if (!banderaSalirDelFor)
+            {
+                p1 = "CORRECTO";
+            }
+
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
             BorrarTemporales();
+
+        }
+        private void Pregunta15()
+        {           
+            
         }
         private void Pregunta16()
         {
+            p1 = "INCORRECTO";
+            var contador = wbookAlumno.Sheets.Count;
+            if (contador == 3)
+            {
+                var nombre = wbookAlumno.Sheets[3].Name;
+                if (nombre == "Calificaciones (2)")
+                {
+                    p1 = "CORRECTO";
+                }               
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta17()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+            int maxCol = 8; // set maximum number of rows/columns to search
+            int maxRow = 13;
+            bool banderaSalirDelFor = false;
+
+            //this is pretty slow, since it has to interact with 10,000 cells in Excel
+            // just one example of how to access and set cell values     
+            var temp = (wsheetAlumno.Cells[4, 5] as Excel.Range).FormatConditions.GetType();
+            for (int col = 5; col <= maxCol; col++)
+            {
+
+                for (int row = 3; row <= maxRow; row++)
+                {
+                    if ((wsheetAlumno.Cells[row, col] as Excel.Range).Value != (wsheetResuelto.Cells[row, col] as Excel.Range).Value)
+                    {
+                        banderaSalirDelFor = true;
+                        p1 = "INCORRECTO";
+                        break;
+                    }
+                }
+                if (banderaSalirDelFor)
+                    break;
+            }
+            if (!banderaSalirDelFor)
+            {
+                p1 = "CORRECTO";
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
+
         }
         private void Pregunta18()
         {
+            //wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+
+            //Excel.Range range = wsheetAlumno.get_Range("A3:F8");
+            //var temp = range.Interior.ThemeColor;
+            //p1 = "INCORRECTO";
+
         }
         private void Pregunta19()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[2];
+
+            Excel.Range range = wsheetAlumno.get_Range("A3:F8");
+            //var tempo = wsheetAlumno.ListObjects.get_Item("Table1").TableStyle.Name;
+            p1 = "INCORRECTO";
+
+            foreach (Excel.ListObject obj in wsheetAlumno.ListObjects)
+            {
+                Excel.Range rangeAlumno = wsheetAlumno.ListObjects.get_Item(obj.Name).Range;
+                if (obj.TableStyle.Name == "TableStyleMedium1" && rangeAlumno.Column == range.Column && rangeAlumno.Row == range.Row && rangeAlumno.Count == range.Count)
+                {
+                    p1 = "CORRECTO";
+                }
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
 
         private void Pregunta20()
         {
+            //p1 = "INCORRECTO";
+            //wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+
+            //Excel.ChartObjects objs = (Excel.ChartObjects)wsheetAlumno.ChartObjects(Type.Missing);
+            //MessageBox.Show(objs.Count.ToString());
+
+            //foreach (Excel.ChartObject obj in objs)
+            //{                
+            //    MessageBox.Show(obj.Chart.ChartTitle.Caption);
+            //}
+
+
+
+
+            //Microsoft.Office.Interop.Excel.ChartObject obj = objs.Item(1);
+            ////Get the chartTitle
+            //string chartTitle = obj.Chart.ChartTitle.Caption;
+            //MessageBox.Show(chartTitle);
+      
+
+
+
+            //var charts = wsheetAlumno.ChartObjects() as Excel.ChartObjects;
+            //var chart = charts.;
+
+            //foreach (Excel.ChartObject obj in wsheetAlumno.ChartObjects())
+            //{
+            //    //MessageBox.Show(obj.TableStyle.Name);
+            //    MessageBox.Show(obj.Chart.ChartTitle.Caption);
+            //}
         }
         private void Pregunta21()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[3];            
+            int maxRow = 27;            
+            p1 = "CORRECTO";
+  
+            //var temp = (wsheetAlumno.Cells[4, 5] as Excel.Range).FormatConditions.GetType();
+                for (int row = 4; row <= maxRow; row++)
+                {
+                    if ((wsheetAlumno.Cells[row, 4] as Excel.Range).Formula != (wsheetResuelto.Cells[row, 4] as Excel.Range).Formula)
+                    {                        
+                        p1 = "INCORRECTO";
+                        break;
+                    }
+                }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
+
         }
         private void Pregunta22()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+            int maxRow = 41;
+            p1 = "CORRECTO";
+
+            //var temp = (wsheetAlumno.Cells[4, 5] as Excel.Range).FormatConditions.GetType();
+            for (int row = 5; row <= maxRow; row++)
+            {
+                if ((wsheetAlumno.Cells[row, 2] as Excel.Range).Value != (wsheetResuelto.Cells[row, 2] as Excel.Range).Value)
+                {
+                    p1 = "INCORRECTO";
+                    break;
+                }
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta23()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];            
+            p1 = "INCORRECTO";
+
+            if ((wsheetAlumno.Cells[1, 7] as Excel.Range).Formula == "=SUMIF(C5:C41,\"Importado\",F5:F41)")
+            {
+              p1 = "CORRECTO";                    
+            }         
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta24()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+            p1 = "INCORRECTO";
+
+            if ((wsheetAlumno.Cells[1, 7] as Excel.Range).Formula == "=COUNTIF(B5:B41,\"Cocina\")")
+            {
+                p1 = "CORRECTO";
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta25()
         {
+            CerrarExcels();
+            p1 = "INCORRECTO";
+            string temp = "INCORRECTO";
+
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZip());
+            Task.WaitAll(task1);
+
+            Thread.Sleep(2000); //para esperar a que el zip se descomprima totalmente
+            string cadenaAchequear1 = "rowBreaks count=\"3\"";            
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"Ejercicio\xl\worksheets\sheet1.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
+                temp = "CORRECTO";
+
+            //Ahora falta hacer las otras verificaciones
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+            if ((wsheetAlumno.Cells[19, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E5:E18)"
+                && (wsheetAlumno.Cells[29, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E20:E28)"
+                && (wsheetAlumno.Cells[44, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E30:E43)"
+                && (wsheetAlumno.Cells[45, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E5:E43)"
+                && temp == "CORRECTO")
+            {
+                p1 = "CORRECTO";
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
+
         }
         private void Pregunta26()
         {
         }
         private void Pregunta27()
         {
+            wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
+            p1 = "INCORRECTO";
+
+            if ((wsheetAlumno.Cells[14, 13] as Excel.Range).Formula == "=SUBTOTAL(109,[Dic])")
+            {
+                p1 = "CORRECTO";
+            }
+
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = p1,
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                ExamenIdExamen = idExamen
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+            BorrarTemporales();
         }
         private void Pregunta28()
         {
+
         }
         private void Pregunta29()
         {

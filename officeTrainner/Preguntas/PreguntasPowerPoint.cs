@@ -90,17 +90,7 @@ namespace Preguntas
         }
 
         private void AbrirPowerPoints(int numeroDePregunta)
-        {/*
-
-            ObjExcelResuelto = new Excel.Application()
-            {
-                Visible = false
-            };
-            string rutaResuelto = Application.StartupPath + @"\Documentos\Excel\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Resuelta.xlsx";
-            wbookResuelto = ObjExcelResuelto.Workbooks.Open(rutaResuelto);
-            wsheetResuelto = (Excel.Worksheet)wbookResuelto.ActiveSheet;*/
-
-            //usar
+        {
 
             ObjPowerPointAlumno = new PowerPoint.Application();
 
@@ -454,6 +444,23 @@ namespace Preguntas
         }
         private void Pregunta12()
         {
+            //
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "<p14:trim st=\"1500\" end=\"2801\"/></p14:media>";
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide7.xml"));
+
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta13()
         {
@@ -928,16 +935,19 @@ namespace Preguntas
         {
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
+            if (File.Exists(@"c:\OfficeTrainner\Pregunta 33 Ejercicio.pptx\"))
+            {
+                string ruta_7z = Application.StartupPath + @"\Documentos\Temp\7z";
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.UseShellExecute = true;
+                info.FileName = "7z.exe";
+                info.WorkingDirectory = ruta_7z;
+                info.Arguments = "x " + "\"c:\\OfficeTrainner\\Pregunta 33 Ejercicio.pptx\"" + " " + "-o" + ruta_ResTem;
+                Process.Start(info);
 
-            string ruta_7z = Application.StartupPath + @"\Documentos\Temp\7z";
-            ProcessStartInfo info = new ProcessStartInfo();
-            info.UseShellExecute = true;
-            info.FileName = "7z.exe";
-            info.WorkingDirectory = ruta_7z;
-            info.Arguments = "x " + "\"c:\\OfficeTrainner\\Pregunta 33 Ejercicio.pptx\"" + " " + "-o" + ruta_ResTem;
-            Process.Start(info);
+                ComprobarDescompresion();
+            }
 
-            ComprobarDescompresion();
 
             string cadenaAchequear1 = "embedTrueTypeFonts=\"1\"";
             string cadenaAchequear2 = "<p:embeddedFont><p:font typeface=\"Tw Cen MT Condensed\"";
@@ -987,6 +997,24 @@ namespace Preguntas
         }
         private void Pregunta35()
         {
+            //<a:softEdge rad=\"112500\"/></a:effectLst>
+            //<a:ext cx=\"2381793\" cy=\"2210303\"/></a:xfrm><a:prstGeom prst=\"ellipse\">
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "<a:softEdge rad=\"112500\"/></a:effectLst>";
+            string cadenaAchequear2 = "<a:ext cx=\"2381793\" cy=\"2210303\"/></a:xfrm><a:prstGeom prst=\"ellipse\">";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta36()
         {

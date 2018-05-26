@@ -46,9 +46,10 @@
             this.BtnComenzarExamen.BackColor = System.Drawing.Color.SeaGreen;
             this.BtnComenzarExamen.Image = ((System.Drawing.Image)(resources.GetObject("BtnComenzarExamen.Image")));
             this.BtnComenzarExamen.ImageActive = null;
-            this.BtnComenzarExamen.Location = new System.Drawing.Point(106, 84);
+            this.BtnComenzarExamen.Location = new System.Drawing.Point(36, 36);
+            this.BtnComenzarExamen.Margin = new System.Windows.Forms.Padding(4);
             this.BtnComenzarExamen.Name = "BtnComenzarExamen";
-            this.BtnComenzarExamen.Size = new System.Drawing.Size(200, 200);
+            this.BtnComenzarExamen.Size = new System.Drawing.Size(267, 246);
             this.BtnComenzarExamen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.BtnComenzarExamen.TabIndex = 0;
             this.BtnComenzarExamen.TabStop = false;
@@ -60,9 +61,10 @@
             this.BtnContinueExam.BackColor = System.Drawing.Color.SeaGreen;
             this.BtnContinueExam.Image = ((System.Drawing.Image)(resources.GetObject("BtnContinueExam.Image")));
             this.BtnContinueExam.ImageActive = null;
-            this.BtnContinueExam.Location = new System.Drawing.Point(884, 84);
+            this.BtnContinueExam.Location = new System.Drawing.Point(961, 36);
+            this.BtnContinueExam.Margin = new System.Windows.Forms.Padding(4);
             this.BtnContinueExam.Name = "BtnContinueExam";
-            this.BtnContinueExam.Size = new System.Drawing.Size(200, 200);
+            this.BtnContinueExam.Size = new System.Drawing.Size(267, 246);
             this.BtnContinueExam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.BtnContinueExam.TabIndex = 1;
             this.BtnContinueExam.TabStop = false;
@@ -74,9 +76,10 @@
             this.BtnHerramientasAdm.BackColor = System.Drawing.Color.SeaGreen;
             this.BtnHerramientasAdm.Image = ((System.Drawing.Image)(resources.GetObject("BtnHerramientasAdm.Image")));
             this.BtnHerramientasAdm.ImageActive = null;
-            this.BtnHerramientasAdm.Location = new System.Drawing.Point(160, 416);
+            this.BtnHerramientasAdm.Location = new System.Drawing.Point(36, 399);
+            this.BtnHerramientasAdm.Margin = new System.Windows.Forms.Padding(4);
             this.BtnHerramientasAdm.Name = "BtnHerramientasAdm";
-            this.BtnHerramientasAdm.Size = new System.Drawing.Size(200, 200);
+            this.BtnHerramientasAdm.Size = new System.Drawing.Size(267, 246);
             this.BtnHerramientasAdm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.BtnHerramientasAdm.TabIndex = 3;
             this.BtnHerramientasAdm.TabStop = false;
@@ -87,9 +90,10 @@
             this.bunifuImageButton5.BackColor = System.Drawing.Color.SeaGreen;
             this.bunifuImageButton5.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton5.Image")));
             this.bunifuImageButton5.ImageActive = null;
-            this.bunifuImageButton5.Location = new System.Drawing.Point(790, 416);
+            this.bunifuImageButton5.Location = new System.Drawing.Point(961, 399);
+            this.bunifuImageButton5.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuImageButton5.Name = "bunifuImageButton5";
-            this.bunifuImageButton5.Size = new System.Drawing.Size(200, 200);
+            this.bunifuImageButton5.Size = new System.Drawing.Size(267, 246);
             this.bunifuImageButton5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.bunifuImageButton5.TabIndex = 4;
             this.bunifuImageButton5.TabStop = false;
@@ -98,26 +102,32 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(322, 200);
+            this.pictureBox1.Location = new System.Drawing.Point(262, 232);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(545, 193);
+            this.pictureBox1.Size = new System.Drawing.Size(727, 238);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Navy;
-            this.ClientSize = new System.Drawing.Size(1184, 681);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bunifuImageButton5);
             this.Controls.Add(this.BtnHerramientasAdm);
             this.Controls.Add(this.BtnContinueExam);
             this.Controls.Add(this.BtnComenzarExamen);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "Form1";
+            this.Text = "DDC Testing Center";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.BtnComenzarExamen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnContinueExam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnHerramientasAdm)).EndInit();

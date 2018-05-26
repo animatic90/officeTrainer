@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormContinueToExam));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnBack = new Bunifu.Framework.UI.BunifuFlatButton();
             this.PnlNames = new System.Windows.Forms.Panel();
             this.RbLastName = new System.Windows.Forms.RadioButton();
@@ -42,10 +43,10 @@
             this.apellidos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idAlumno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvExams = new System.Windows.Forms.DataGridView();
-            this.bunifuFlatButton1 = new Bunifu.Framework.UI.BunifuFlatButton();
             this.nombreExamen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idExamen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnGoToExam = new Bunifu.Framework.UI.BunifuFlatButton();
             this.PnlNames.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvAlumnos)).BeginInit();
@@ -74,19 +75,20 @@
             this.BtnBack.IconVisible = false;
             this.BtnBack.IconZoom = 90D;
             this.BtnBack.IsTab = false;
-            this.BtnBack.Location = new System.Drawing.Point(13, 618);
-            this.BtnBack.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnBack.Location = new System.Drawing.Point(14, 565);
+            this.BtnBack.Margin = new System.Windows.Forms.Padding(5);
             this.BtnBack.Name = "BtnBack";
             this.BtnBack.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnBack.OnHovercolor = System.Drawing.Color.RoyalBlue;
             this.BtnBack.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnBack.selected = false;
-            this.BtnBack.Size = new System.Drawing.Size(105, 50);
+            this.BtnBack.Size = new System.Drawing.Size(140, 60);
             this.BtnBack.TabIndex = 22;
             this.BtnBack.Text = "<< VOLVER";
             this.BtnBack.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnBack.Textcolor = System.Drawing.Color.White;
             this.BtnBack.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // PnlNames
             // 
@@ -95,30 +97,33 @@
             this.PnlNames.Controls.Add(this.BtnSearch);
             this.PnlNames.Controls.Add(this.TxtSearch);
             this.PnlNames.Controls.Add(this.label6);
-            this.PnlNames.Location = new System.Drawing.Point(366, 147);
+            this.PnlNames.Location = new System.Drawing.Point(271, 103);
+            this.PnlNames.Margin = new System.Windows.Forms.Padding(4);
             this.PnlNames.Name = "PnlNames";
-            this.PnlNames.Size = new System.Drawing.Size(535, 107);
+            this.PnlNames.Size = new System.Drawing.Size(713, 132);
             this.PnlNames.TabIndex = 21;
             // 
             // RbLastName
             // 
             this.RbLastName.AutoSize = true;
             this.RbLastName.ForeColor = System.Drawing.Color.White;
-            this.RbLastName.Location = new System.Drawing.Point(228, 77);
+            this.RbLastName.Location = new System.Drawing.Point(304, 95);
+            this.RbLastName.Margin = new System.Windows.Forms.Padding(4);
             this.RbLastName.Name = "RbLastName";
-            this.RbLastName.Size = new System.Drawing.Size(62, 17);
+            this.RbLastName.Size = new System.Drawing.Size(79, 21);
             this.RbLastName.TabIndex = 20;
-            this.RbLastName.TabStop = true;
             this.RbLastName.Text = "Apellido";
             this.RbLastName.UseVisualStyleBackColor = true;
             // 
             // RbFirstName
             // 
             this.RbFirstName.AutoSize = true;
+            this.RbFirstName.Checked = true;
             this.RbFirstName.ForeColor = System.Drawing.Color.White;
-            this.RbFirstName.Location = new System.Drawing.Point(72, 77);
+            this.RbFirstName.Location = new System.Drawing.Point(96, 95);
+            this.RbFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.RbFirstName.Name = "RbFirstName";
-            this.RbFirstName.Size = new System.Drawing.Size(62, 17);
+            this.RbFirstName.Size = new System.Drawing.Size(79, 21);
             this.RbFirstName.TabIndex = 19;
             this.RbFirstName.TabStop = true;
             this.RbFirstName.Text = "Nombre";
@@ -126,7 +131,7 @@
             // 
             // BtnSearch
             // 
-            this.BtnSearch.Activecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnSearch.Activecolor = System.Drawing.Color.Yellow;
             this.BtnSearch.BackColor = System.Drawing.Color.Yellow;
             this.BtnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BtnSearch.BorderRadius = 0;
@@ -147,14 +152,14 @@
             this.BtnSearch.IconVisible = false;
             this.BtnSearch.IconZoom = 90D;
             this.BtnSearch.IsTab = false;
-            this.BtnSearch.Location = new System.Drawing.Point(421, 33);
-            this.BtnSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSearch.Location = new System.Drawing.Point(561, 41);
+            this.BtnSearch.Margin = new System.Windows.Forms.Padding(5);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Normalcolor = System.Drawing.Color.Yellow;
             this.BtnSearch.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.BtnSearch.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnSearch.selected = false;
-            this.BtnSearch.Size = new System.Drawing.Size(82, 29);
+            this.BtnSearch.Size = new System.Drawing.Size(109, 35);
             this.BtnSearch.TabIndex = 18;
             this.BtnSearch.Text = "BUSCAR";
             this.BtnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -165,9 +170,10 @@
             // TxtSearch
             // 
             this.TxtSearch.BorderColor = System.Drawing.Color.SeaGreen;
-            this.TxtSearch.Location = new System.Drawing.Point(18, 42);
+            this.TxtSearch.Location = new System.Drawing.Point(24, 52);
+            this.TxtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(351, 20);
+            this.TxtSearch.Size = new System.Drawing.Size(467, 22);
             this.TxtSearch.TabIndex = 6;
             // 
             // label6
@@ -175,18 +181,20 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Silver;
-            this.label6.Location = new System.Drawing.Point(14, 3);
+            this.label6.Location = new System.Drawing.Point(19, 4);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(162, 24);
+            this.label6.Size = new System.Drawing.Size(208, 29);
             this.label6.TabIndex = 2;
             this.label6.Text = "Ingrese sus datos:";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(114, 26);
+            this.pictureBox1.Location = new System.Drawing.Point(-21, -6);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1011, 183);
+            this.pictureBox1.Size = new System.Drawing.Size(1270, 225);
             this.pictureBox1.TabIndex = 23;
             this.pictureBox1.TabStop = false;
             // 
@@ -197,15 +205,26 @@
             this.DgvAlumnos.AllowUserToResizeColumns = false;
             this.DgvAlumnos.AllowUserToResizeRows = false;
             this.DgvAlumnos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvAlumnos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvAlumnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvAlumnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nombres,
             this.apellidos,
             this.idAlumno});
-            this.DgvAlumnos.Location = new System.Drawing.Point(253, 279);
+            this.DgvAlumnos.Location = new System.Drawing.Point(181, 243);
+            this.DgvAlumnos.Margin = new System.Windows.Forms.Padding(4);
+            this.DgvAlumnos.MultiSelect = false;
             this.DgvAlumnos.Name = "DgvAlumnos";
+            this.DgvAlumnos.RowHeadersVisible = false;
             this.DgvAlumnos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvAlumnos.Size = new System.Drawing.Size(289, 292);
+            this.DgvAlumnos.Size = new System.Drawing.Size(388, 359);
             this.DgvAlumnos.TabIndex = 24;
             this.DgvAlumnos.Visible = false;
             this.DgvAlumnos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAlumnos_CellClick);
@@ -213,14 +232,15 @@
             // nombres
             // 
             this.nombres.DataPropertyName = "nombres";
-            this.nombres.HeaderText = "nombres";
+            this.nombres.HeaderText = "Nombres";
+            this.nombres.MinimumWidth = 2;
             this.nombres.Name = "nombres";
             this.nombres.ReadOnly = true;
             // 
             // apellidos
             // 
             this.apellidos.DataPropertyName = "apellidos";
-            this.apellidos.HeaderText = "apellidos";
+            this.apellidos.HeaderText = "Apellidos";
             this.apellidos.Name = "apellidos";
             this.apellidos.ReadOnly = true;
             // 
@@ -239,65 +259,34 @@
             this.DgvExams.AllowUserToResizeRows = false;
             this.DgvExams.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvExams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvExams.ColumnHeadersVisible = false;
             this.DgvExams.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nombreExamen,
             this.fecha,
             this.idExamen});
-            this.DgvExams.Location = new System.Drawing.Point(603, 279);
+            this.DgvExams.Location = new System.Drawing.Point(620, 268);
+            this.DgvExams.Margin = new System.Windows.Forms.Padding(4);
+            this.DgvExams.MultiSelect = false;
             this.DgvExams.Name = "DgvExams";
-            this.DgvExams.Size = new System.Drawing.Size(358, 292);
+            this.DgvExams.ReadOnly = true;
+            this.DgvExams.RowHeadersVisible = false;
+            this.DgvExams.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvExams.Size = new System.Drawing.Size(388, 334);
             this.DgvExams.TabIndex = 25;
             this.DgvExams.Visible = false;
             this.DgvExams.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvExams_CellClick);
             // 
-            // bunifuFlatButton1
-            // 
-            this.bunifuFlatButton1.Activecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.bunifuFlatButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.bunifuFlatButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.bunifuFlatButton1.BorderRadius = 0;
-            this.bunifuFlatButton1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bunifuFlatButton1.ButtonText = "IR A EXAMEN >>";
-            this.bunifuFlatButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.bunifuFlatButton1.DisabledColor = System.Drawing.Color.Gray;
-            this.bunifuFlatButton1.Iconcolor = System.Drawing.Color.Transparent;
-            this.bunifuFlatButton1.Iconimage = ((System.Drawing.Image)(resources.GetObject("bunifuFlatButton1.Iconimage")));
-            this.bunifuFlatButton1.Iconimage_right = null;
-            this.bunifuFlatButton1.Iconimage_right_Selected = null;
-            this.bunifuFlatButton1.Iconimage_Selected = null;
-            this.bunifuFlatButton1.IconMarginLeft = 0;
-            this.bunifuFlatButton1.IconMarginRight = 0;
-            this.bunifuFlatButton1.IconRightVisible = false;
-            this.bunifuFlatButton1.IconRightZoom = 0D;
-            this.bunifuFlatButton1.IconVisible = false;
-            this.bunifuFlatButton1.IconZoom = 90D;
-            this.bunifuFlatButton1.IsTab = false;
-            this.bunifuFlatButton1.Location = new System.Drawing.Point(1028, 618);
-            this.bunifuFlatButton1.Margin = new System.Windows.Forms.Padding(4);
-            this.bunifuFlatButton1.Name = "bunifuFlatButton1";
-            this.bunifuFlatButton1.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.bunifuFlatButton1.OnHovercolor = System.Drawing.Color.RoyalBlue;
-            this.bunifuFlatButton1.OnHoverTextColor = System.Drawing.Color.White;
-            this.bunifuFlatButton1.selected = false;
-            this.bunifuFlatButton1.Size = new System.Drawing.Size(143, 50);
-            this.bunifuFlatButton1.TabIndex = 26;
-            this.bunifuFlatButton1.Text = "IR A EXAMEN >>";
-            this.bunifuFlatButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bunifuFlatButton1.Textcolor = System.Drawing.Color.White;
-            this.bunifuFlatButton1.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuFlatButton1.Click += new System.EventHandler(this.bunifuFlatButton1_Click);
-            // 
             // nombreExamen
             // 
             this.nombreExamen.DataPropertyName = "nombreExamen";
-            this.nombreExamen.HeaderText = "nombreExamen";
+            this.nombreExamen.HeaderText = "Examen";
             this.nombreExamen.Name = "nombreExamen";
             this.nombreExamen.ReadOnly = true;
             // 
             // fecha
             // 
             this.fecha.DataPropertyName = "fecha";
-            this.fecha.HeaderText = "fecha";
+            this.fecha.HeaderText = "Fecha";
             this.fecha.Name = "fecha";
             this.fecha.ReadOnly = true;
             // 
@@ -307,21 +296,64 @@
             this.idExamen.HeaderText = "idExamen";
             this.idExamen.Name = "idExamen";
             this.idExamen.ReadOnly = true;
+            this.idExamen.Visible = false;
+            // 
+            // BtnGoToExam
+            // 
+            this.BtnGoToExam.Activecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnGoToExam.BackColor = System.Drawing.Color.Yellow;
+            this.BtnGoToExam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BtnGoToExam.BorderRadius = 0;
+            this.BtnGoToExam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BtnGoToExam.ButtonText = "IR A EXAMEN >>";
+            this.BtnGoToExam.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnGoToExam.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnGoToExam.Enabled = false;
+            this.BtnGoToExam.Iconcolor = System.Drawing.Color.Transparent;
+            this.BtnGoToExam.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnGoToExam.Iconimage")));
+            this.BtnGoToExam.Iconimage_right = null;
+            this.BtnGoToExam.Iconimage_right_Selected = null;
+            this.BtnGoToExam.Iconimage_Selected = null;
+            this.BtnGoToExam.IconMarginLeft = 0;
+            this.BtnGoToExam.IconMarginRight = 0;
+            this.BtnGoToExam.IconRightVisible = false;
+            this.BtnGoToExam.IconRightZoom = 0D;
+            this.BtnGoToExam.IconVisible = false;
+            this.BtnGoToExam.IconZoom = 90D;
+            this.BtnGoToExam.IsTab = false;
+            this.BtnGoToExam.Location = new System.Drawing.Point(1036, 564);
+            this.BtnGoToExam.Margin = new System.Windows.Forms.Padding(5);
+            this.BtnGoToExam.Name = "BtnGoToExam";
+            this.BtnGoToExam.Normalcolor = System.Drawing.Color.Yellow;
+            this.BtnGoToExam.OnHovercolor = System.Drawing.Color.RoyalBlue;
+            this.BtnGoToExam.OnHoverTextColor = System.Drawing.Color.White;
+            this.BtnGoToExam.selected = false;
+            this.BtnGoToExam.Size = new System.Drawing.Size(190, 61);
+            this.BtnGoToExam.TabIndex = 26;
+            this.BtnGoToExam.Text = "IR A EXAMEN >>";
+            this.BtnGoToExam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnGoToExam.Textcolor = System.Drawing.Color.Black;
+            this.BtnGoToExam.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnGoToExam.Click += new System.EventHandler(this.BtnGoToExam_Click);
             // 
             // FormContinueToExam
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Navy;
-            this.ClientSize = new System.Drawing.Size(1184, 681);
-            this.Controls.Add(this.bunifuFlatButton1);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ControlBox = false;
+            this.Controls.Add(this.BtnGoToExam);
             this.Controls.Add(this.DgvExams);
             this.Controls.Add(this.DgvAlumnos);
             this.Controls.Add(this.BtnBack);
             this.Controls.Add(this.PnlNames);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormContinueToExam";
-            this.Text = "FormContinueToExam";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "Continue Exam";
             this.Load += new System.EventHandler(this.FormContinueToExam_Load);
             this.PnlNames.ResumeLayout(false);
             this.PnlNames.PerformLayout();
@@ -343,11 +375,11 @@
         private System.Windows.Forms.RadioButton RbLastName;
         private System.Windows.Forms.RadioButton RbFirstName;
         private System.Windows.Forms.DataGridView DgvExams;
+        private System.Windows.Forms.DataGridView DgvAlumnos;
+        private Bunifu.Framework.UI.BunifuFlatButton BtnGoToExam;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombres;
         private System.Windows.Forms.DataGridViewTextBoxColumn apellidos;
         private System.Windows.Forms.DataGridViewTextBoxColumn idAlumno;
-        private System.Windows.Forms.DataGridView DgvAlumnos;
-        private Bunifu.Framework.UI.BunifuFlatButton bunifuFlatButton1;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreExamen;
         private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
         private System.Windows.Forms.DataGridViewTextBoxColumn idExamen;
