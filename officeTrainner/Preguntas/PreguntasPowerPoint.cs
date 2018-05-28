@@ -28,6 +28,14 @@ namespace Preguntas
         string p4 = "NO EXISTE";
         string p5 = "NO EXISTE";
 
+        /***********Propiedades de Impresion**********/
+        string numeroCopias; //
+        string slidesPorHoja; //
+        string color;//
+        string rango;//
+        string intercalar;//
+        /*********************************************/
+
         public void Pregunta(int numeroDePregunta, int examenIdExamen)
         {
            // powerPointProcsOld = Process.GetProcessesByName("POWERPNT");
@@ -89,19 +97,19 @@ namespace Preguntas
             }
         }
 
+        public void PropiedadesDeImpresion(string NumeroCopias, string SlidesPorHoja, string Color, string Rango, string Intercalar)
+        {
+            numeroCopias = NumeroCopias;
+            slidesPorHoja = SlidesPorHoja;
+            color = Color;
+            rango = Rango;
+            intercalar = Intercalar;
+        }
+
         private void AbrirPowerPoints(int numeroDePregunta)
         {
 
             ObjPowerPointAlumno = new PowerPoint.Application();
-
-            try
-            {
-                ObjPowerPointAlumno.Visible = MsoTriState.msoFalse; //aun no funciona
-            }
-            catch (Exception)
-            {
-                throw;
-            }
 
 
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
@@ -161,6 +169,9 @@ namespace Preguntas
                 }
             }
         }
+
+
+
         private void GuardarPuntaje()
         {
 
@@ -411,9 +422,7 @@ namespace Preguntas
 
             if (numText.Count == 25 && contenidoDeArchivoA[0].Contains(cadenaAchequear1) && contenidoDeArchivoB[0].Contains(cadenaAchequear2) && contenidoDeArchivoB[0].Contains(cadenaAchequear3))
           // if (contenidoDeArchivoA[0].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+
 
             GuardarPuntaje();
             BorrarTemporales();
@@ -421,8 +430,13 @@ namespace Preguntas
 
         private void Pregunta10()
         {
-            
+            if (numeroCopias.Equals("4") && slidesPorHoja.Equals("ppPrintOutputTwoSlideHandouts") && color.Equals("ppPrintColor") && rango.Equals("ppPrintAll") && intercalar.Equals("msoFalse"))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+            GuardarPuntaje();
         }
+
         private void Pregunta11()
         {
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
@@ -820,7 +834,27 @@ namespace Preguntas
         }
         private void Pregunta27()
         {
+
+            ObjPowerPointAlumno = new PowerPoint.Application();
+            // ppts = ObjPowerPoint.Presentations;
+            string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
+            if (System.IO.File.Exists(ruta))
+            {
+                pptAlumno = ObjPowerPointAlumno.Presentations.Open(ruta, MsoTriState.msoFalse, MsoTriState.msoFalse, MsoTriState.msoFalse);
+                var gridLine = ObjPowerPointAlumno.DisplayGridLines;
+                var snapToGrid = pptAlumno.SnapToGrid;
+
+                if (snapToGrid == MsoTriState.msoTrue && gridLine == MsoTriState.msoTrue)
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+
+            GuardarPuntaje();
+            CerrarPowerPoints();
+
         }
+
         private void Pregunta28()
         {
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";

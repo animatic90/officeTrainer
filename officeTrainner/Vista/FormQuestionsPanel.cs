@@ -29,6 +29,7 @@ namespace Vista
         //PowerPoint.Presentations ppts;
         PowerPoint.Presentation ppt;
 
+
         int examenIdExamen;
         string ExamenSeleccionado;
 
@@ -211,6 +212,20 @@ namespace Vista
         }
         private void ComprobarCorrectoIncorrectoPowerPoint()
         {
+            int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
+            PreguntasPowerPoint preguntasPowerPoint = new PreguntasPowerPoint();
+
+            if (numeroDePregunta == 10 || numeroDePregunta == 22) //propiedades de impresion
+            {
+                string numeroCopias = ppt.PrintOptions.NumberOfCopies.ToString();
+                string slidesPorHoja = ppt.PrintOptions.OutputType.ToString();
+                string color = ppt.PrintOptions.PrintColorType.ToString();
+                string rango = ppt.PrintOptions.RangeType.ToString();
+                string intercalar = ppt.PrintOptions.Collate.ToString();
+
+                preguntasPowerPoint.PropiedadesDeImpresion(numeroCopias, slidesPorHoja, color, rango, intercalar);
+            }
+            
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
 
             if (System.IO.File.Exists(ruta))
@@ -221,10 +236,7 @@ namespace Vista
             ppt.SaveCopyAs (ruta, PowerPoint.PpSaveAsFileType.ppSaveAsDefault, Microsoft.Office.Core.MsoTriState.msoFalse);
 
             CerrarPowerPoints();
-
-            //comparar cambio en los archivos ejercicio y respuesta
-            int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
-            PreguntasPowerPoint preguntasPowerPoint = new PreguntasPowerPoint();
+            //comparar cambio en los archivos ejercicio y respuesta     
             preguntasPowerPoint.Pregunta(numeroDePregunta, examenIdExamen);
         }
         private void GuardarAvance()
