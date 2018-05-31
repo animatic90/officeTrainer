@@ -734,6 +734,11 @@ namespace Preguntas
         }
         private void Pregunta22()
         {
+            if (numeroCopias.Equals("5") && slidesPorHoja.Equals("ppPrintOutputNotesPages") && rango.Equals("ppPrintAll") && intercalar.Equals("msoFalse"))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+            GuardarPuntaje();
         }
         private void Pregunta23()
         {
@@ -803,7 +808,8 @@ namespace Preguntas
             String[] contenidoDeArchivo9 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide9.xml"));
             String[] contenidoDeArchivo10 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide10.xml"));
 
-            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) && contenidoDeArchivo2[1].Contains(cadenaAchequear1) && contenidoDeArchivo3[1].Contains(cadenaAchequear1) && contenidoDeArchivo4[1].Contains(cadenaAchequear1) && contenidoDeArchivo5[1].Contains(cadenaAchequear1) && contenidoDeArchivo6[1].Contains(cadenaAchequear1) && contenidoDeArchivo7[1].Contains(cadenaAchequear1) && contenidoDeArchivo8[1].Contains(cadenaAchequear1) && contenidoDeArchivo9[1].Contains(cadenaAchequear1) && contenidoDeArchivo10[1].Contains(cadenaAchequear1))
+            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo2[1].Contains(cadenaAchequear1) && contenidoDeArchivo3[1].Contains(cadenaAchequear1) && contenidoDeArchivo4[1].Contains(cadenaAchequear1) && contenidoDeArchivo5[1].Contains(cadenaAchequear1) && contenidoDeArchivo6[1].Contains(cadenaAchequear1) && contenidoDeArchivo7[1].Contains(cadenaAchequear1) && contenidoDeArchivo8[1].Contains(cadenaAchequear1) && contenidoDeArchivo9[1].Contains(cadenaAchequear1) && contenidoDeArchivo10[1].Contains(cadenaAchequear1))
                 p1 = "CORRECTO";
             else
                 p1 = "INCORRECTO";

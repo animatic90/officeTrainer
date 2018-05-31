@@ -410,6 +410,7 @@
             this.TxtFirstName.Name = "TxtFirstName";
             this.TxtFirstName.Size = new System.Drawing.Size(309, 22);
             this.TxtFirstName.TabIndex = 1;
+            this.TxtFirstName.Text = "asd";
             // 
             // TxtLastName
             // 
@@ -419,6 +420,7 @@
             this.TxtLastName.Name = "TxtLastName";
             this.TxtLastName.Size = new System.Drawing.Size(309, 22);
             this.TxtLastName.TabIndex = 2;
+            this.TxtLastName.Text = "asd";
             // 
             // label7
             // 

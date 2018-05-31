@@ -71,8 +71,10 @@
             BtnSelectedExam.Text = "Word";
             PnlSelectExam.Visible = false;
             PnlSelectedExam.Visible = true;
-            
-            //PnlOptions.Visible = true; // descoemntar cuando se implementen preguntas para word
+
+            FormMain.NUMERO_DE_PREGUNTAS = 35;
+
+            PnlOptions.Visible = true;
             PnlNames.Visible = true;
         }
 
