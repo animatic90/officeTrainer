@@ -126,7 +126,7 @@ namespace Preguntas
             }
         }
 
-        static void DescomprimirZipPowerPoint()
+        static void DescomprimirZipWord()
         {
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\";
             string ruta_7z = Application.StartupPath + @"\Documentos\Temp\7z";
@@ -143,7 +143,7 @@ namespace Preguntas
         {
             for (int i = 0; i < 200; i++)
             {
-                string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio\ppt\presentation.xml";
+                string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio\docProps\core.xml";
 
                 if (!File.Exists(ruta))
                 {
@@ -251,44 +251,290 @@ namespace Preguntas
 
         private void Pregunta2()
         {
-           
+            bool tablaEsCorrecto = false;
+            bool posicionEsCorrecto = false;
+
+            Word.Tables tablas = docAlumno.Tables;
+            if (tablas.Count == 1) //comprobar que exista solo una tabla
+            {
+                /******************** Comprobar si la Tabla es correcta ******************/
+                int filas = tablas[1].Rows.Count;
+                int columnas = tablas[1].Columns.Count;
+                if (filas == 3 && columnas == 4)
+                {
+                    tablaEsCorrecto = true;
+                }
+                /*************************************************************************/
+                
+                /********comprobar la pisicion de la tabla*****/
+                Word.Range rango = tablas[1].Range;     
+                int numPage = tablas[1].Range.get_Information(Word.WdInformation.wdActiveEndPageNumber); //pagina donde se encuentra la tabla
+
+                int start = rango.Start;
+                int end = rango.End;
+                if (start >= 345 && start <= 355 && end >= 360 && end <=370 && numPage == 1) 
+                {
+                    posicionEsCorrecto = true;
+                }
+                /*************************************************************************/
+
+                if (tablaEsCorrecto && posicionEsCorrecto)
+                {
+                    p1 = "CORRECTO";
+                }
+                else
+                {
+                    p1 = "INCORRECTO";
+                }
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
 
         private void Pregunta3()
         {
-            
+            Word.Tables tablas = docAlumno.Tables;
+            if (tablas.Count == 1) 
+            {
+                Word.Table tabla = tablas[1];
+                int filas = tabla.Rows.Count;
+                int columnas = tabla.Columns.Count;                
+                
+
+                if (filas == 6 && columnas == 2 && tabla.Uniform ==  false)
+                {
+                    Word.Cell cell = tabla.Cell(filas, 1);
+
+                    try
+                    {
+                        Word.Column col = cell.Column;
+                    }
+                    catch (Exception)
+                    {
+                        p1 = "CORRECTO";
+                    }
+                    
+                }
+                else
+                    p1 = "INCORRECTO";
+
+            }
+            else
+            {
+                p1 = "INCORRECTO";
+            }
+
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta4()
         {
-           
+            Word.Tables tablas = docAlumno.Tables;
+            if (tablas.Count == 1)
+            {
+                Word.Table tabla = tablas[1];
+                int filas = tabla.Rows.Count;
+                int columnas = tabla.Columns.Count;
+
+                Word.Columns col = tabla.Columns;
+
+                if (filas == 5 && columnas == 2 && col.Last.Width == col.First.Width)
+                {                    
+                        p1 = "CORRECTO";
+                }
+                else
+                    p1 = "INCORRECTO";
+
+            }
+            else
+            {
+                p1 = "INCORRECTO";
+            }
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta5()
         {
-          
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //<dc:description>Me parece que la información es confusa</dc:description>
+            string cadenaAchequear1 = "<dc:description>Me parece que la información es confusa</dc:description>";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"docProps\core.xml"));
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta6()
         {
-           
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //
+            string cadenaAchequear1 = "<b:Year>2015</b:Year>";
+            string cadenaAchequear2 = ". (2013).";
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"customXml\item1.xml"));
+            String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+
+            int elementos = contenidoDeArchivo1.Count();
+            if (contenidoDeArchivo1[elementos-1].Contains(cadenaAchequear1) && !contenidoDeArchivo2[1].Contains(cadenaAchequear2))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta7()
         {
-           
+            string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
+            docAlumno.ExportAsFixedFormat(rutaPdf, Word.WdExportFormat.wdExportFormatPDF);
+
+            StringBuilder text = new StringBuilder();
+            using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
+            {
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    text.Append(PdfReader.parser.PdfTextExtractor.GetTextFromPage(reader, i));
+                }
+            }
+            File.Delete(rutaPdf);
+
+            string cadenaAchequear = "(iteración) \n \nDefinición";
+            string contenidoDeArchivo = text.ToString();
+
+            int marksNum =  docAlumno.Paragraphs.Count;//41 todos
+
+            bool active = objWordAlumno.ActiveWindow.View.ShowAll;
+
+            if (contenidoDeArchivo.Contains(cadenaAchequear) && marksNum == 40 && active)
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta8()
         {
-           
+            Word.Tables tablas = docAlumno.Tables;
+            if (tablas.Count == 1) 
+            {
+                //Claves del éxito
+                string cadenaAchequear = "Claves de éxito";
+                string contenidoDeArchivo = tablas[1].Title;
+
+                if (contenidoDeArchivo.Equals(cadenaAchequear))
+                {
+                    p1 = "CORRECTO";
+                }
+                else
+                {
+                    p1 = "INCORRECTO";
+                }
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
 
         private void Pregunta9()
         {
+            Word.Tables tablas = docAlumno.Tables;
+            if (tablas.Count == 1)
+            {
+                Word.Style estilo =  tablas[1].get_Style();
+                
+                //Claves del éxito
+                string cadenaAchequear = "Tabla de cuadrícula 2 - Énfasis 4";
+                string contenidoDeArchivo = estilo.NameLocal;
+
+                if (contenidoDeArchivo.Equals(cadenaAchequear))
+                {
+                    p1 = "CORRECTO";
+                }
+                else
+                {
+                    p1 = "INCORRECTO";
+                }
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta10()
         {
-          
+            string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
+            docAlumno.ExportAsFixedFormat(rutaPdf, Word.WdExportFormat.wdExportFormatPDF);
+
+            StringBuilder text = new StringBuilder();
+            using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
+            {
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    text.Append(PdfReader.parser.PdfTextExtractor.GetTextFromPage(reader, i));
+                }
+            }
+            File.Delete(rutaPdf);
+
+            string cadenaAchequear = "LAS SERIES DE TV™";
+            string contenidoDeArchivo = text.ToString();
+
+            if (contenidoDeArchivo.Contains(cadenaAchequear))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta11()
         {
-            
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //
+            string cadenaAchequear1 = "<dc:title></dc:title>";
+            string cadenaAchequear2 = "<dc:subject></dc:subject>";
+            string cadenaAchequear3 = "<dc:creator></dc:creator>";
+            string cadenaAchequear4 = "<cp:lastModifiedBy></cp:lastModifiedBy>";
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"docProps\core.xml"));
+
+            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) 
+                && contenidoDeArchivo1[1].Contains(cadenaAchequear2)
+                && contenidoDeArchivo1[1].Contains(cadenaAchequear3)
+                && contenidoDeArchivo1[1].Contains(cadenaAchequear4))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta12()
         {
