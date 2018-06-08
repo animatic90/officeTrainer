@@ -11,6 +11,7 @@ using Microsoft.Office.Core;
 using PdfReader = iTextSharp.text.pdf;
 using System.Diagnostics;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace Preguntas
 {
@@ -155,6 +156,24 @@ namespace Preguntas
                 }
             }
         }
+
+        private string obtenerTextoDePdf()
+        {
+            string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
+            docAlumno.ExportAsFixedFormat(rutaPdf, Word.WdExportFormat.wdExportFormatPDF);
+
+            StringBuilder text = new StringBuilder();
+            using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
+            {
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    text.Append(PdfReader.parser.PdfTextExtractor.GetTextFromPage(reader, i));
+                }
+            }
+            File.Delete(rutaPdf);
+
+            return text.ToString();
+        }
         
         private void GuardarPuntaje()
         {
@@ -213,26 +232,15 @@ namespace Preguntas
                 }
             }
             /*********************************************************************/
+            
+            string textPdf = obtenerTextoDePdf();
 
-            //  var temp = docAlumno.Content.Text.Replace((char)(0x07), (char)(0x20));
-            string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
-            docAlumno.ExportAsFixedFormat(rutaPdf, Word.WdExportFormat.wdExportFormatPDF);
-
-            StringBuilder text = new StringBuilder();
-            using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
-            {
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    text.Append(PdfReader.parser.PdfTextExtractor.GetTextFromPage(reader, i));
-                }
-            }
-            File.Delete(rutaPdf);
             // Algoritmo recursivo (iteración) \n \nAutosimilitud\n  LOS FRACTALES
             // Algoritmo recursivo (iteración) \nAutosimilitud\n \n  LOS FRACTALES
             string cadenaAchequear1 = "Algoritmo recursivo (iteración) \n \nAutosimilitud\n  LOS FRACTALES";
             string cadenaAchequear2 = "Algoritmo recursivo (iteración) \nAutosimilitud\n \n  LOS FRACTALES";
 
-            string contenidoDeArchivo = text.ToString();
+            string contenidoDeArchivo = textPdf;
 
             if (smartEsCorrecto)
             {
@@ -404,21 +412,10 @@ namespace Preguntas
         }
         private void Pregunta7()
         {
-            string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
-            docAlumno.ExportAsFixedFormat(rutaPdf, Word.WdExportFormat.wdExportFormatPDF);
-
-            StringBuilder text = new StringBuilder();
-            using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
-            {
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    text.Append(PdfReader.parser.PdfTextExtractor.GetTextFromPage(reader, i));
-                }
-            }
-            File.Delete(rutaPdf);
+            string textPdf = obtenerTextoDePdf();
 
             string cadenaAchequear = "(iteración) \n \nDefinición";
-            string contenidoDeArchivo = text.ToString();
+            string contenidoDeArchivo = textPdf;
 
             int marksNum =  docAlumno.Paragraphs.Count;//41 todos
 
@@ -485,21 +482,10 @@ namespace Preguntas
         }
         private void Pregunta10()
         {
-            string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
-            docAlumno.ExportAsFixedFormat(rutaPdf, Word.WdExportFormat.wdExportFormatPDF);
-
-            StringBuilder text = new StringBuilder();
-            using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
-            {
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    text.Append(PdfReader.parser.PdfTextExtractor.GetTextFromPage(reader, i));
-                }
-            }
-            File.Delete(rutaPdf);
+            string textPdf = obtenerTextoDePdf();
 
             string cadenaAchequear = "LAS SERIES DE TV™";
-            string contenidoDeArchivo = text.ToString();
+            string contenidoDeArchivo = textPdf;
 
             if (contenidoDeArchivo.Contains(cadenaAchequear))
                 p1 = "CORRECTO";
@@ -538,61 +524,338 @@ namespace Preguntas
         }
         private void Pregunta12()
         {
-            
+            //Se utiliza con mayor frecuencia una técnica llamada colecistectomía laparoscópica. En este procedimiento, se hacen incisiones quirúrgicas más pequeñas que permiten una recuperación más rápida. Los pacientes pueden salir del hospital un día después de la cirugía.
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //
+            string cadenaAchequear1 = "Se utiliza con mayor frecuencia una técnica llamada colecistectomía laparoscópica. En este procedimiento, se hacen incisiones quirúrgicas más pequeñas que permiten una recuperación más rápida. Los pacientes pueden salir del hospital un día después de la cirugía.";
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+
+            if (!contenidoDeArchivo1[1].Contains(cadenaAchequear1))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
+
         }
         private void Pregunta13()
         {
-           
+            int listas = docAlumno.Content.ListParagraphs.Count; //11
+
+            string textPdf = obtenerTextoDePdf();
+
+            //\nA. Ecografía abdominal
+            //\nF. Colangiopancreatografía
+            //\nK. Enzimas pancreáticas
+
+            string cadenaAchequear1 = "\nA. Ecografía abdominal";
+            string cadenaAchequear2 = "\nF. Colangiopancreatografía";
+            string cadenaAchequear3 = "\nK. Enzimas pancreáticas";
+
+            string contenidoDeArchivo = textPdf;
+
+            if (contenidoDeArchivo.Contains(cadenaAchequear1) &&
+                contenidoDeArchivo.Contains(cadenaAchequear2) &&
+                contenidoDeArchivo.Contains(cadenaAchequear3) &&
+                listas == 11)
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta14()
         {
-           
+            string textPdf = obtenerTextoDePdf();
+            //\nCÁLCULOS BILIARES \nPrevención y Tratamiento \n \n  \n[FECHA] \n[NOMBRE DE LA COMPAÑÍA] \n[Dirección de la compañía] CÁLCULOS
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+
+            string ruta = Path.Combine(ruta_ResTem, @"word\glossary\document.xml");
+            
+            if (File.Exists(ruta))
+            {
+                string cadenaAchequear1 = "\nCÁLCULOS BILIARES \nPrevención y Tratamiento \n \n  \n[FECHA] \n[NOMBRE DE LA COMPAÑÍA] \n[Dirección de la compañía] CÁLCULOS";
+                string contenidoDeArchivo = textPdf;
+
+                if (contenidoDeArchivo.Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
+            
         private void Pregunta15()
         {
+            //Word.Range wrdRng = docAlumno.Bookmarks.get_Item("\\endofdoc").Range;
+           var firstPage =  docAlumno.Sections[docAlumno.Sections.Count].PageSetup.Orientation;
+           var lastPage = docAlumno.Sections[1].PageSetup.Orientation;
 
+            if (firstPage == Word.WdOrientation.wdOrientLandscape && lastPage == Word.WdOrientation.wdOrientPortrait)
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta16()
         {
-          
+
         }
         private void Pregunta17()
         {
+            //val=\"cyan\"/></w:rPr><w:lastRenderedPageBreak/><w:t>Definición de Fractal
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //
+            string cadenaAchequear1 = "val=\"cyan\"/></w:rPr><w:lastRenderedPageBreak/><w:t>Definición de Fractal";
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+
+            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta18()
         {
-            
+            //scaled=\"0\"/></w14:gradFill></w14:textFill></w:rPr><w:lastRenderedPageBreak/><w:t>Las series de Televisión
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //"val=\"C5C7CA\"/></w14:gs>"
+            //scaled=\"0\"/>
+            string cadenaAchequear1 = "scaled=\"0\"/></w14:gradFill></w14:textFill></w:rPr><w:lastRenderedPageBreak/><w:t>Las series de Televisión";
+            string cadenaAchequear2 = "val=\"C5C7CA\"/></w14:gs>";
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+
+            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo1[1].Contains(cadenaAchequear2))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta19()
         {
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "cirugía";
+            string cadenaAchequear2 = "operación";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+
+            MatchCollection numCirugia = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear1);
+            MatchCollection numOperacion = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear2);
+
+            if (numCirugia.Count == 0 && numOperacion.Count == 7)
+            {
+                p1 = "CORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+            
+            GuardarPuntaje();
+            BorrarTemporales();
         }
 
         private void Pregunta20()
         {
-           
+
         }
         private void Pregunta21()
         {
+            string textPdf = obtenerTextoDePdf();
+            //vómitos\n \n  \n \n3 CÁLCULOS
+            string cadenaAchequear = "vómitos\n \n  \n \n3 CÁLCULOS";
+            string contenidoDeArchivo = textPdf;
+
+            if (contenidoDeArchivo.Contains(cadenaAchequear))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta22()
         {
-          
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "Page Numbers (Bottom of Page)";
+            string cadenaAchequear2 = "Cinta: curvada e inclinada hacia abajo";  
+            
+            string cadenaAchequear3 = "Cinta curvada hacia abajo";
+
+            string ruta1 = Path.Combine(ruta_ResTem, @"word\footer1.xml");
+            string ruta2 = Path.Combine(ruta_ResTem, @"word\footer2.xml");
+            string ruta3 = Path.Combine(ruta_ResTem, @"word\footer3.xml");
+
+            String[] contenidoDeArchivo1 = new String[3];
+            String[] contenidoDeArchivo2 = new String[3];
+            String[] contenidoDeArchivo3 = new String[3];
+
+            if (File.Exists(ruta1))
+            {
+                contenidoDeArchivo1 = File.ReadAllLines(ruta1);
+
+                if (File.Exists(ruta2))
+                    contenidoDeArchivo2 = File.ReadAllLines(ruta2);
+                else
+                    contenidoDeArchivo2 = File.ReadAllLines(ruta1);
+                if (File.Exists(ruta3))
+                    contenidoDeArchivo3 = File.ReadAllLines(ruta3);
+                else
+                    contenidoDeArchivo3 = File.ReadAllLines(ruta1);
+
+                if ((contenidoDeArchivo1[1].Contains(cadenaAchequear1) && (contenidoDeArchivo1[1].Contains(cadenaAchequear2) || contenidoDeArchivo1[1].Contains(cadenaAchequear3))) ||
+                    (contenidoDeArchivo2[1].Contains(cadenaAchequear1) && (contenidoDeArchivo2[1].Contains(cadenaAchequear2) || contenidoDeArchivo2[1].Contains(cadenaAchequear3))) ||
+                    (contenidoDeArchivo3[1].Contains(cadenaAchequear1) && (contenidoDeArchivo3[1].Contains(cadenaAchequear2) || contenidoDeArchivo3[1].Contains(cadenaAchequear3))))
+                {
+                    p1 = "CORRECTO";
+                }
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+
+            GuardarPuntaje();
+            BorrarTemporales();
+
         }
         private void Pregunta23()
-        {
-          
+        {//no funciona
+            var listas = docAlumno.Content.ListParagraphs;
+            var temp1 = listas[1].Format;
+
+            var temp2 = docAlumno.Content.ListFormat;
+            var temp3 = temp2.ListPictureBullet;
+
+            Word.InlineShapes iShapes = docAlumno.InlineShapes;
+            Word.Shapes shapes = docAlumno.Shapes;
         }
         private void Pregunta24()
         {
-          
+            //string=\"BORRADOR\"/></v:shape>
+            //<v:shape id=\"PowerPlusWaterMark
+
+            CerrarWords();
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+
+            string cadenaAchequear1 = "string=\"BORRADOR\"/></v:shape>";
+            string cadenaAchequear2 = "<v:shape id=\"PowerPlusWaterMark";
+
+            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\header1.xml"));
+
+
+            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo[1].Contains(cadenaAchequear2))
+            {
+                p1 = "CORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta25()
         {
-           
+            int listas = docAlumno.Content.ListParagraphs.Count; //7
+
+            string textPdf = obtenerTextoDePdf();
+
+            string cadenaAchequear1 = "\n1. El matemático";
+            string cadenaAchequear2 = "\n2. La geometría";
+            string cadenaAchequear3 = "\n3. Sin embargo";
+            string cadenaAchequear4 = "\n4. La geometría";
+            string cadenaAchequear5 = "\n5. A menudo";
+            string cadenaAchequear6 = "\n6. La característica";
+            string cadenaAchequear7 = "\n7. Los fractales";
+
+
+            string contenidoDeArchivo = textPdf;
+
+            if (contenidoDeArchivo.Contains(cadenaAchequear1) &&
+                contenidoDeArchivo.Contains(cadenaAchequear2) &&
+                contenidoDeArchivo.Contains(cadenaAchequear3) &&
+                contenidoDeArchivo.Contains(cadenaAchequear4) &&
+                contenidoDeArchivo.Contains(cadenaAchequear5) &&
+                contenidoDeArchivo.Contains(cadenaAchequear6) &&
+                contenidoDeArchivo.Contains(cadenaAchequear7) &&
+                listas == 7)
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+
+            CerrarWords();
         }
         private void Pregunta26()
         {
+            Word.WdLineSpacing reglaDeEspaciado = docAlumno.Sections[1].Range.Paragraphs.Format.LineSpacingRule;
+            //wdLineSpace1pt5
+
+            string cadenaAchequear1 = "wdLineSpace1pt5";
+
+            string contenidoDeArchivo = reglaDeEspaciado.ToString();
+
+            if (contenidoDeArchivo.Contains(cadenaAchequear1))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+
+            CerrarWords();
         }
         private void Pregunta27()
         {
