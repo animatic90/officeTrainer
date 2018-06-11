@@ -547,7 +547,7 @@ namespace Preguntas
         }
         private void Pregunta13()
         {
-            int listas = docAlumno.Content.ListParagraphs.Count; //11
+            int numListas = docAlumno.Content.ListParagraphs.Count; //11
 
             string textPdf = obtenerTextoDePdf();
 
@@ -564,7 +564,7 @@ namespace Preguntas
             if (contenidoDeArchivo.Contains(cadenaAchequear1) &&
                 contenidoDeArchivo.Contains(cadenaAchequear2) &&
                 contenidoDeArchivo.Contains(cadenaAchequear3) &&
-                listas == 11)
+                numListas == 11)
                 p1 = "CORRECTO";
             else
                 p1 = "INCORRECTO";
@@ -768,6 +768,7 @@ namespace Preguntas
         }
         private void Pregunta23()
         {//no funciona
+            //var temp1 = iShapes[1].IsPictureBullet;
             var listas = docAlumno.Content.ListParagraphs;
             var temp1 = listas[1].Format;
 
@@ -781,7 +782,6 @@ namespace Preguntas
         {
             //string=\"BORRADOR\"/></v:shape>
             //<v:shape id=\"PowerPlusWaterMark
-
             CerrarWords();
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
@@ -854,34 +854,222 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-
             CerrarWords();
         }
         private void Pregunta27()
         {
-           
+            string textPdf = obtenerTextoDePdf();
+            string cadenaAchequear1 = "(iteración) \n \nTodos";
+            string cadenaAchequear2 = "(iteración) \nTodos";
+            //(iteración) \n \nTodos
+            //(iteración) \nTodos
+            if (textPdf.Contains(cadenaAchequear1) || textPdf.Contains(cadenaAchequear2))
+            {
+                // var temp = docAlumno.Content.Text.IndexOf("todos los fractales tienen algo en común");
+                int start = docAlumno.Content.Text.IndexOf("Todos los fractales tienen algo en común") - 15;
+                int end = docAlumno.Content.Text.IndexOf("Todos los fractales tienen algo en común") + 25;
+
+                Word.Range range = docAlumno.Range(Start: start, End: end);
+
+                var negrita = Math.Abs(range.Font.Bold);
+                var cursiva = Math.Abs(range.Font.Italic);
+                int tamaño = Convert.ToInt32(range.Font.Size);//22
+
+                Word.WdParagraphAlignment alineacion = range.Paragraphs.Alignment;//wdAlignParagraphLeft
+                Word.WdCharacterCase tipo = range.Case;//wdTitleSentence
+
+                string cadenaAchequear3 = "wdAlignParagraphLeft";
+                string cadenaAchequear4 = "wdTitleSentence";
+
+                string contenidoDeArchivo1 = alineacion.ToString();
+                string contenidoDeArchivo2 = tipo.ToString();
+
+                if (contenidoDeArchivo1.Contains(cadenaAchequear3) &&
+                    contenidoDeArchivo2.Contains(cadenaAchequear4) &&
+                    tamaño == 22 && negrita == 1 && cursiva == 1)
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta28()
         {
+            int start = docAlumno.Content.Text.IndexOf("Todos los fractales tienen algo en común") - 15;
+            int end = docAlumno.Content.Text.IndexOf("Todos los fractales tienen algo en común") + 25;
 
+            Word.Range range = docAlumno.Range(Start: start, End: end);
+               
+            Word.Style estilo = range.Paragraphs.get_Style();
+
+            string tipo = estilo.NameLocal; //"Cita"
+            string cadenaAchequear = "Cita";
+
+            if (tipo.Contains(cadenaAchequear))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta29()
         {
+            Word.Shapes shapes = docAlumno.Sections[1].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Shapes;//1
+
+            if (shapes.Count == 1)
+            {
+                Word.Range rango = docAlumno.Sections[1].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+
+                string tipo = rango.Case.ToString();//wdTitleWord
+                string texto = rango.Text;//"Los Fractales\r\r"
+                string tipoFuente = rango.Font.Name;//"Calibri"
+                float tamaño = rango.Font.Size;//10
+                int color = Math.Abs(Convert.ToInt32(rango.Font.Color));//-738131969
+                string indexColor = rango.Font.ColorIndex.ToString();//wdYellow
+                string alineacion = rango.Paragraphs.Alignment.ToString();//wdAlignParagraphLeft
+
+                if (tipo.Contains("wdTitleWord") && texto.Contains("Los Fractales\r\r") &&
+                    tipoFuente.Contains("Calibri") && tamaño == 10 && color == 738131969 &&
+                    indexColor.Contains("wdYellow") && alineacion.Contains("wdAlignParagraphLeft"))
+
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta30()
         {
+            int numMarcadores = docAlumno.Bookmarks.Count;//1
+
+            if (numMarcadores == 1)
+            {
+                Word.Bookmark marcador = docAlumno.Bookmarks[1];
+                int start = marcador.Start;//326
+                int end = marcador.End;
+                string name = marcador.Name;//Tipo
+
+                if (start == 326 && end == 326 && name.Equals("Tipo"))
+
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta31()
         {
+            int numListas = docAlumno.Content.ListParagraphs.Count; //4
+            string textPdf = obtenerTextoDePdf();
+            //de éstos. \n \nPara más información acerca de las mejores Series, diríjase a la siguiente página: \nhttp: www.imdb.com/
+            //de éstos. \n \n \nPara más información acerca de las mejores Series, diríjase a la siguiente página: \nhttp: www.imdb.com/
+            string cadenaAchequear1 = "de éstos. \n \nPara más información acerca de las mejores Series, diríjase a la siguiente página: \nhttp: www.imdb.com/";
+            string cadenaAchequear2 = "de éstos. \n \n \nPara más información acerca de las mejores Series, diríjase a la siguiente página: \nhttp: www.imdb.com/";
+
+            string contenidoDeArchivo = textPdf;
+                    
+            if ((contenidoDeArchivo.Contains(cadenaAchequear1) || contenidoDeArchivo.Contains(cadenaAchequear2)) &&
+                numListas == 4)
+
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+
+            CerrarWords();
         }
         private void Pregunta32()
         {
+            //no funciona
+            //<wp:effectExtent l="38100" t="57150" r="38100" b="38100"/>
+            var temp1 = docAlumno.Shapes;
+            var tmp1 = temp1[1];
+            var tmp2 = temp1[2];
+            var tmp3 = temp1[3];
+            var tmp4 = temp1[4];
+            var tmp5 = temp1[5];
+            var tmp6 = temp1[6];
+
+            var temp2 = tmp2.Shadow;
+            var temp3 = temp2.Type;
+
+            var temp4 = tmp2.AutoShapeType;
+            var temp5 = tmp2.Fill;
         }
         private void Pregunta33()
         {
+            Word.Shapes shapes = docAlumno.Shapes;//4
+            Word.InlineShapes iShapes = docAlumno.InlineShapes;//1
+
+            if (shapes.Count == 4 && iShapes.Count == 1)
+            {
+                string tipo = iShapes[1].Type.ToString();//wdInlineShapePicture
+                var rango = iShapes[1].Range;
+                int start = rango.Start;//2365
+                int end = rango.End;//2366
+
+                if (tipo.Equals("wdInlineShapePicture") &&
+                    start == 2365 && end == 2366)
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta34()
         {
+            
+            Word.Shapes shapes = docAlumno.Shapes;//4
+            Word.InlineShapes iShapes = docAlumno.InlineShapes;//1
+
+            if (shapes.Count == 4 && iShapes.Count == 1)
+            {
+                string tipo = iShapes[1].Type.ToString();//wdInlineShapePicture
+                var rango = iShapes[1].Range;
+                int start = rango.Start;//528
+                int end = rango.End;//529
+
+                //name=\"Eleven.jpg\"/><pic
+
+                CerrarWords();
+                string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+                Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+                ComprobarDescompresion();
+
+                string cadenaAchequear = "name=\"Eleven.jpg\"/><pic";
+
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+                                
+                if (contenidoDeArchivo[1].Contains(cadenaAchequear) && 
+                    tipo.Equals("wdInlineShapePicture") &&
+                    start == 528 && end == 529)
+                    p1 = "CORRECTO";
+                else
+                    p1 = "INCORRECTO";
+            }
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
+            BorrarTemporales();
         }
         private void Pregunta35()
         {
