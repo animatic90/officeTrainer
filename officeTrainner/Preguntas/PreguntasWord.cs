@@ -996,13 +996,16 @@ namespace Preguntas
         {
             //no funciona
             //<wp:effectExtent l="38100" t="57150" r="38100" b="38100"/>
-            var temp1 = docAlumno.Shapes;
-            var tmp1 = temp1[1];
-            var tmp2 = temp1[2];
-            var tmp3 = temp1[3];
-            var tmp4 = temp1[4];
-            var tmp5 = temp1[5];
-            var tmp6 = temp1[6];
+            var temp = docAlumno.Shapes;
+            var tmp1 = temp[1];
+            var tmp2 = temp[2];
+            var tmp3 = temp[3];
+            var tmp4 = temp[4];
+            var tmp5 = temp[5];
+            var tmp6 = temp[6];
+
+            var temp1 = tmp2.Fill;
+            var tmp7 = temp1.PictureEffects;
 
             var temp2 = tmp2.Shadow;
             var temp3 = temp2.Type;
@@ -1073,6 +1076,38 @@ namespace Preguntas
         }
         private void Pregunta35()
         {
+            p1 = "INCORRECTO";
+            Word.InlineShapes iShapes = docAlumno.InlineShapes;
+                
+            if (iShapes.Count == 1)
+            {
+                Word.InlineShape smart = iShapes[1];
+                int pagina = smart.Range.get_Information(Word.WdInformation.wdActiveEndPageNumber); //3
+                MsoTriState isSmart = smart.HasSmartArt; //comprobar que sea smartart
+
+                if (isSmart == MsoTriState.msoTrue && pagina == 3)
+                {
+                    string name = smart.SmartArt.Layout.Name;//"Lista con rectángulos en vertical"
+                    int numeroNodos = smart.SmartArt.AllNodes.Count;//5
+
+                    if (numeroNodos == 5)
+                    {
+                        SmartArtNode nodo1 = smart.SmartArt.AllNodes[1];
+                        string texto1 = nodo1.TextFrame2.TextRange.Text;//Dolor abdominal
+
+                        SmartArtNode nodo2 = smart.SmartArt.AllNodes[2];//Fiebre
+                        string texto2 = nodo2.TextFrame2.TextRange.Text;
+
+                        if (texto1.Equals("Dolor abdominal") && texto2.Equals("Fiebre"))
+                        {
+                            p1 = "CORRECTO";
+                        }
+                    }
+                }
+            }
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta36()
         {
