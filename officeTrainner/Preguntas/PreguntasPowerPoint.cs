@@ -106,7 +106,7 @@ namespace Preguntas
             intercalar = Intercalar;
         }
 
-        private void AbrirPowerPoints(int numeroDePregunta)
+      /*  private void AbrirPowerPoints(int numeroDePregunta)
         {
 
             ObjPowerPointAlumno = new PowerPoint.Application();
@@ -115,21 +115,21 @@ namespace Preguntas
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
             pptAlumno = ObjPowerPointAlumno.Presentations.Open(ruta);
 
-            //string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
-
-        }
+        }*/
 
         private void CerrarPowerPoints()
         {
-
-            pptAlumno.Close();
-            ObjPowerPointAlumno.Quit();
-
+            try
+            {
+                pptAlumno.Close();
+                ObjPowerPointAlumno.Quit();
+            }
+            catch (Exception){}
         }
         private void BorrarTemporales()
         {
             string rutaEjercicio = Application.StartupPath + @"\Documentos\Temp\Ejercicio";
-            System.IO.DirectoryInfo di = new DirectoryInfo(rutaEjercicio);
+            DirectoryInfo di = new DirectoryInfo(rutaEjercicio);
 
             foreach (FileInfo file in di.GetFiles())
             {
@@ -169,12 +169,9 @@ namespace Preguntas
                 }
             }
         }
-
-
-
+        
         private void GuardarPuntaje()
         {
-
             PuntajePregunta puntajePregunta = new PuntajePregunta
             {
                 sp1 = p1,
@@ -193,29 +190,35 @@ namespace Preguntas
         }
         private void Pregunta1()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:transition spd=\"slow\"><p:randomBar dir=\"vert\"/></p:transition>";
+                        
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }                
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
 
         private void Pregunta2()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\ppt\slides\";
-
-
+            
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
@@ -226,31 +229,37 @@ namespace Preguntas
             string cadenaAchequear5 = "<a:t>, de forma que una de ellas será necesariamente capturada.</a:t>";
             string cadenaAchequear6 = "<a:t> Consisten en elegir cuál entre todos los elementos es el más importante.</a:t>";
 
-            if (File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")))
-            {
-                String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide6.xml"));
-                String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide7.xml"));
-                String[] contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide8.xml"));
-                String[] contenidoDeArchivo4 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide9.xml"));
-                String[] contenidoDeArchivo5 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide10.xml"));
-                String[] contenidoDeArchivo6 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide11.xml"));
+            if (File.Exists(Path.Combine(ruta_ResTem, @"slide6.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide7.xml")) && 
+                File.Exists(Path.Combine(ruta_ResTem, @"slide8.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide9.xml")) && 
+                File.Exists(Path.Combine(ruta_ResTem, @"slide10.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"slide11.xml")))
+                {
+                    String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide6.xml"));
+                    String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide7.xml"));
+                    String[] contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide8.xml"));
+                    String[] contenidoDeArchivo4 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide9.xml"));
+                    String[] contenidoDeArchivo5 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide10.xml"));
+                    String[] contenidoDeArchivo6 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"slide11.xml"));
 
-                if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) && contenidoDeArchivo2[1].Contains(cadenaAchequear2) && contenidoDeArchivo3[1].Contains(cadenaAchequear3) && contenidoDeArchivo4[1].Contains(cadenaAchequear4) && contenidoDeArchivo5[1].Contains(cadenaAchequear5) && contenidoDeArchivo6[1].Contains(cadenaAchequear6))
-                    p1 = "CORRECTO";
-            }
-            else
-            {
-                p1 = "INCORRECTO";
-            }
+                    if (contenidoDeArchivo1[contenidoDeArchivo1.Length - 1].Contains(cadenaAchequear1) && 
+                        contenidoDeArchivo2[contenidoDeArchivo2.Length - 1].Contains(cadenaAchequear2) && 
+                        contenidoDeArchivo3[contenidoDeArchivo3.Length - 1].Contains(cadenaAchequear3) && 
+                        contenidoDeArchivo4[contenidoDeArchivo4.Length - 1].Contains(cadenaAchequear4) && 
+                        contenidoDeArchivo5[contenidoDeArchivo5.Length - 1].Contains(cadenaAchequear5) && 
+                        contenidoDeArchivo6[contenidoDeArchivo6.Length - 1].Contains(cadenaAchequear6))
+                        {
+                            p1 = "CORRECTO";
+                        }
+                }
 
-           GuardarPuntaje();
-           BorrarTemporales();
+           GuardarPuntaje();           
         }
 
         private void Pregunta3()
         {
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
@@ -264,67 +273,79 @@ namespace Preguntas
             {
                 String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"docProps\core.xml"));
 
-                if (!contenidoDeArchivo1[1].Contains(cadenaAchequear1) && !contenidoDeArchivo1[1].Contains(cadenaAchequear2) && !contenidoDeArchivo1[1].Contains(cadenaAchequear3) && contenidoDeArchivo1[1].Contains(cadenaAchequear4))
+                int indice = contenidoDeArchivo1.Length - 1;
+                if (!contenidoDeArchivo1[indice].Contains(cadenaAchequear1) && 
+                    !contenidoDeArchivo1[indice].Contains(cadenaAchequear2) &&
+                    !contenidoDeArchivo1[indice].Contains(cadenaAchequear3) && 
+                    contenidoDeArchivo1[indice].Contains(cadenaAchequear4))
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
-            }
-            else
-            {
-                p1 = "INCORRECTO";
-            }
-
-            GuardarPuntaje();
-            BorrarTemporales();
+                }                    
+            }            
+            GuardarPuntaje();           
         }
         private void Pregunta4()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "fmtScheme name=\"Sector\">";
             string cadenaAchequear2 = "<a:clrScheme name=\"Sector\">";
             string cadenaAchequear3 = "<a:fontScheme name=\"Sector\">";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\theme\theme1.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\theme\theme1.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\theme\theme1.xml"));
+                int indice = contenidoDeArchivo.Length - 1;
 
-            GuardarPuntaje();
-            BorrarTemporales();
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear2) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear3))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
+
+            GuardarPuntaje();            
         }
         private void Pregunta5()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "peón</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=";
             string cadenaAchequear2 = "</p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"503434\" y=\"1268016\"/><a:ext cx=\"698642\" cy=\"2803734\"/><a:chOff x=\"503434\" y=\"1268016\"/><a:chExt cx=\"698642\" cy=\"2803734\"/></a:xfrm></p:grpSpPr><p:sp><p:nvSpPr>";
-            //string cadenaAchequear3 = "<a:fontScheme name=\"Sector\">";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            if (!contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (!contenidoDeArchivo[1].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivo[1].Contains(cadenaAchequear2))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta6()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<dgm:catLst><dgm:cat type=\"colorful\"";
@@ -332,21 +353,30 @@ namespace Preguntas
             string cadenaAchequear3 = "<a:schemeClr val=\"accent3\"";
             string cadenaAchequear4 = "<a:schemeClr val=\"accent4\"";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\diagrams\colors1.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3) && contenidoDeArchivo[1].Contains(cadenaAchequear4))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\diagrams\colors1.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\diagrams\colors1.xml"));
 
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear2) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear3) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear4))
+                {
+                    p1 = "CORRECTO";
+                }
+            } 
             GuardarPuntaje();
-            BorrarTemporales();
         }
+
         private void Pregunta7()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:childTnLst><p:seq concurrent=\"1\" nextAc=\"seek\"><p:cTn id=\"2\" dur=\"indefinite\" nodeType=\"mainSeq\"><p:childTnLst><p:par><p:cTn id=\"3\" fill=\"hold\"><p:stCondLst><p:cond delay=\"indefinite\"/><p:cond evt=\"onBegin\" delay=\"0\"><p:tn val=\"2\"/></p:cond></p:stCondLst><p:childTnLst><p:par><p:cTn id=\"4\" fill=\"hold\"><p:stCondLst><p:cond delay=\"0\"/></p:stCondLst><p:childTnLst>";
@@ -358,79 +388,89 @@ namespace Preguntas
             string cadenaAchequear7 = "delay=\"5000\"/></p:stCondLst><p:childTnLst><p:par><p:cTn id=\"21\" presetID=\"22\" presetClass=\"entr\" presetSubtype=\"8\" fill=\"hold\" nodeType=\"afterEffect\"><p:stCondLst><p:cond delay=\"1000\"/></p:stCondLst><p:childTnLst><p:set><p:cBhvr><p:cTn id=\"22\" dur=\"1\" fill=\"hold\"><p:stCondLst><p:cond delay=\"0\"/></p:stCondLst></p:cTn><p:tgtEl><p:spTgt spid=\"3\"><p:txEl><p:pRg st=\"4\" end=\"4\"";
             string cadenaAchequear8 = "transition=\"in\" filter=\"wipe(left)\"><p:cBhvr><p:cTn id=\"23\" dur=\"500\"/><p:tgtEl><p:spTgt spid=\"3\"><p:txEl><p:pRg st=\"4\" end=\"4\"";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3) && contenidoDeArchivo[1].Contains(cadenaAchequear4) && contenidoDeArchivo[1].Contains(cadenaAchequear5) && contenidoDeArchivo[1].Contains(cadenaAchequear6) && contenidoDeArchivo[1].Contains(cadenaAchequear7) && contenidoDeArchivo[1].Contains(cadenaAchequear8))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
 
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2) && 
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear3) && contenidoDeArchivo[indice].Contains(cadenaAchequear4) && 
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear5) && contenidoDeArchivo[indice].Contains(cadenaAchequear6) && 
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear7) && contenidoDeArchivo[indice].Contains(cadenaAchequear8))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
             GuardarPuntaje();
-            BorrarTemporales();
         }
+
         private void Pregunta8()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:cNvPr id=\"6\" name=\"Imagen 5\"/><p:cNvPicPr><a:picLocks noChangeAspect=\"1\"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed=\"rId2\"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x=\"5867400\" y=\"1563624\"/><a:ext cx=\"2517866\" cy=\"2243522\"/><";
             string cadenaAchequear2 = "a:gridCol";
             string cadenaAchequear3 = "<a:tc><a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            
-            MatchCollection numColumnas = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear2);
-            MatchCollection numFilas = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear3);
-
-
-            if(contenidoDeArchivo[1].Contains(cadenaAchequear1) && numFilas.Count == 20)
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
             {
-                if (numColumnas.Count == 5 || numColumnas.Count == 10)
-                    p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                MatchCollection numColumnas = Regex.Matches(contenidoDeArchivo[indice], cadenaAchequear2);
+                MatchCollection numFilas = Regex.Matches(contenidoDeArchivo[indice], cadenaAchequear3);
+
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && numFilas.Count == 20)
+                {
+                    if (numColumnas.Count == 5 || numColumnas.Count == 10)
+                        p1 = "CORRECTO";
+                }
             }
-            else
-                p1 = "INCORRECTO";
-             
 
             GuardarPuntaje();
-            BorrarTemporales();
-
         }
+
         private void Pregunta9()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "main\" meth=\"cycle\" id=\"13\"><a:schemeClr val=\"accent6\"/><a:schemeClr val=\"accent5\"/><a:schemeClr val=\"accent4\"/><cs:variation/><cs:variation><a:lumMod val=\"60000\"/>";
             string cadenaAchequear2 = "/main\" id=\"293\"><cs:axisTitle>";                                      
-            string cadenaAchequear3 = "<a:schemeClr val=\"bg1\"";
-                                      
-            string cadenaAchequear4 = "val=\"tx1\"";//25 veces
+            string cadenaAchequear3 = "<a:schemeClr val=\"bg1\"";                                      
+            string cadenaAchequear4 = "val=\"tx1\"";
 
-            String[] contenidoDeArchivoA = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\colors1.xml"));
-            String[] contenidoDeArchivoB = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml"));
-            MatchCollection numText = Regex.Matches(contenidoDeArchivoB[0], cadenaAchequear4);
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\colors1.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml")))
+            {
+                String[] contenidoDeArchivoA = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\colors1.xml"));
+                String[] contenidoDeArchivoB = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml"));
+                MatchCollection numText = Regex.Matches(contenidoDeArchivoB[0], cadenaAchequear4);
 
-
-            if (numText.Count == 25 && contenidoDeArchivoA[0].Contains(cadenaAchequear1) && contenidoDeArchivoB[0].Contains(cadenaAchequear2) && contenidoDeArchivoB[0].Contains(cadenaAchequear3))
-          // if (contenidoDeArchivoA[0].Contains(cadenaAchequear1))
-
+                if (numText.Count == 25 && contenidoDeArchivoA[contenidoDeArchivoA.Length - 1].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivoB[contenidoDeArchivoB.Length - 1].Contains(cadenaAchequear2) && contenidoDeArchivoB[0].Contains(cadenaAchequear3))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
 
         private void Pregunta10()
         {
-            if (numeroCopias.Equals("4") && slidesPorHoja.Equals("ppPrintOutputTwoSlideHandouts") && color.Equals("ppPrintColor") && rango.Equals("ppPrintAll") && intercalar.Equals("msoFalse"))
+            if (numeroCopias.Equals("4") && slidesPorHoja.Equals("ppPrintOutputTwoSlideHandouts") &&
+                color.Equals("ppPrintColor") && rango.Equals("ppPrintAll") && intercalar.Equals("msoFalse"))
                 p1 = "CORRECTO";
             else
                 p1 = "INCORRECTO";
@@ -439,128 +479,155 @@ namespace Preguntas
 
         private void Pregunta11()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:bg><p:bgPr><a:gradFill><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/></a:gradFill><a:effectLst/></p:bgPr>";
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
 
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta12()
         {
-            //
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p14:trim st=\"1500\" end=\"2801\"/></p14:media>";
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide7.xml"));
 
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide7.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide7.xml"));
 
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
+                
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta13()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "tp://schemas.microsoft.com/office/drawing/2010/main\" val=\"0\"/></a:ext></a:extLst></a:blip><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x=\"4128746\" y=\"1953908\"/><a:ext cx=\"2515284\" cy=\"2243747\"/></a:xfrm><a:prstGeom";
             string cadenaAchequear2 = "<p:ph sz=\"half\" idx=\"1\"/>";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta14()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
+
             string cadenaAchequear1 = "<a:off x=\"3388530\" y=\"2917294\"/><a:ext cx=\"1981200\" cy=\"1767320\"/>";
             string cadenaAchequear2 = "<a:off x=\"3924300\" y=\"3468422\"/><a:ext cx=\"909661\" cy=\"665064\"/>";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta15()
         {
-            //<p:cNvPr id=\"4\" name=\"Date Placeholder 3\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" sz=\"half\" idx=\"2\"/>     no tiene esto
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
+
             string cadenaAchequear1 = "<p:cNvPr id=\"4\" name=\"Date Placeholder 3\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" sz=\"half\" idx=\"2\"/>";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slideMasters\slideMaster1.xml"));
-            if (!contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slideMasters\slideMaster1.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slideMasters\slideMaster1.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (!contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta16()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
-            //
+           
             string cadenaAchequear1 = "spc=\"300\" dirty=\"0\" smtClean=\"0\"><a:effectLst><a:outerShdw blurRad=\"38100\" dist=\"38100\" dir=\"2700000\" algn=\"tl\"><a:srgbClr val=\"000000\"><a:alpha val=\"43137\"";
             string cadenaAchequear2 = "spc=\"300\" dirty=\"0\"><a:effectLst><a:outerShdw blurRad=\"38100\" dist=\"38100\" dir=\"2700000\" algn=\"tl\"><a:srgbClr val=\"000000\">";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide1.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide1.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide1.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta17()
         {
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
+
            /*************chartex**************/
             string cadenaAchequear1 = "<cx:numDim type=\"val\">";
             string cadenaAchequear2 = "Categoría";
@@ -572,44 +639,44 @@ namespace Preguntas
             /***********style***********/
             string cadenaAchequear5 = "schemas.openxmlformats.org/drawingml/2006/main\" id=\"366\"";
 
-            //schemas.openxmlformats.org/drawingml/2006/main\" id=\"366\"  style1
-            //<cx:numDim type=\"val\"> chartex
-            //Categoría  no en chartex
-
-
             String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
 
             if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml")))
             {
                 String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml"));
                 String[] contenidoDeArchivo3 = new String[1];
-                if(File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\chartEx1.xml")))
+
+                string temp = contenidoDeArchivo3[0];
+
+                if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\chartEx1.xml")))
                     contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\chartE1.xml"));
                 if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\chart1.xml")))
                     contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\chart1.xml"));
-
-                if (!contenidoDeArchivo1[1].Contains(cadenaAchequear3) && contenidoDeArchivo1[1].Contains(cadenaAchequear4) && contenidoDeArchivo2[0].Contains(cadenaAchequear5)  && contenidoDeArchivo3[0].Contains(cadenaAchequear1) && !contenidoDeArchivo3[0].Contains(cadenaAchequear2))
+                
+                if (!contenidoDeArchivo1[contenidoDeArchivo1.Length - 1].Contains(cadenaAchequear3) && 
+                    contenidoDeArchivo1[contenidoDeArchivo1.Length - 1].Contains(cadenaAchequear4) && 
+                    contenidoDeArchivo2[contenidoDeArchivo2.Length - 1].Contains(cadenaAchequear5) && 
+                    contenidoDeArchivo3[contenidoDeArchivo3.Length - 1].Contains(cadenaAchequear1) && 
+                    !contenidoDeArchivo3[contenidoDeArchivo3.Length - 1].Contains(cadenaAchequear2))
+                  {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
-            }
-            else
-            {
-                p1 = "INCORRECTO";
+                  }     
             }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta18()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
             string rutaPdf = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pdf";
 
-            PowerPoint.Application ObjPowerPointAlumno = new PowerPoint.Application();
-            PowerPoint.Presentation ppt = ObjPowerPointAlumno.Presentations.Open(ruta);
+            ObjPowerPointAlumno = new PowerPoint.Application();
+            pptAlumno = ObjPowerPointAlumno.Presentations.Open(ruta);
 
-            ppt.SaveCopyAs(rutaPdf, PowerPoint.PpSaveAsFileType.ppSaveAsPDF, MsoTriState.msoFalse);
+            pptAlumno.SaveCopyAs(rutaPdf, PowerPoint.PpSaveAsFileType.ppSaveAsPDF, MsoTriState.msoFalse);
 
             StringBuilder text = new StringBuilder();
             using (PdfReader.PdfReader reader = new PdfReader.PdfReader(rutaPdf))
@@ -620,8 +687,7 @@ namespace Preguntas
                 }
             }
             File.Delete(rutaPdf);
-            ppt.Close();
-            ObjPowerPointAlumno.Quit();
+            CerrarPowerPoints();
 
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
@@ -632,30 +698,26 @@ namespace Preguntas
             string cadenaAchequear2 = "La producción de ATP por la oxidación de azucares orgánicos";
             string cadenaAchequear3 = "Descomposición de alimentos. Liberación de energia";
             string cadenaAchequear4 = "<mc:Choice xmlns:v=\"urn:schemas-microsoft-com:vml\" Requires=\"v\"><p:oleObj spid=\"_x0000_s1026\" name=";
-            //<mc:Choice xmlns:v=\"urn:schemas-microsoft-com:vml\" Requires=\"v\"><p:oleObj spid=\"_x0000_s1026\" name=
-            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\drawings\vmlDrawing1.vml")))
+            
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide5.xml")))
             {
                 string contenidoDeArchivo1 = text.ToString();
                 String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide5.xml"));
 
-                if (contenidoDeArchivo1.Contains(cadenaAchequear1) && contenidoDeArchivo1.Contains(cadenaAchequear2) && contenidoDeArchivo1.Contains(cadenaAchequear3) && contenidoDeArchivo2[1].Contains(cadenaAchequear4))
+                if (contenidoDeArchivo1.Contains(cadenaAchequear1) && contenidoDeArchivo1.Contains(cadenaAchequear2) &&
+                    contenidoDeArchivo1.Contains(cadenaAchequear3) && contenidoDeArchivo2[contenidoDeArchivo2.Length - 1].Contains(cadenaAchequear4))
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
-            }
-            else
-            {
-                p1 = "INCORRECTO";
+                }
             }
 
             GuardarPuntaje();
-            BorrarTemporales();
-
-
         }
         private void Pregunta19()
         {
-            //<a:ln w=\"57150\"/><a:scene3d><a:camera prst=\"orthographicFront\"/><a:lightRig rig=\"threePt\" dir=\"t\"/></a:scene3d><a:sp3d><a:bevelT prst=\"slope\"/></a:sp3d></p:spPr><p:style><a:lnRef idx=\"1\"><a:schemeClr val=\"accent4\"/></a:lnRef><a:fillRef idx=\"3\"><a:schemeClr val=\"accent4\"/></a:fillRef><a:effectRef idx=\"2\"><a:schemeClr val=\"accent4\"/></a:effectRef><a:fontRef idx=\"minor\"><a:schemeClr val=\"lt1\"/></a:fontRef></p:style>
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
@@ -663,22 +725,26 @@ namespace Preguntas
             ComprobarDescompresion();
             string cadenaAchequear1 = "<a:ln w=\"57150\"/><a:scene3d><a:camera prst=\"orthographicFront\"/><a:lightRig rig=\"threePt\" dir=\"t\"/></a:scene3d><a:sp3d><a:bevelT prst=\"slope\"/></a:sp3d></p:spPr><p:style><a:lnRef idx=\"1\"><a:schemeClr val=\"accent4\"/></a:lnRef><a:fillRef idx=\"3\"><a:schemeClr val=\"accent4\"/></a:fillRef><a:effectRef idx=\"2\"><a:schemeClr val=\"accent4\"/></a:effectRef><a:fontRef idx=\"minor\"><a:schemeClr val=\"lt1\"/></a:fontRef></p:style>";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
 
         private void Pregunta20()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "typeface=\"Times New Roman\" panose=\"02020603050405020304\" pitchFamily=\"18\" charset=\"0\"/></a:rPr><a:t>ETAPAS DE LA FOTOSÍNTESIS</a:t></a:r></a:p></p:txBody>";
@@ -692,19 +758,23 @@ namespace Preguntas
             {
                 contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
 
-                if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3) && contenidoDeArchivo[1].Contains(cadenaAchequear4))
+                if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && 
+                    contenidoDeArchivo[1].Contains(cadenaAchequear2) &&
+                    contenidoDeArchivo[1].Contains(cadenaAchequear3) && 
+                    contenidoDeArchivo[1].Contains(cadenaAchequear4))
+                    {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                    }                    
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta21()
         {
+            BorrarTemporales();
+
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
@@ -713,35 +783,34 @@ namespace Preguntas
             //<a:t>Notas al pie</a:t></a:r><a:endParaRPr
             string cadenaAchequear1 = "<a:t>Notas al pie</a:t></a:r><a:endParaRPr";
             string cadenaAchequear2 = "a:t";
-
             
-
             if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\handoutMasters\handoutMaster1.xml")))
             {
                 String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\handoutMasters\handoutMaster1.xml"));
                 MatchCollection comparar = Regex.Matches(contenidoDeArchivo[1], cadenaAchequear2);
 
-                if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && comparar.Count == 6)
-                    p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && comparar.Count == 6)
+                    p1 = "CORRECTO"; 
             }
-            else
-                p1 = "INCORRECTO";
-
+  
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta22()
         {
-            if (numeroCopias.Equals("5") && slidesPorHoja.Equals("ppPrintOutputNotesPages") && rango.Equals("ppPrintAll") && intercalar.Equals("msoFalse"))
+            if (numeroCopias.Equals("5") && slidesPorHoja.Equals("ppPrintOutputNotesPages") && 
+                rango.Equals("ppPrintAll") && intercalar.Equals("msoFalse"))
+            {
                 p1 = "CORRECTO";
+            }                
             else
                 p1 = "INCORRECTO";
             GuardarPuntaje();
         }
         private void Pregunta23()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
@@ -752,17 +821,23 @@ namespace Preguntas
             string cadenaAchequear1 = "<p:txBody><a:bodyPr numCol=\"2\"/><a:lstStyle/><a:p><a:r><a:rPr lang=";
             string cadenaAchequear2 = "<p:txBody><a:bodyPr numCol=\"1\"/><a:lstStyle/><a:p><a:r><a:rPr lang=";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && !contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && !contenidoDeArchivo[indice].Contains(cadenaAchequear2))
+                    p1 = "CORRECTO";
+            }                            
 
             GuardarPuntaje();
-            BorrarTemporales();
+            
         }
         private void Pregunta24()
         {
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
@@ -770,25 +845,31 @@ namespace Preguntas
             ComprobarDescompresion();
   
             string cadenaAchequear1 = "<p14:section name=\"Historia\"";
-            //<p14:section name=\"Historia\"
             string cadenaAchequear2 = "<p14:sldId id=\"256\"/><p14:sldId id=\"258\"/><p14:sldId id=\"263\"/><p14:sldId id=\"257\"/><p14:sldId id=\"273\"/><p14:sldId id=\"289\"/><p14:sldId id=\"290\"/></p14:sldIdLst>";
-            //<p14:sldId id=\"256\"/><p14:sldId id=\"258\"/><p14:sldId id=\"263\"/><p14:sldId id=\"257\"/><p14:sldId id=\"273\"/><p14:sldId id=\"289\"/><p14:sldId id=\"290\"/></p14:sldIdLst>
             string cadenaAchequear3 = "<p14:section name=\"Aplicaciones\"";
             string cadenaAchequear4 = "<p14:sldIdLst><p14:sldId id=\"272\"/><p14:sldId id=\"274\"/><p14:sldId id=\"278\"/></p14:sldIdLst>";
             string cadenaAchequear5 = "<p14:section name = \"Sin nombre\"";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\presentation.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3) && contenidoDeArchivo[1].Contains(cadenaAchequear4) && !contenidoDeArchivo[1].Contains(cadenaAchequear5))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\presentation.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\presentation.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear3) && contenidoDeArchivo[indice].Contains(cadenaAchequear4) &&
+                    !contenidoDeArchivo[indice].Contains(cadenaAchequear5))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta25()
         {
-            //p14:dur=\"2500\"><p15:prstTrans
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
@@ -808,43 +889,53 @@ namespace Preguntas
             String[] contenidoDeArchivo9 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide9.xml"));
             String[] contenidoDeArchivo10 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide10.xml"));
 
-            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) &&
-                contenidoDeArchivo2[1].Contains(cadenaAchequear1) && contenidoDeArchivo3[1].Contains(cadenaAchequear1) && contenidoDeArchivo4[1].Contains(cadenaAchequear1) && contenidoDeArchivo5[1].Contains(cadenaAchequear1) && contenidoDeArchivo6[1].Contains(cadenaAchequear1) && contenidoDeArchivo7[1].Contains(cadenaAchequear1) && contenidoDeArchivo8[1].Contains(cadenaAchequear1) && contenidoDeArchivo9[1].Contains(cadenaAchequear1) && contenidoDeArchivo10[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide1.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")) &&
+                File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide3.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")) &&
+                File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide5.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml")) &&
+                File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide7.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide8.xml")) &&
+                File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide9.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide10.xml")))
+            {
+                if (contenidoDeArchivo1[contenidoDeArchivo1.Length - 1].Contains(cadenaAchequear1) && contenidoDeArchivo2[contenidoDeArchivo2.Length - 1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo3[contenidoDeArchivo3.Length - 1].Contains(cadenaAchequear1) && contenidoDeArchivo4[contenidoDeArchivo4.Length - 1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo5[contenidoDeArchivo5.Length - 1].Contains(cadenaAchequear1) && contenidoDeArchivo6[contenidoDeArchivo6.Length - 1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo7[contenidoDeArchivo7.Length - 1].Contains(cadenaAchequear1) && contenidoDeArchivo8[contenidoDeArchivo8.Length - 1].Contains(cadenaAchequear1) &&
+                contenidoDeArchivo9[contenidoDeArchivo9.Length - 1].Contains(cadenaAchequear1) && contenidoDeArchivo10[contenidoDeArchivo10.Length - 1].Contains(cadenaAchequear1))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
 
-            GuardarPuntaje();
-            BorrarTemporales();
-
+            GuardarPuntaje();    
         }
         private void Pregunta26()
         {
-            //
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:cTn id=\"5\" presetID=\"3\" presetClass=\"path\" presetSubtype=\"0\" accel=\"50000\" decel=\"50000\" fill=\"hold\" grpId=\"0\" nodeType=\"clickEffect\">";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta27()
         {
-
             ObjPowerPointAlumno = new PowerPoint.Application();
-            // ppts = ObjPowerPoint.Presentations;
+
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.pptx";
-            if (System.IO.File.Exists(ruta))
+            if (File.Exists(ruta))
             {
                 pptAlumno = ObjPowerPointAlumno.Presentations.Open(ruta, MsoTriState.msoFalse, MsoTriState.msoFalse, MsoTriState.msoFalse);
                 var gridLine = ObjPowerPointAlumno.DisplayGridLines;
@@ -858,52 +949,63 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarPowerPoints();
-
         }
 
         private void Pregunta28()
         {
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
-            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:cNvPr id=\"3\" name=\"Estrella de 5 puntas 2\"/><p:cNvSpPr><a:spLocks noChangeAspect=\"1\"/></p:cNvSpPr><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm rot=\"20393680\"><a:off x=\"1549337\" y=\"1551327\"/><a:ext cx=\"5107864\" cy=\"3479696\"/></a:xfrm><a:prstGeom prst=\"star5\">";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta29()
         {
-            //<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"push.wav\"/></p:stSnd></p:sndAc>
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
-            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"push.wav\"/></p:stSnd></p:sndAc>";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta30()
         {
+            BorrarTemporales();
+
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
-
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "typeface=\"Times New Roman\" panose=\"02020603050405020304\" pitchFamily=\"18\" charset=\"0\"/></a:rPr><a:t>Por Desarrollar";
@@ -916,63 +1018,78 @@ namespace Preguntas
             {
                 contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
 
-                if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3))
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear2) && 
+                    contenidoDeArchivo[indice].Contains(cadenaAchequear3))
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                }
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta31()
         {
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
-            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<PresentationFormat>Presentación en pantalla (16:9)</PresentationFormat>";
             string cadenaAchequear2 = "<a:off x=\"1719074\" y=\"1928814\"/><a:ext cx=\"5467541\" cy=\"2070167\"/>";
             string cadenaAchequear3 = "<a:off x=\"4881292\" y=\"1518967\"/><a:ext cx=\"2381793\" cy=\"2210303\"/>";
 
-            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"docProps\app.xml"));
-            String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
-            String[] contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+            if (File.Exists(Path.Combine(ruta_ResTem, @"docProps\app.xml")) &&
+                File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml")) &&
+                File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"docProps\app.xml"));
+                String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide4.xml"));
+                String[] contenidoDeArchivo3 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
 
-            if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) && contenidoDeArchivo2[1].Contains(cadenaAchequear2) && contenidoDeArchivo3[1].Contains(cadenaAchequear3))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+                if (contenidoDeArchivo1[contenidoDeArchivo1.Length - 1].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivo2[contenidoDeArchivo2.Length - 1].Contains(cadenaAchequear2) &&
+                    contenidoDeArchivo3[contenidoDeArchivo3.Length - 1].Contains(cadenaAchequear3))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
-
         }
         private void Pregunta32()
         {
-            //<p:custShow name=\"Síntesis\" id=\"0\"><p:sldLst><p:sld r:id=\"rId2\"/><p:sld r:id=\"rId4\"/><p:sld r:id=\"rId6\"/></p:sldLst></p:custShow>
-            //<p:custShow name=\"Síntesis\" id=\"0\"><p:sldLst><p:sld r:id=\"rId2\"/><p:sld r:id=\"rId4\"/><p:sld r:id=\"rId6\"/></p:sldLst></p:custShow>
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
-            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:custShow name=\"Síntesis\" id=\"0\"><p:sldLst><p:sld r:id=\"rId2\"/><p:sld r:id=\"rId4\"/><p:sld r:id=\"rId6\"/></p:sldLst></p:custShow>";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\presentation.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\presentation.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\presentation.xml"));
 
-            GuardarPuntaje();
-            BorrarTemporales();
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1))
+                    p1 = "CORRECTO";
+            }
+
+            GuardarPuntaje();            
         }
         private void Pregunta33()
         {
+            ///revisar uso de carpeta temporal c:\\OfficeTrainner\\Pregunta 33 Ejercicio.pptx
+            BorrarTemporales();
+            p1 = "INCORRECTO";
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             if (File.Exists(@"c:\OfficeTrainner\Pregunta 33 Ejercicio.pptx\"))
@@ -988,7 +1105,6 @@ namespace Preguntas
                 ComprobarDescompresion();
             }
 
-
             string cadenaAchequear1 = "embedTrueTypeFonts=\"1\"";
             string cadenaAchequear2 = "<p:embeddedFont><p:font typeface=\"Tw Cen MT Condensed\"";
             string cadenaAchequear3 = "<p:embeddedFont><p:font typeface=\"Tw Cen MT\"";
@@ -999,62 +1115,72 @@ namespace Preguntas
             {
                 contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\presentation.xml"));
 
-                if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2) && contenidoDeArchivo[1].Contains(cadenaAchequear3))
+                if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && 
+                    contenidoDeArchivo[1].Contains(cadenaAchequear2) && 
+                    contenidoDeArchivo[1].Contains(cadenaAchequear3))
+                    {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                    }
             }
-            else
-                p1 = "INCORRECTO";
-
+            
             if (File.Exists("c:\\OfficeTrainner\\Pregunta 33 Ejercicio.pptx"))
             {
                 File.Delete("c:\\OfficeTrainner\\Pregunta 33 Ejercicio.pptx");
             }
-
-
-            GuardarPuntaje();
-            BorrarTemporales();
+            
+            GuardarPuntaje();            
         }
         private void Pregunta34()
         {
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
-            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<p:cMediaNode vol=\"80000\" showWhenStopped=\"0\">";
             string cadenaAchequear2 = "<p:cTn id=\"2\" dur=\"indefinite\" nodeType=\"mainSeq\"><p:childTnLst><p:par><p:cTn id=\"3\" fill=\"hold\"><p:stCondLst><p:cond delay=\"indefinite\"/><p:cond evt=\"onBegin\" delay=\"0\"";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta35()
         {
-            //<a:softEdge rad=\"112500\"/></a:effectLst>
-            //<a:ext cx=\"2381793\" cy=\"2210303\"/></a:xfrm><a:prstGeom prst=\"ellipse\">
-            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
-            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
+            BorrarTemporales();
+            p1 = "INCORRECTO";
 
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipPowerPoint());
             ComprobarDescompresion();
 
             string cadenaAchequear1 = "<a:softEdge rad=\"112500\"/></a:effectLst>";
             string cadenaAchequear2 = "<a:ext cx=\"2381793\" cy=\"2210303\"/></a:xfrm><a:prstGeom prst=\"ellipse\">";
 
-            String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
-            if (contenidoDeArchivo[1].Contains(cadenaAchequear1) && contenidoDeArchivo[1].Contains(cadenaAchequear2))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml")))
+            {
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide2.xml"));
+
+                int indice = contenidoDeArchivo.Length - 1;
+                if (contenidoDeArchivo[indice].Contains(cadenaAchequear1) && contenidoDeArchivo[indice].Contains(cadenaAchequear2))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta36()
         {

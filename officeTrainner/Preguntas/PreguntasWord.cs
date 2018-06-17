@@ -29,7 +29,6 @@ namespace Preguntas
 
         public void Pregunta(int numeroDePregunta, int examenIdExamen)
         {
-            // powerPointProcsOld = Process.GetProcessesByName("POWERPNT");
             idExamen = examenIdExamen;
             AbrirWords(numeroDePregunta);
 
@@ -91,25 +90,23 @@ namespace Preguntas
         private void AbrirWords(int numeroDePregunta)
         {
             objWordAlumno = new Word.Application();
-            objWordAlumno.Visible = true;
+            objWordAlumno.Visible = false;
 
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.docx";
             object fileName = ruta;
             object missing = Type.Missing;
 
-            /* docAlumno = objWordAlumno.Documents.Open(ref fileName,
-                     ref missing, ref missing, ref missing, ref missing,
-                     ref missing, ref missing, ref missing, ref missing,
-                     ref missing, ref missing, ref missing, ref missing,
-                     ref missing, ref missing, ref missing);*/
-
-            docAlumno = objWordAlumno.Documents.Open(ruta, ReadOnly: false, Visible: true);
+            docAlumno = objWordAlumno.Documents.Open(ruta, ReadOnly: false, Visible: true);            
         }
                 
         private void CerrarWords()
         {
-            docAlumno.Close();
-            objWordAlumno.Quit();
+            try
+            {
+                docAlumno.Close();
+                objWordAlumno.Quit();
+            }
+            catch (Exception){}
         }
 
         private void BorrarTemporales()
@@ -262,6 +259,8 @@ namespace Preguntas
             bool tablaEsCorrecto = false;
             bool posicionEsCorrecto = false;
 
+            p1 = "INCORRECTO";
+
             Word.Tables tablas = docAlumno.Tables;
             if (tablas.Count == 1) //comprobar que exista solo una tabla
             {
@@ -290,13 +289,7 @@ namespace Preguntas
                 {
                     p1 = "CORRECTO";
                 }
-                else
-                {
-                    p1 = "INCORRECTO";
-                }
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
@@ -304,6 +297,8 @@ namespace Preguntas
 
         private void Pregunta3()
         {
+            p1 = "INCORRECTO";
+
             Word.Tables tablas = docAlumno.Tables;
             if (tablas.Count == 1) 
             {
@@ -323,17 +318,10 @@ namespace Preguntas
                     catch (Exception)
                     {
                         p1 = "CORRECTO";
-                    }
-                    
-                }
-                else
-                    p1 = "INCORRECTO";
+                    }                    
+                }  
+            }
 
-            }
-            else
-            {
-                p1 = "INCORRECTO";
-            }
 
 
             GuardarPuntaje();
@@ -341,6 +329,7 @@ namespace Preguntas
         }
         private void Pregunta4()
         {
+            p1 = "INCORRECTO";
             Word.Tables tablas = docAlumno.Tables;
             if (tablas.Count == 1)
             {
@@ -354,15 +343,8 @@ namespace Preguntas
                 {                    
                         p1 = "CORRECTO";
                 }
-                else
-                    p1 = "INCORRECTO";
-
             }
-            else
-            {
-                p1 = "INCORRECTO";
-            }
-
+            
             GuardarPuntaje();
             CerrarWords();
         }
@@ -431,24 +413,22 @@ namespace Preguntas
         }
         private void Pregunta8()
         {
+            p1 = "INCORRECTO";
+
             Word.Tables tablas = docAlumno.Tables;
             if (tablas.Count == 1) 
             {
                 //Claves del éxito
                 string cadenaAchequear = "Claves de éxito";
                 string contenidoDeArchivo = tablas[1].Title;
-
-                if (contenidoDeArchivo.Equals(cadenaAchequear))
+                if (!String.IsNullOrEmpty(contenidoDeArchivo))
                 {
-                    p1 = "CORRECTO";
-                }
-                else
-                {
-                    p1 = "INCORRECTO";
-                }
+                    if (contenidoDeArchivo.Equals(cadenaAchequear))
+                    {
+                        p1 = "CORRECTO";
+                    }
+                }  
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
@@ -456,6 +436,7 @@ namespace Preguntas
 
         private void Pregunta9()
         {
+            p1 = "INCORRECTO";
             Word.Tables tablas = docAlumno.Tables;
             if (tablas.Count == 1)
             {
@@ -469,13 +450,7 @@ namespace Preguntas
                 {
                     p1 = "CORRECTO";
                 }
-                else
-                {
-                    p1 = "INCORRECTO";
-                }
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
@@ -551,10 +526,6 @@ namespace Preguntas
 
             string textPdf = obtenerTextoDePdf();
 
-            //\nA. Ecografía abdominal
-            //\nF. Colangiopancreatografía
-            //\nK. Enzimas pancreáticas
-
             string cadenaAchequear1 = "\nA. Ecografía abdominal";
             string cadenaAchequear2 = "\nF. Colangiopancreatografía";
             string cadenaAchequear3 = "\nK. Enzimas pancreáticas";
@@ -574,6 +545,8 @@ namespace Preguntas
         }
         private void Pregunta14()
         {
+            p1 = "INCORRECTO";
+
             string textPdf = obtenerTextoDePdf();
             //\nCÁLCULOS BILIARES \nPrevención y Tratamiento \n \n  \n[FECHA] \n[NOMBRE DE LA COMPAÑÍA] \n[Dirección de la compañía] CÁLCULOS
             CerrarWords();
@@ -591,12 +564,11 @@ namespace Preguntas
                 string contenidoDeArchivo = textPdf;
 
                 if (contenidoDeArchivo.Contains(cadenaAchequear1))
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                }
+                    
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             BorrarTemporales();
@@ -618,7 +590,35 @@ namespace Preguntas
         }
         private void Pregunta16()
         {
+            p1 = "INCORRECTO";
 
+            int palabras = docAlumno.Words.Count;//858 //864
+            int vinculo = docAlumno.Hyperlinks.Count;//1
+
+            if (palabras <= 864 && palabras >=858 && vinculo == 1)
+            {
+                //pancreáticas \n \nTratamiento
+                //pancreáticas \nTratamiento
+                //pancreáticas \n \n \nTratamiento
+                string cadenaAchequear1 = "pancreáticas \n \nTratamiento";
+                string cadenaAchequear2 = "pancreáticas \nTratamiento";
+                string cadenaAchequear3 = "pancreáticas \n \n \nTratamiento";
+
+                string textPdf = obtenerTextoDePdf();
+
+                string contenidoDeArchivo = textPdf;
+
+                if (contenidoDeArchivo.Contains(cadenaAchequear1) ||
+                    contenidoDeArchivo.Contains(cadenaAchequear2) ||
+                    contenidoDeArchivo.Contains(cadenaAchequear3))
+                {
+                    p1 = "CORRECTO";
+                }
+            }
+                
+
+            GuardarPuntaje();
+            CerrarWords();
         }
         private void Pregunta17()
         {
@@ -644,6 +644,18 @@ namespace Preguntas
         }
         private void Pregunta18()
         {
+            //no esta completo
+            Word.Shapes temp1 = docAlumno.Shapes;//7
+            foreach (Word.Shape shape in temp1)
+            {
+                if (shape.Name == "Text Box 1")
+                {
+                    var temp2 = shape.TextFrame.ContainingRange.Text;//"La empatía con los personajes\r"
+                    var temp3 = shape.RelativeHorizontalPosition;
+                    var temp4 = shape.RelativeVerticalPosition;
+                }
+            }
+
             //scaled=\"0\"/></w14:gradFill></w14:textFill></w:rPr><w:lastRenderedPageBreak/><w:t>Las series de Televisión
             CerrarWords();
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
@@ -651,8 +663,7 @@ namespace Preguntas
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
 
             ComprobarDescompresion();
-            //"val=\"C5C7CA\"/></w14:gs>"
-            //scaled=\"0\"/>
+ 
             string cadenaAchequear1 = "scaled=\"0\"/></w14:gradFill></w14:textFill></w:rPr><w:lastRenderedPageBreak/><w:t>Las series de Televisión";
             string cadenaAchequear2 = "val=\"C5C7CA\"/></w14:gs>";
 
@@ -697,7 +708,7 @@ namespace Preguntas
 
         private void Pregunta20()
         {
-
+            CerrarWords();
         }
         private void Pregunta21()
         {
@@ -716,6 +727,8 @@ namespace Preguntas
         }
         private void Pregunta22()
         {
+            p1 = "INCORRECTO";
+
             CerrarWords();
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
@@ -755,12 +768,7 @@ namespace Preguntas
                 {
                     p1 = "CORRECTO";
                 }
-                else
-                    p1 = "INCORRECTO";
             }
-            else
-                p1 = "INCORRECTO";
-
 
             GuardarPuntaje();
             BorrarTemporales();
@@ -770,13 +778,15 @@ namespace Preguntas
         {//no funciona
             //var temp1 = iShapes[1].IsPictureBullet;
             var listas = docAlumno.Content.ListParagraphs;
-            var temp1 = listas[1].Format;
+           // var temp1 = listas[1].Format;
 
             var temp2 = docAlumno.Content.ListFormat;
             var temp3 = temp2.ListPictureBullet;
 
             Word.InlineShapes iShapes = docAlumno.InlineShapes;
             Word.Shapes shapes = docAlumno.Shapes;
+
+            CerrarWords();
         }
         private void Pregunta24()
         {
@@ -858,6 +868,8 @@ namespace Preguntas
         }
         private void Pregunta27()
         {
+            p1 = "INCORRECTO";
+
             string textPdf = obtenerTextoDePdf();
             string cadenaAchequear1 = "(iteración) \n \nTodos";
             string cadenaAchequear2 = "(iteración) \nTodos";
@@ -888,37 +900,40 @@ namespace Preguntas
                     contenidoDeArchivo2.Contains(cadenaAchequear4) &&
                     tamaño == 22 && negrita == 1 && cursiva == 1)
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
         }
         private void Pregunta28()
         {
+            p1 = "INCORRECTO";
+
             int start = docAlumno.Content.Text.IndexOf("Todos los fractales tienen algo en común") - 15;
             int end = docAlumno.Content.Text.IndexOf("Todos los fractales tienen algo en común") + 25;
 
-            Word.Range range = docAlumno.Range(Start: start, End: end);
-               
-            Word.Style estilo = range.Paragraphs.get_Style();
+            if (start >= 0)
+            {
+                Word.Range range = docAlumno.Range(Start: start, End: end);
 
-            string tipo = estilo.NameLocal; //"Cita"
-            string cadenaAchequear = "Cita";
+                Word.Style estilo = range.Paragraphs.get_Style();
 
-            if (tipo.Contains(cadenaAchequear))
-                p1 = "CORRECTO";
-            else
-                p1 = "INCORRECTO";
+                string tipo = estilo.NameLocal; //"Cita"
+                string cadenaAchequear = "Cita";
+
+                if (tipo.Contains(cadenaAchequear))
+                {
+                    p1 = "CORRECTO";
+                }
+            }      
 
             GuardarPuntaje();
             CerrarWords();
         }
         private void Pregunta29()
         {
+            p1 = "INCORRECTO";
+
             Word.Shapes shapes = docAlumno.Sections[1].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Shapes;//1
 
             if (shapes.Count == 1)
@@ -936,19 +951,18 @@ namespace Preguntas
                 if (tipo.Contains("wdTitleWord") && texto.Contains("Los Fractales\r\r") &&
                     tipoFuente.Contains("Calibri") && tamaño == 10 && color == 738131969 &&
                     indexColor.Contains("wdYellow") && alineacion.Contains("wdAlignParagraphLeft"))
-
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                }      
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
         }
         private void Pregunta30()
         {
+            p1 = "INCORRECTO";
+
             int numMarcadores = docAlumno.Bookmarks.Count;//1
 
             if (numMarcadores == 1)
@@ -959,13 +973,10 @@ namespace Preguntas
                 string name = marcador.Name;//Tipo
 
                 if (start == 326 && end == 326 && name.Equals("Tipo"))
-
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                }     
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
@@ -997,7 +1008,7 @@ namespace Preguntas
             //no funciona
             //<wp:effectExtent l="38100" t="57150" r="38100" b="38100"/>
             var temp = docAlumno.Shapes;
-            var tmp1 = temp[1];
+          /*  var tmp1 = temp[1];
             var tmp2 = temp[2];
             var tmp3 = temp[3];
             var tmp4 = temp[4];
@@ -1011,10 +1022,13 @@ namespace Preguntas
             var temp3 = temp2.Type;
 
             var temp4 = tmp2.AutoShapeType;
-            var temp5 = tmp2.Fill;
+            var temp5 = tmp2.Fill;*/
+            CerrarWords();
         }
         private void Pregunta33()
         {
+            p1 = "INCORRECTO";
+
             Word.Shapes shapes = docAlumno.Shapes;//4
             Word.InlineShapes iShapes = docAlumno.InlineShapes;//1
 
@@ -1027,19 +1041,18 @@ namespace Preguntas
 
                 if (tipo.Equals("wdInlineShapePicture") &&
                     start == 2365 && end == 2366)
+                {
                     p1 = "CORRECTO";
-                else
-                    p1 = "INCORRECTO";
+                }                    
             }
-            else
-                p1 = "INCORRECTO";
 
             GuardarPuntaje();
             CerrarWords();
         }
         private void Pregunta34()
         {
-            
+            p1 = "INCORRECTO";
+
             Word.Shapes shapes = docAlumno.Shapes;//4
             Word.InlineShapes iShapes = docAlumno.InlineShapes;//1
 
@@ -1068,9 +1081,8 @@ namespace Preguntas
                 else
                     p1 = "INCORRECTO";
             }
-            else
-                p1 = "INCORRECTO";
 
+            CerrarWords();
             GuardarPuntaje();
             BorrarTemporales();
         }

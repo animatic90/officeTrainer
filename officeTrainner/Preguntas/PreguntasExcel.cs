@@ -125,18 +125,6 @@ namespace Preguntas
 
         private void CerrarExcels()
         {
-            /*
-           // System.Runtime.InteropServices.Marshal.ReleaseComObject(wsheetAlumno);
-            //System.Runtime.InteropServices.Marshal.ReleaseComObject(wsheetResuelto);
-            wbookAlumno.Close(false, Type.Missing, Type.Missing);
-            ObjExcelAlumno.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(wbookAlumno);            
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(ObjExcelAlumno);
-
-            wbookResuelto.Close(false, Type.Missing, Type.Missing);
-            ObjExcelResuelto.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(wbookResuelto);  
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(ObjExcelResuelto);*/
 
             Process[] excelProcsNew = Process.GetProcessesByName("EXCEL");
             foreach (Process procNew in excelProcsNew)
@@ -174,26 +162,6 @@ namespace Preguntas
 
         private void Pregunta1()
         {
-            //string p1 = "NO EXISTE";
-            //string p2 = "NO EXISTE";
-
-            //ObjExcelAlumno = new Excel.Application()
-            //{
-            //    Visible = false
-            //};
-            //string ruta =  Application.StartupPath + @"\Documentos\Temp\Ejercicio.xlsx";
-            //wbookAlumno = ObjExcelAlumno.Workbooks.Open(ruta);
-            //wsheetAlumno = (Excel.Worksheet)wbookAlumno.ActiveSheet;
-
-            //ObjExcelResuelto = new Excel.Application()
-            //{
-            //    Visible = false
-            //};
-            //string rutaResuelto = Application.StartupPath + @"\Documentos\Excel\Pregunta 1\Pregunta 1 Resuelta.xlsx";
-            //wbookResuelto = ObjExcelResuelto.Workbooks.Open(rutaResuelto);
-            //wsheetResuelto = (Excel.Worksheet)wbookResuelto.ActiveSheet;
-
-            //AbrirExcels();
 
             if (wsheetAlumno.ListObjects.Count == 0)
             {
@@ -245,24 +213,8 @@ namespace Preguntas
                 conexion.PuntajePreguntas.Add(puntajePregunta);
                 conexion.SaveChanges();
             }
-            //wbookAlumno.Close();
-            //wbookResuelto.Close();
-            //ObjExcelAlumno.Quit();
-            //ObjExcelResuelto.Quit();
+
             CerrarExcels();
-
-            //var range = wsheet.get_Range("A1:J325");
-            //wsheet.ListObjects.AddEx(Excel.XlListObjectSourceType.xlSrcRange, range, Type.Missing, Microsoft.Office.Interop.Excel.XlYesNoGuess.xlYes, Type.Missing).Name = "MyTableStyle";
-
-            //string nombreObjectList;
-            //nombreObjectList = wsheet.ListObjects[1].Name; // Tabla1
-
-
-            // wsheet.ListObjects.get_Item("MyTableStyle").TableStyle = "TableStyleMedium16";
-            // wsheet.ListObjects.get_Item("MyTableStyle").ShowTableStyleRowStripes = false;
-            // wsheet.ListObjects.get_Item("MyTableStyle").ShowTableStyleFirstColumn = true;
-            //wbook.Save();
-            // wbook.Close();
         }
 
         private void Pregunta2()
@@ -773,7 +725,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
-
+            CerrarExcels();
         }
         private void Pregunta15()
         {
@@ -873,6 +825,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta17()
         {
@@ -924,7 +877,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
-
+            CerrarExcels();
         }
         private void Pregunta18()
         {
@@ -980,7 +933,6 @@ namespace Preguntas
             }
             CerrarExcels();
 
-
         }
         private void Pregunta19()
         {
@@ -1015,6 +967,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
 
         private void Pregunta20()
@@ -1065,33 +1018,6 @@ namespace Preguntas
             }
             BorrarTemporales();
 
-
-
-            //Excel.ChartObjects objs = (Excel.ChartObjects)wsheetAlumno.ChartObjects(Type.Missing);
-            //MessageBox.Show(objs.Count.ToString());
-
-            //foreach (Excel.ChartObject obj in objs)
-            //{                
-            //    MessageBox.Show(obj.Chart.ChartTitle.Caption);
-            //}
-
-
-            //Microsoft.Office.Interop.Excel.ChartObject obj = objs.Item(1);
-            ////Get the chartTitle
-            //string chartTitle = obj.Chart.ChartTitle.Caption;
-            //MessageBox.Show(chartTitle);
-
-
-
-
-            //var charts = wsheetAlumno.ChartObjects() as Excel.ChartObjects;
-            //var chart = charts.;
-
-            //foreach (Excel.ChartObject obj in wsheetAlumno.ChartObjects())
-            //{
-            //    //MessageBox.Show(obj.TableStyle.Name);
-            //    MessageBox.Show(obj.Chart.ChartTitle.Caption);
-            //}
         }
         private void Pregunta21()
         {
@@ -1125,7 +1051,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
-
+            CerrarExcels();
         }
         private void Pregunta22()
         {
@@ -1159,6 +1085,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta23()
         {
@@ -1186,6 +1113,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta24()
         {
@@ -1213,6 +1141,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta25()
         {
@@ -1340,6 +1269,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta28()
         {
@@ -1435,6 +1365,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta30()
         {
@@ -1567,6 +1498,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta34()
         {
@@ -1597,6 +1529,7 @@ namespace Preguntas
                 conexion.SaveChanges();
             }
             BorrarTemporales();
+            CerrarExcels();
         }
         private void Pregunta35()
         {

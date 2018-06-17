@@ -18,8 +18,8 @@ namespace Vista
         Screen screenPowerPoint = Screen.PrimaryScreen;
 
         int[] arrayOrdenPreguntas;
-        int contadorDeAvance;
-        string rutaPregunta;
+        int contadorDeAvance;//para navegar en el arrray de preguntas
+        string rutaPregunta;//rrellena el path segun el examen seleccionado
 
         Excel.Application ObjExcel;
         //Excel.Worksheet wsheet;
@@ -32,12 +32,14 @@ namespace Vista
         Word.Application ObjWord;
         Word.Document doc;
 
-
         int examenIdExamen;
         string ExamenSeleccionado;
 
         Process[] excelProcsOld;//para capturar todos los excel abiertos antes de iniciar el programa
-        Process[] powerPointProcsOld;//para capturar todos los power points abiertos antes de iniciar el programa
+        Process[] wordProcsOld;//para capturar todos los Word abiertos antes de iniciar el programa
+        Process[] powerPointProcOld;
+
+        bool guardarCorrecto= false;
         #endregion
 
         public FormQuestionsPanel()
@@ -49,7 +51,8 @@ namespace Vista
         private void FormQuestionsPanel_Load(object sender, EventArgs e)
         {
             excelProcsOld = Process.GetProcessesByName("EXCEL");
-            powerPointProcsOld = Process.GetProcessesByName("POWERPNT");
+            wordProcsOld = Process.GetProcessesByName("WINWORD");
+            powerPointProcOld = Process.GetProcessesByName("POWERPNT");
 
             ExamenSeleccionado = FormMain.ExamenSeleccionado;
             
@@ -70,10 +73,18 @@ namespace Vista
         private void BtNext_Click(object sender, EventArgs e)
         {            
 
-            GuardarAvance();
-            ComprobarCorrectoIncorrecto();
-            RellenarLabelPregunta();
-            MostrarPreguntaYEjercicio();
+            ComprobarCorrectoIncorrecto(sender, e);
+            if (guardarCorrecto)
+            {
+                GuardarAvance();
+
+                RellenarLabelPregunta();        //rellenar label antes de MostrarPreguntaYEjercicio ya que el contador cambia;
+                MostrarPreguntaYEjercicio();
+
+
+                guardarCorrecto = false;
+            }
+
         }
 
         private void BtnReset_Click(object sender, EventArgs e)
@@ -84,6 +95,13 @@ namespace Vista
             switch (ExamenSeleccionado)
             {
                 case "Word":
+                    //CerrarWords();
+                    try
+                    {
+                        doc.Close();
+                        ObjWord.Quit();
+                    }
+                    catch (Exception){}
                     AbrirEjercicioWord(numeroDePregunta);
                     break;
                 case "Excel":
@@ -115,13 +133,27 @@ namespace Vista
                     examen.banderaReanudar= true;
                     conexion.SaveChanges();
                 }
-                Application.Exit();
+                
             }
            if(RbFinishQuestions.Checked == true)
             {
-                contadorDeAvance = FormMain.NUMERO_DE_PREGUNTAS -1;
-                Application.Exit();
-            }            
+                contadorDeAvance = FormMain.NUMERO_DE_PREGUNTAS -1;                
+            }
+
+            switch (ExamenSeleccionado)
+            {
+                case "Word":
+                    CerrarWords();
+                    break;
+                case "Excel":
+                    CerrarExcels();
+                    break;
+                case "Power Point":
+                    CerrarPowerPoints();
+                    break;
+            }
+            Application.Exit();
+
         }
 
 
@@ -131,7 +163,7 @@ namespace Vista
         private void RellenarLabelPregunta()
         {
             LblQuestions.Text = FormMain.NUMERO_DE_PREGUNTAS.ToString();
-            LblNumberOfQuestion.Text = (contadorDeAvance+1).ToString();
+            LblNumberOfQuestion.Text = (contadorDeAvance + 1).ToString();
         }
 
         private void CerrarExcels()
@@ -155,11 +187,38 @@ namespace Vista
         }
         private void CerrarPowerPoints()
         {
-           /* Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
-            foreach (Process procNew in powerPointProcsNew)
+            /*  Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
+               foreach (Process procNew in powerPointProcsNew)
+               {
+                   int exist = 0;
+                   foreach (Process procOld in powerPointProcOld)
+                   {
+                       if (procNew.Id == procOld.Id)
+                       {
+                           exist++;
+                       }
+                   }
+                   if (exist == 0)
+                   {
+                       procNew.Kill();
+                   }
+               }*/
+
+            try
+            {
+                ppt.Close();
+                ObjPowerPoint.Quit();
+            }
+            catch (Exception){}
+        }
+
+        private void CerrarWords()
+        {
+            Process[] wordProcsNew = Process.GetProcessesByName("WINWORD");
+            foreach (Process procNew in wordProcsNew)
             {
                 int exist = 0;
-                foreach (Process procOld in powerPointProcsOld)
+                foreach (Process procOld in wordProcsOld)
                 {
                     if (procNew.Id == procOld.Id)
                     {
@@ -170,35 +229,30 @@ namespace Vista
                 {
                     procNew.Kill();
                 }
-            }*/
-            ppt.Close();
-            ObjPowerPoint.Quit();
+            }
+
+            //doc.Close();
+            //ObjWord.Quit();
         }
 
-        private void CerrarWords()
-        {
-            doc.Close();
-            ObjWord.Quit();
-        }
-
-        private void ComprobarCorrectoIncorrecto()
+        private void ComprobarCorrectoIncorrecto(object sender, EventArgs e)
         {
             switch (ExamenSeleccionado)
             {
                 case "Word":
-                    ComprobarCorrectoIncorrectoWord();
+                    ComprobarCorrectoIncorrectoWord(sender, e);
                     break;
                 case "Excel":
-                    ComprobarCorrectoIncorrectoExcel();
+                    ComprobarCorrectoIncorrectoExcel(sender, e);
                     break;
                 case "Power Point":
-                    ComprobarCorrectoIncorrectoPowerPoint();
+                    ComprobarCorrectoIncorrectoPowerPoint(sender, e);
                     break;
             }
 
 
         }
-        private void ComprobarCorrectoIncorrectoWord()
+        private void ComprobarCorrectoIncorrectoWord(object sender, EventArgs e)
         {
             
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.docx";
@@ -208,17 +262,31 @@ namespace Vista
                 System.IO.File.Delete(ruta);
             }
 
-            doc.SaveAs(ruta, Word.WdSaveFormat.wdFormatDocumentDefault, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            try
+            {
+                doc.SaveAs(ruta, Word.WdSaveFormat.wdFormatDocumentDefault, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
-            CerrarWords();
+                CerrarWords();
 
-            //comparar cambio en los archivos ejercicio y respuesta
-            int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
-            PreguntasWord preguntasWord = new PreguntasWord();
-            preguntasWord.Pregunta(numeroDePregunta, examenIdExamen);
+                guardarCorrecto = true;
+
+           
+            }
+            catch (Exception)
+            {
+                BtnReset_Click(sender, e);
+            }
+
+            if (guardarCorrecto)
+            {
+                int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
+                PreguntasWord preguntasWord = new PreguntasWord();
+                preguntasWord.Pregunta(numeroDePregunta, examenIdExamen);
+            }
+            
         }
-        private void ComprobarCorrectoIncorrectoExcel()
+        private void ComprobarCorrectoIncorrectoExcel(object sender, EventArgs e)
         {
 
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.xlsx";
@@ -228,20 +296,30 @@ namespace Vista
                 System.IO.File.Delete(ruta);
             }
 
-            wbook.SaveAs(ruta, Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
-            false, false, Excel.XlSaveAsAccessMode.xlNoChange,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-            
-            CerrarExcels();
+            try
+            {
+                wbook.SaveAs(ruta, Excel.XlFileFormat.xlWorkbookDefault, Type.Missing, Type.Missing,
+                false, false, Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
-            //comparar cambio en los archivos ejercicio y respuesta
-            int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
-            PreguntasExcel preguntasExcel = new PreguntasExcel();
-            preguntasExcel.Pregunta(numeroDePregunta, examenIdExamen);
+                CerrarExcels();
+                guardarCorrecto = true;
 
-            //borrar documentos temporales 
+                //comparar cambio en los archivos ejercicio y respuesta
+
+            }
+            catch (Exception)
+            {
+                BtnReset_Click(sender, e);
+            }
+            if (guardarCorrecto)
+            {
+                int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
+                PreguntasExcel preguntasExcel = new PreguntasExcel();
+                preguntasExcel.Pregunta(numeroDePregunta, examenIdExamen);
+            }
+ 
         }
-        private void ComprobarCorrectoIncorrectoPowerPoint()
+        private void ComprobarCorrectoIncorrectoPowerPoint(object sender, EventArgs e)
         {
             int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
             PreguntasPowerPoint preguntasPowerPoint = new PreguntasPowerPoint();
@@ -250,7 +328,6 @@ namespace Vista
             {
                 var temp = ppt.PrintOptions;
                
-
                 string numeroCopias = ppt.PrintOptions.NumberOfCopies.ToString(); 
                 string slidesPorHoja = ppt.PrintOptions.OutputType.ToString();
                 string color = ppt.PrintOptions.PrintColorType.ToString();
@@ -267,11 +344,23 @@ namespace Vista
                 System.IO.File.Delete(ruta);
             }
 
-            ppt.SaveCopyAs (ruta, PowerPoint.PpSaveAsFileType.ppSaveAsDefault, Microsoft.Office.Core.MsoTriState.msoFalse);
+            try
+            {
+                ppt.SaveCopyAs(ruta, PowerPoint.PpSaveAsFileType.ppSaveAsDefault, Microsoft.Office.Core.MsoTriState.msoFalse);
 
-            CerrarPowerPoints();
-            //comparar cambio en los archivos ejercicio y respuesta     
-            preguntasPowerPoint.Pregunta(numeroDePregunta, examenIdExamen);
+                CerrarPowerPoints();
+                guardarCorrecto = true;
+            }
+            catch (Exception)
+            {
+                BtnReset_Click(sender, e);
+            }
+
+            if (guardarCorrecto)
+            {
+                preguntasPowerPoint.Pregunta(numeroDePregunta, examenIdExamen);
+            }
+            
         }
         private void GuardarAvance()
         {
@@ -300,15 +389,10 @@ namespace Vista
             else
             {
                 contadorDeAvance = FormStartExam.irAPregunta-1;
-            }
-            
-
-
+            }            
         }
         private void MostrarPreguntaYEjercicio()
-        {          
-            
-            
+        { 
             //int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance];
             int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance];
             switch (ExamenSeleccionado)
@@ -427,15 +511,13 @@ namespace Vista
             string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
             if (System.IO.File.Exists(ruta))
             {
-
                 ppt = ObjPowerPoint.Presentations.Open(ruta);
 
                 ObjPowerPoint.ActiveWindow.WindowState = PowerPoint.PpWindowState.ppWindowNormal;
                 ObjPowerPoint.ActiveWindow.Height = 811 * newHeightScreen / 1080;
                 ObjPowerPoint.ActiveWindow.Width = WidthScreen;
                 ObjPowerPoint.ActiveWindow.Left = 0;
-                ObjPowerPoint.ActiveWindow.Top = 0;
-                
+                ObjPowerPoint.ActiveWindow.Top = 0;                
             }
             else
             {
