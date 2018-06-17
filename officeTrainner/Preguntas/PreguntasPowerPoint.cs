@@ -155,11 +155,11 @@ namespace Preguntas
 
         private void ComprobarDescompresion()
         {
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 10; i++)
             {
                 string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio\ppt\presentation.xml";
 
-                if (!System.IO.File.Exists(ruta))
+                if (!File.Exists(ruta))
                 {
                     Thread.Sleep(500); //para esperar a que el zip se descomprima totalmente
                 }
@@ -639,10 +639,11 @@ namespace Preguntas
             /***********style***********/
             string cadenaAchequear5 = "schemas.openxmlformats.org/drawingml/2006/main\" id=\"366\"";
 
-            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
 
-            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml")))
+            if (File.Exists(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml")) && File.Exists(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml")))
             {
+
+                String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\slides\slide6.xml"));
                 String[] contenidoDeArchivo2 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"ppt\charts\style1.xml"));
                 String[] contenidoDeArchivo3 = new String[1];
 
