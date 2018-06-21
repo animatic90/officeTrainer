@@ -7,8 +7,7 @@
 
     public partial class FormStartExam : Form
     {
-        #region Atributes        
-        
+        #region Atributes               
         //****************************************************
         public static bool aleatorio;
         public static bool cronometro;
@@ -16,14 +15,9 @@
         public static bool reanudar;
         //****************************************************
         public static int[] arrayOrdenDePreguntas;
-        // public static int[] arrayOrdenDePreguntas = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public static int irAPregunta;
-
-
-            
+        //public static int[] arrayOrdenDePreguntas = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public static int irAPregunta;            
         #endregion
-
-
 
         public FormStartExam()
         {
@@ -37,7 +31,6 @@
         }
         private void BtnComenzarExamen_Click(object sender, EventArgs e)
         {
-
             irAPregunta = Convert.ToInt32(LblNumeroPregunta.Text);
 
             Screen screen = Screen.PrimaryScreen;
@@ -62,7 +55,6 @@
                 formQuestionsPanel.Show();
             }
             this.Hide();
-
         }
 
         private void BtnWord_Click(object sender, EventArgs e)
@@ -157,6 +149,7 @@
                     alumnoExiste = conexion.Alumnos.Where(p => p.nombres == alumnoExiste.nombres).Where(p => p.apellidos == alumnoExiste.apellidos).FirstOrDefault();                    
 
                 }
+
                 if(alumnoExiste == null)
                 {
                     Alumno alumno = new Alumno
@@ -172,7 +165,7 @@
                 }
                 else
                 {
-                   idAlumno = alumnoExiste.IdAlumno;//significa que no se encontró un alumno con el mismo nombre y apellido
+                   idAlumno = alumnoExiste.IdAlumno;//significa que se encontró un alumno con el mismo nombre y apellido
                 }
 
                 DateTime today = DateTime.Today;
@@ -181,6 +174,7 @@
                     nombreExamen = FormMain.ExamenSeleccionado,
                     //nombreExamen = "Word",
                     fecha = today,
+                    preguntasResueltas = 0,
                     avance = 0,
 
                     alumnoIdAlumno = ObtenerIdAlumno(idAlumno),
@@ -194,55 +188,7 @@
                 {
                     conexion.Examenes.Add(examen);
                     conexion.SaveChanges();
-                }
-
-                DetalleExamen detalleExamen = new DetalleExamen
-                {
-                    //los tres estados de esta tabla son: CORRECTO, INCORRECTO, NO RESUELTO (indica que el alumno todavía no llegó a esta pregunta)
-                    //Inicializaremos las 35 preguntas
-                    Pregunta1 = "NO RESUELTO",
-                    Pregunta2 = "NO RESUELTO",
-                    Pregunta3 = "NO RESUELTO",
-                    Pregunta4 = "NO RESUELTO",
-                    Pregunta5 = "NO RESUELTO",
-                    Pregunta6 = "NO RESUELTO",
-                    Pregunta7 = "NO RESUELTO",
-                    Pregunta8 = "NO RESUELTO",
-                    Pregunta9 = "NO RESUELTO",
-                    Pregunta10 = "NO RESUELTO",
-                    Pregunta11 = "NO RESUELTO",
-                    Pregunta12 = "NO RESUELTO",
-                    Pregunta13 = "NO RESUELTO",
-                    Pregunta14 = "NO RESUELTO",
-                    Pregunta15 = "NO RESUELTO",
-                    Pregunta16 = "NO RESUELTO",
-                    Pregunta17 = "NO RESUELTO",
-                    Pregunta18 = "NO RESUELTO",
-                    Pregunta19 = "NO RESUELTO",
-                    Pregunta20 = "NO RESUELTO",
-                    Pregunta21 = "NO RESUELTO",
-                    Pregunta22 = "NO RESUELTO",
-                    Pregunta23 = "NO RESUELTO",
-                    Pregunta24 = "NO RESUELTO",
-                    Pregunta25 = "NO RESUELTO",
-                    Pregunta26 = "NO RESUELTO",
-                    Pregunta27 = "NO RESUELTO",
-                    Pregunta28 = "NO RESUELTO",
-                    Pregunta29 = "NO RESUELTO",
-                    Pregunta30 = "NO RESUELTO",
-                    Pregunta31 = "NO RESUELTO",
-                    Pregunta32 = "NO RESUELTO",
-                    Pregunta33 = "NO RESUELTO",
-                    Pregunta34 = "NO RESUELTO",
-                    Pregunta35 = "NO RESUELTO",
-                    ExamenIdExamen = ObtenerUltimoIdExamen()
-                };
-
-                using (ModelContainer conexion = new ModelContainer())
-                {
-                    conexion.DetalleExamenes.Add(detalleExamen);
-                    conexion.SaveChanges();
-                }
+                }  
 
                 return true;
             }
@@ -400,15 +346,6 @@
                 idAlumno = ObtenerUltimoIdAlumno();
             }
             return idAlumno;
-        }
-
-        private int ObtenerUltimoIdDetalleExamen()
-        {
-            using (ModelContainer conexion = new ModelContainer())
-            {
-                int id = conexion.DetalleExamenes.Max(u => u.IdDetalleExamen);
-                return id;
-            }
         }
 
         private void FormStartExam_VisibleChanged(object sender, EventArgs e)

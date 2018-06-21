@@ -21,7 +21,7 @@ namespace Preguntas
         Word.Application objWordAlumno;
         Word.Document docAlumno;
 
-        string p1 = "NO EXISTE";
+        string p1 = "NO RESUELTA";
         string p2 = "NO EXISTE";
         string p3 = "NO EXISTE";
         string p4 = "NO EXISTE";
@@ -351,6 +351,8 @@ namespace Preguntas
         private void Pregunta5()
         {
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -366,11 +368,13 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
+            
         }
         private void Pregunta6()
         {
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -390,7 +394,6 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta7()
         {
@@ -473,6 +476,8 @@ namespace Preguntas
         private void Pregunta11()
         {
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -495,12 +500,13 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta12()
         {
             //Se utiliza con mayor frecuencia una técnica llamada colecistectomía laparoscópica. En este procedimiento, se hacen incisiones quirúrgicas más pequeñas que permiten una recuperación más rápida. Los pacientes pueden salir del hospital un día después de la cirugía.
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -517,8 +523,6 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
-
         }
         private void Pregunta13()
         {
@@ -547,6 +551,8 @@ namespace Preguntas
         {
             p1 = "INCORRECTO";
 
+            BorrarTemporales();
+
             string textPdf = obtenerTextoDePdf();
             //\nCÁLCULOS BILIARES \nPrevención y Tratamiento \n \n  \n[FECHA] \n[NOMBRE DE LA COMPAÑÍA] \n[Dirección de la compañía] CÁLCULOS
             CerrarWords();
@@ -571,7 +577,6 @@ namespace Preguntas
             }
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
             
         private void Pregunta15()
@@ -624,6 +629,8 @@ namespace Preguntas
         {
             //val=\"cyan\"/></w:rPr><w:lastRenderedPageBreak/><w:t>Definición de Fractal
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -640,10 +647,10 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta18()
         {
+            BorrarTemporales();
             //no esta completo
             Word.Shapes temp1 = docAlumno.Shapes;//7
             foreach (Word.Shape shape in temp1)
@@ -676,11 +683,12 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta19()
         {
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -703,7 +711,6 @@ namespace Preguntas
                 p1 = "INCORRECTO";
             
             GuardarPuntaje();
-            BorrarTemporales();
         }
 
         private void Pregunta20()
@@ -730,6 +737,8 @@ namespace Preguntas
             p1 = "INCORRECTO";
 
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -771,8 +780,6 @@ namespace Preguntas
             }
 
             GuardarPuntaje();
-            BorrarTemporales();
-
         }
         private void Pregunta23()
         {//no funciona
@@ -793,6 +800,8 @@ namespace Preguntas
             //string=\"BORRADOR\"/></v:shape>
             //<v:shape id=\"PowerPlusWaterMark
             CerrarWords();
+            BorrarTemporales();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -814,7 +823,6 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta25()
         {
@@ -1052,6 +1060,7 @@ namespace Preguntas
         private void Pregunta34()
         {
             p1 = "INCORRECTO";
+            BorrarTemporales();
 
             Word.Shapes shapes = docAlumno.Shapes;//4
             Word.InlineShapes iShapes = docAlumno.InlineShapes;//1
@@ -1084,7 +1093,6 @@ namespace Preguntas
 
             CerrarWords();
             GuardarPuntaje();
-            BorrarTemporales();
         }
         private void Pregunta35()
         {

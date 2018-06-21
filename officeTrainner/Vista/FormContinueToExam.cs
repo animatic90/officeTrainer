@@ -101,6 +101,7 @@ namespace Vista
             {
                 FormMain.idExamenActual = Convert.ToInt32(row.Cells[2].Value);
                 FormMain.ExamenSeleccionado = row.Cells[0].Value.ToString();
+                FormMain.NUMERO_DE_PREGUNTAS = Convert.ToInt32(row.Cells[3].Value);
             }
 
             Screen screen = Screen.PrimaryScreen;

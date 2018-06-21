@@ -19,6 +19,7 @@ namespace Vista
 
         int[] arrayOrdenPreguntas;
         int contadorDeAvance;//para navegar en el arrray de preguntas
+        int preguntasResueltas; //para el avance de preguntas resueltas 
         string rutaPregunta;//rrellena el path segun el examen seleccionado
 
         Excel.Application ObjExcel;
@@ -46,16 +47,15 @@ namespace Vista
         {
             InitializeComponent();
         }
-        #region Events
 
+        #region Events
         private void FormQuestionsPanel_Load(object sender, EventArgs e)
         {
             excelProcsOld = Process.GetProcessesByName("EXCEL");
             wordProcsOld = Process.GetProcessesByName("WINWORD");
             powerPointProcOld = Process.GetProcessesByName("POWERPNT");
 
-            ExamenSeleccionado = FormMain.ExamenSeleccionado;
-            
+            ExamenSeleccionado = FormMain.ExamenSeleccionado;            
             examenIdExamen = FormMain.idExamenActual;
 
             CargarArrayOrdenPreguntas();
@@ -72,7 +72,6 @@ namespace Vista
 
         private void BtNext_Click(object sender, EventArgs e)
         {            
-
             ComprobarCorrectoIncorrecto(sender, e);
             if (guardarCorrecto)
             {
@@ -80,7 +79,6 @@ namespace Vista
 
                 RellenarLabelPregunta();        //rellenar label antes de MostrarPreguntaYEjercicio ya que el contador cambia;
                 MostrarPreguntaYEjercicio();
-
 
                 guardarCorrecto = false;
             }
@@ -123,7 +121,27 @@ namespace Vista
         }
         private void BtnAcept_Click(object sender, EventArgs e)
         {
-           if (RbContineLatter.Checked == true)
+            switch (ExamenSeleccionado)
+            {
+                case "Word":
+                    try
+                    {
+                        doc.Close();
+                        ObjWord.Quit();
+                    }
+                    catch (Exception) { }
+                    CerrarWords();
+                    break;
+                case "Excel":
+                    CerrarExcels();
+                    break;
+                case "Power Point":
+                    CerrarPowerPoints();
+                    DestruirPowerPoints();
+                    break;
+            }
+
+            if (RbContineLatter.Checked == true)
             {
                 using (ModelContainer conexion = new ModelContainer())
                 {
@@ -133,29 +151,17 @@ namespace Vista
                     examen.banderaReanudar= true;
                     conexion.SaveChanges();
                 }
-                
+                Application.Exit();
             }
            if(RbFinishQuestions.Checked == true)
             {
-                contadorDeAvance = FormMain.NUMERO_DE_PREGUNTAS -1;                
-            }
+                contadorDeAvance = FormMain.NUMERO_DE_PREGUNTAS -1;
 
-            switch (ExamenSeleccionado)
-            {
-                case "Word":
-                    CerrarWords();
-                    break;
-                case "Excel":
-                    CerrarExcels();
-                    break;
-                case "Power Point":
-                    CerrarPowerPoints();
-                    break;
+                FormMain.formExamResult.Show();
+                FormMain.formExamResult.Activate();
+                this.Hide();
             }
-            Application.Exit();
-
         }
-
 
         #endregion
 
@@ -185,6 +191,7 @@ namespace Vista
                 }
             }
         }
+
         private void CerrarPowerPoints()
         {
             /*  Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
@@ -210,6 +217,26 @@ namespace Vista
                 ObjPowerPoint.Quit();
             }
             catch (Exception){}
+        }
+
+        private void DestruirPowerPoints()
+        {
+            Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
+               foreach (Process procNew in powerPointProcsNew)
+               {
+                   int exist = 0;
+                   foreach (Process procOld in powerPointProcOld)
+                   {
+                       if (procNew.Id == procOld.Id)
+                       {
+                           exist++;
+                       }
+                   }
+                   if (exist == 0)
+                   {
+                       procNew.Kill();
+                   }
+               }
         }
 
         private void CerrarWords()

@@ -20,7 +20,7 @@ namespace Vista
             //Application.Run(new FormStartExam());
             //Application.Run(new FormQuestionsPanel());
             //Application.Run(new FormContinueToExam());
-            
+            //Application.Run(new FormExamResult());
         }
     }
 }

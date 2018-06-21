@@ -27,7 +27,6 @@ namespace Datos
     
         public virtual DbSet<Alumno> Alumnos { get; set; }
         public virtual DbSet<Examen> Examenes { get; set; }
-        public virtual DbSet<DetalleExamen> DetalleExamenes { get; set; }
         public virtual DbSet<ArrayOrdenPreguntas> ArrayOrdenPreguntas { get; set; }
         public virtual DbSet<PuntajePregunta> PuntajePreguntas { get; set; }
     }

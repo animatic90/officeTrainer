@@ -17,6 +17,7 @@ namespace Vista
         public static int NUMERO_DE_PREGUNTAS;
         public static FormContinueToExam formContinueToExam = new FormContinueToExam();
         public static FormStartExam formStartExam = new FormStartExam();
+        public static FormExamResult formExamResult = new FormExamResult();
         public static Form formMain;
 
         public static string ExamenSeleccionado;
@@ -57,7 +58,7 @@ namespace Vista
         private void BorrarTemporales()
         {
             string rutaEjercicio = Application.StartupPath + @"\Documentos\Temp\Ejercicio";
-            System.IO.DirectoryInfo di = new DirectoryInfo(rutaEjercicio);
+            DirectoryInfo di = new DirectoryInfo(rutaEjercicio);
 
             foreach (FileInfo file in di.GetFiles())
             {

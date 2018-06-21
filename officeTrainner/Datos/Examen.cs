@@ -23,6 +23,7 @@ namespace Datos
         public int IdExamen { get; set; }
         public string nombreExamen { get; set; }
         public System.DateTime fecha { get; set; }
+        public int preguntasResueltas { get; set; }
         public int avance { get; set; }
         public int alumnoIdAlumno { get; set; }
         public int numeroDePreguntas { get; set; }

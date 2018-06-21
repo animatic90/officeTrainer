@@ -22,7 +22,7 @@ namespace Preguntas
         int idExamen;
         //Process[] powerPointProcsOld;
 
-        string p1 = "NO EXISTE";
+        string p1 = "NO RESUELTA";
         string p2 = "NO EXISTE";
         string p3 = "NO EXISTE";
         string p4 = "NO EXISTE";

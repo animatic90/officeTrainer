@@ -55,9 +55,6 @@
     <Compile Include="ArrayOrdenPreguntas.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="DetalleExamen.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Examen.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
