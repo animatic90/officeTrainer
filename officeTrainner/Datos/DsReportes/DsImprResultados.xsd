@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsImprResultados" targetNamespace="http://tempuri.org/DsImprResultados.xsd" xmlns:mstns="http://tempuri.org/DsImprResultados.xsd" xmlns="http://tempuri.org/DsImprResultados.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsImprResultados" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsImprResultados" msprop:Generator_UserDSName="DsImprResultados">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="puntaje" msprop:Generator_TableClassName="puntajeDataTable" msprop:Generator_TableVarName="tablepuntaje" msprop:Generator_TablePropName="puntaje" msprop:Generator_RowDeletingName="puntajeRowDeleting" msprop:Generator_RowChangingName="puntajeRowChanging" msprop:Generator_RowEvHandlerName="puntajeRowChangeEventHandler" msprop:Generator_RowDeletedName="puntajeRowDeleted" msprop:Generator_UserTableName="puntaje" msprop:Generator_RowChangedName="puntajeRowChanged" msprop:Generator_RowEvArgName="puntajeRowChangeEvent" msprop:Generator_RowClassName="puntajeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="numeroDePregunta" msprop:Generator_ColumnVarNameInTable="columnnumeroDePregunta" msprop:Generator_ColumnPropNameInRow="numeroDePregunta" msprop:Generator_ColumnPropNameInTable="numeroDePreguntaColumn" msprop:Generator_UserColumnName="numeroDePregunta" type="xs:string" minOccurs="0" />
+              <xs:element name="sp1" msprop:Generator_ColumnVarNameInTable="columnsp1" msprop:Generator_ColumnPropNameInRow="sp1" msprop:Generator_ColumnPropNameInTable="sp1Column" msprop:Generator_UserColumnName="sp1" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

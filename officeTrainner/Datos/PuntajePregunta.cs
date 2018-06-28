@@ -15,11 +15,12 @@ namespace Datos
     public partial class PuntajePregunta
     {
         public int IdPuntajePreguntas { get; set; }
+        public int ExamenIdExamen { get; set; }
         public string sp1 { get; set; }
         public string sp2 { get; set; }
         public string sp3 { get; set; }
         public string sp4 { get; set; }
         public string sp5 { get; set; }
-        public int ExamenIdExamen { get; set; }
+        public string numeroDePregunta { get; set; }
     }
 }

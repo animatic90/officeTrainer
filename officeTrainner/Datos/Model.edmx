@@ -109,12 +109,13 @@
       <PropertyRef Name="IdPuntajePreguntas" />
     </Key>
     <Property Name="IdPuntajePreguntas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExamenIdExamen" Type="int" Nullable="false" />
     <Property Name="sp1" Type="nvarchar(max)" Nullable="false" />
     <Property Name="sp2" Type="nvarchar(max)" Nullable="false" />
     <Property Name="sp3" Type="nvarchar(max)" Nullable="false" />
     <Property Name="sp4" Type="nvarchar(max)" Nullable="false" />
     <Property Name="sp5" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ExamenIdExamen" Type="int" Nullable="false" />
+    <Property Name="numeroDePregunta" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="AlumnoExamen">
     <End Role="Alumno" Type="Model.Store.Alumnos" Multiplicity="1" />
@@ -286,12 +287,13 @@
             <PropertyRef Name="IdPuntajePreguntas" />
           </Key>
           <Property Name="IdPuntajePreguntas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamenIdExamen" Type="Int32" Nullable="false" />
           <Property Name="sp1" Type="String" Nullable="false" />
           <Property Name="sp2" Type="String" Nullable="false" />
           <Property Name="sp3" Type="String" Nullable="false" />
           <Property Name="sp4" Type="String" Nullable="false" />
           <Property Name="sp5" Type="String" Nullable="false" />
-          <Property Name="ExamenIdExamen" Type="Int32" Nullable="false" />
+          <Property Name="numeroDePregunta" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="PuntajePreguntaExamen">
           <End Type="Model.PuntajePregunta" Role="PuntajePregunta" Multiplicity="*" />
@@ -399,12 +401,13 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.PuntajePregunta)">
         <MappingFragment StoreEntitySet="PuntajePreguntas">
           <ScalarProperty Name="IdPuntajePreguntas" ColumnName="IdPuntajePreguntas" />
+          <ScalarProperty Name="ExamenIdExamen" ColumnName="ExamenIdExamen" />
           <ScalarProperty Name="sp1" ColumnName="sp1" />
           <ScalarProperty Name="sp2" ColumnName="sp2" />
           <ScalarProperty Name="sp3" ColumnName="sp3" />
           <ScalarProperty Name="sp4" ColumnName="sp4" />
           <ScalarProperty Name="sp5" ColumnName="sp5" />
-          <ScalarProperty Name="ExamenIdExamen" ColumnName="ExamenIdExamen" />
+          <ScalarProperty Name="numeroDePregunta" ColumnName="numeroDePregunta" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

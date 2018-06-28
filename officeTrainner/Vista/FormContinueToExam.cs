@@ -79,6 +79,8 @@ namespace Vista
             {
                 this.DgvExams.DataSource = conexion.Examenes.Where(p => p.alumnoIdAlumno == idAlumno).Where(p => p.banderaReanudar == true).ToList();
             }
+            FormMain.idAlumnoActual = idAlumno;
+
             DgvExams.Visible = true;
         }
 

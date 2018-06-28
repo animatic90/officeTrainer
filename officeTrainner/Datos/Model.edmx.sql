@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/20/2018 15:39:10
+-- Date Created: 06/21/2018 11:37:02
 -- Generated from EDMX file: C:\OfficeTrainner\officeTrainer\officeTrainner\Datos\Model.edmx
 -- --------------------------------------------------
 
@@ -132,12 +132,13 @@ GO
 -- Creating table 'PuntajePreguntas'
 CREATE TABLE [dbo].[PuntajePreguntas] (
     [IdPuntajePreguntas] int IDENTITY(1,1) NOT NULL,
+    [ExamenIdExamen] int  NOT NULL,
     [sp1] nvarchar(max)  NOT NULL,
     [sp2] nvarchar(max)  NOT NULL,
     [sp3] nvarchar(max)  NOT NULL,
     [sp4] nvarchar(max)  NOT NULL,
     [sp5] nvarchar(max)  NOT NULL,
-    [ExamenIdExamen] int  NOT NULL
+    [numeroDePregunta] nvarchar(max)  NOT NULL
 );
 GO
 

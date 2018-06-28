@@ -26,10 +26,13 @@ namespace Preguntas
         string p3 = "NO EXISTE";
         string p4 = "NO EXISTE";
         string p5 = "NO EXISTE";
+        string numeroPregunta;
 
         public void Pregunta(int numeroDePregunta, int examenIdExamen)
         {
             idExamen = examenIdExamen;
+            numeroPregunta = numeroDePregunta.ToString();
+
             AbrirWords(numeroDePregunta);
 
             switch (numeroDePregunta)
@@ -182,6 +185,7 @@ namespace Preguntas
                 sp3 = p3,
                 sp4 = p4,
                 sp5 = p5,
+                numeroDePregunta = numeroPregunta,
                 ExamenIdExamen = idExamen
             };
 

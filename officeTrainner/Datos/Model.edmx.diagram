@@ -10,7 +10,7 @@
         <AssociationConnector Association="Model.AlumnoExamen" />
         <EntityTypeShape EntityType="Model.ArrayOrdenPreguntas" Width="1.5" PointX="8.875" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="Model.ExamenArrayOrdenPreguntas" />
-        <EntityTypeShape EntityType="Model.PuntajePregunta" Width="1.5" PointX="5.875" PointY="7.5" />
+        <EntityTypeShape EntityType="Model.PuntajePregunta" Width="2" PointX="5.875" PointY="7.5" />
         <AssociationConnector Association="Model.PuntajePreguntaExamen" />
       </Diagram>
     </edmx:Diagrams>

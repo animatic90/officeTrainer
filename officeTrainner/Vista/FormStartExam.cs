@@ -146,8 +146,7 @@
 
                 using (ModelContainer conexion = new ModelContainer())
                 {
-                    alumnoExiste = conexion.Alumnos.Where(p => p.nombres == alumnoExiste.nombres).Where(p => p.apellidos == alumnoExiste.apellidos).FirstOrDefault();                    
-
+                    alumnoExiste = conexion.Alumnos.Where(p => p.nombres == alumnoExiste.nombres).Where(p => p.apellidos == alumnoExiste.apellidos).FirstOrDefault();                   
                 }
 
                 if(alumnoExiste == null)
@@ -168,11 +167,12 @@
                    idAlumno = alumnoExiste.IdAlumno;//significa que se encontró un alumno con el mismo nombre y apellido
                 }
 
+                FormMain.idAlumnoActual = ObtenerIdAlumno(idAlumno);//guardamos el IdAlumno  para mostrar el reporte
+
                 DateTime today = DateTime.Today;
                 Examen examen = new Examen
                 {
                     nombreExamen = FormMain.ExamenSeleccionado,
-                    //nombreExamen = "Word",
                     fecha = today,
                     preguntasResueltas = 0,
                     avance = 0,

@@ -13,6 +13,7 @@ namespace Vista
 {
     public partial class FormMain : Form
     {
+        public static int idAlumnoActual;
         public static int idExamenActual;
         public static int NUMERO_DE_PREGUNTAS;
         public static FormContinueToExam formContinueToExam = new FormContinueToExam();

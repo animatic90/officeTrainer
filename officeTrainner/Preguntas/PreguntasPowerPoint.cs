@@ -27,6 +27,7 @@ namespace Preguntas
         string p3 = "NO EXISTE";
         string p4 = "NO EXISTE";
         string p5 = "NO EXISTE";
+        string numeroPregunta;
 
         /***********Propiedades de Impresion**********/
         string numeroCopias; //
@@ -40,6 +41,7 @@ namespace Preguntas
         {
            // powerPointProcsOld = Process.GetProcessesByName("POWERPNT");
             idExamen = examenIdExamen;
+            numeroPregunta = numeroDePregunta.ToString();
             //AbrirPowerPoints(numeroDePregunta);
 
             switch (numeroDePregunta)
@@ -179,6 +181,7 @@ namespace Preguntas
                 sp3 = p3,
                 sp4 = p4,
                 sp5 = p5,
+                numeroDePregunta = numeroPregunta,
                 ExamenIdExamen = idExamen
             };
 
