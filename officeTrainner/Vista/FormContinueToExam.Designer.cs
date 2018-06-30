@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormContinueToExam));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnBack = new Bunifu.Framework.UI.BunifuFlatButton();
             this.PnlNames = new System.Windows.Forms.Panel();
             this.RbLastName = new System.Windows.Forms.RadioButton();
@@ -43,11 +43,11 @@
             this.apellidos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idAlumno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvExams = new System.Windows.Forms.DataGridView();
-            this.BtnGoToExam = new Bunifu.Framework.UI.BunifuFlatButton();
             this.nombreExamen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idExamen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numeroDePreguntas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnGoToExam = new Bunifu.Framework.UI.BunifuFlatButton();
             this.PnlNames.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvAlumnos)).BeginInit();
@@ -206,14 +206,14 @@
             this.DgvAlumnos.AllowUserToResizeColumns = false;
             this.DgvAlumnos.AllowUserToResizeRows = false;
             this.DgvAlumnos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvAlumnos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvAlumnos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvAlumnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvAlumnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nombres,
@@ -278,6 +278,36 @@
             this.DgvExams.Visible = false;
             this.DgvExams.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvExams_CellClick);
             // 
+            // nombreExamen
+            // 
+            this.nombreExamen.DataPropertyName = "nombreExamen";
+            this.nombreExamen.HeaderText = "Examen";
+            this.nombreExamen.Name = "nombreExamen";
+            this.nombreExamen.ReadOnly = true;
+            // 
+            // fecha
+            // 
+            this.fecha.DataPropertyName = "fecha";
+            this.fecha.HeaderText = "Fecha";
+            this.fecha.Name = "fecha";
+            this.fecha.ReadOnly = true;
+            // 
+            // idExamen
+            // 
+            this.idExamen.DataPropertyName = "idExamen";
+            this.idExamen.HeaderText = "idExamen";
+            this.idExamen.Name = "idExamen";
+            this.idExamen.ReadOnly = true;
+            this.idExamen.Visible = false;
+            // 
+            // numeroDePreguntas
+            // 
+            this.numeroDePreguntas.DataPropertyName = "numeroDePreguntas";
+            this.numeroDePreguntas.HeaderText = "numeroDePreguntas";
+            this.numeroDePreguntas.Name = "numeroDePreguntas";
+            this.numeroDePreguntas.ReadOnly = true;
+            this.numeroDePreguntas.Visible = false;
+            // 
             // BtnGoToExam
             // 
             this.BtnGoToExam.Activecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
@@ -315,36 +345,6 @@
             this.BtnGoToExam.Textcolor = System.Drawing.Color.Black;
             this.BtnGoToExam.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnGoToExam.Click += new System.EventHandler(this.BtnGoToExam_Click);
-            // 
-            // nombreExamen
-            // 
-            this.nombreExamen.DataPropertyName = "nombreExamen";
-            this.nombreExamen.HeaderText = "Examen";
-            this.nombreExamen.Name = "nombreExamen";
-            this.nombreExamen.ReadOnly = true;
-            // 
-            // fecha
-            // 
-            this.fecha.DataPropertyName = "fecha";
-            this.fecha.HeaderText = "Fecha";
-            this.fecha.Name = "fecha";
-            this.fecha.ReadOnly = true;
-            // 
-            // idExamen
-            // 
-            this.idExamen.DataPropertyName = "idExamen";
-            this.idExamen.HeaderText = "idExamen";
-            this.idExamen.Name = "idExamen";
-            this.idExamen.ReadOnly = true;
-            this.idExamen.Visible = false;
-            // 
-            // numeroDePreguntas
-            // 
-            this.numeroDePreguntas.DataPropertyName = "numeroDePreguntas";
-            this.numeroDePreguntas.HeaderText = "numeroDePreguntas";
-            this.numeroDePreguntas.Name = "numeroDePreguntas";
-            this.numeroDePreguntas.ReadOnly = true;
-            this.numeroDePreguntas.Visible = false;
             // 
             // FormContinueToExam
             // 

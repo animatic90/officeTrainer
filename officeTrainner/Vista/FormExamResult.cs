@@ -93,7 +93,7 @@ namespace Vista
 
                 for (int i = 0; i < listaResultados.Count; i++)
                 {
-                    string temp3 = "\t"+ "Pregunta| " + listaResultados[i].numeroDePregunta.ToString() + "\t" + "\t" + "|" + "\t" + listaResultados[i].sp1.ToString() + Environment.NewLine;
+                    string temp3 = "\t"+ "Pregunta " + listaResultados[i].numeroDePregunta.ToString() + "\t" + "|" + "\t" + listaResultados[i].sp1.ToString() + Environment.NewLine;
 
                     stringBuilder.Append(temp3);
 

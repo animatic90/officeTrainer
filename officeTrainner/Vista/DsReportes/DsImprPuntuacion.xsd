@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsImprPuntuacion" targetNamespace="http://tempuri.org/DsImprPuntuacion.xsd" xmlns:mstns="http://tempuri.org/DsImprPuntuacion.xsd" xmlns="http://tempuri.org/DsImprPuntuacion.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsImprPuntuacion" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsImprPuntuacion" msprop:Generator_UserDSName="DsImprPuntuacion">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="puntuacion" msprop:Generator_TableClassName="puntuacionDataTable" msprop:Generator_TableVarName="tablepuntuacion" msprop:Generator_TablePropName="puntuacion" msprop:Generator_RowDeletingName="puntuacionRowDeleting" msprop:Generator_RowChangingName="puntuacionRowChanging" msprop:Generator_RowEvHandlerName="puntuacionRowChangeEventHandler" msprop:Generator_RowDeletedName="puntuacionRowDeleted" msprop:Generator_UserTableName="puntuacion" msprop:Generator_RowChangedName="puntuacionRowChanged" msprop:Generator_RowEvArgName="puntuacionRowChangeEvent" msprop:Generator_RowClassName="puntuacionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nombres" msprop:Generator_ColumnVarNameInTable="columnNombres" msprop:Generator_ColumnPropNameInRow="Nombres" msprop:Generator_ColumnPropNameInTable="NombresColumn" msprop:Generator_UserColumnName="Nombres" type="xs:string" minOccurs="0" />
+              <xs:element name="Apellidos" msprop:Generator_ColumnVarNameInTable="columnApellidos" msprop:Generator_ColumnPropNameInRow="Apellidos" msprop:Generator_ColumnPropNameInTable="ApellidosColumn" msprop:Generator_UserColumnName="Apellidos" type="xs:string" minOccurs="0" />
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Examen" msprop:Generator_ColumnVarNameInTable="columnExamen" msprop:Generator_ColumnPropNameInRow="Examen" msprop:Generator_ColumnPropNameInTable="ExamenColumn" msprop:Generator_UserColumnName="Examen" type="xs:string" minOccurs="0" />
+              <xs:element name="Correctas" msprop:Generator_ColumnVarNameInTable="columnCorrectas" msprop:Generator_ColumnPropNameInRow="Correctas" msprop:Generator_ColumnPropNameInTable="CorrectasColumn" msprop:Generator_UserColumnName="Correctas" type="xs:string" minOccurs="0" />
+              <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:string" minOccurs="0" />
+              <xs:element name="Porcentaje" msprop:Generator_ColumnVarNameInTable="columnPorcentaje" msprop:Generator_ColumnPropNameInRow="Porcentaje" msprop:Generator_ColumnPropNameInTable="PorcentajeColumn" msprop:Generator_UserColumnName="Porcentaje" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

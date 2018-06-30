@@ -84,6 +84,7 @@
             this.BtnHerramientasAdm.TabIndex = 3;
             this.BtnHerramientasAdm.TabStop = false;
             this.BtnHerramientasAdm.Zoom = 10;
+            this.BtnHerramientasAdm.Click += new System.EventHandler(this.BtnHerramientasAdm_Click);
             // 
             // bunifuImageButton5
             // 
@@ -128,6 +129,7 @@
             this.Text = "DDC Testing Center";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Move += new System.EventHandler(this.FormMain_Move);
             ((System.ComponentModel.ISupportInitialize)(this.BtnComenzarExamen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnContinueExam)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnHerramientasAdm)).EndInit();

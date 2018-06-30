@@ -19,7 +19,11 @@ namespace Vista
         public static FormContinueToExam formContinueToExam = new FormContinueToExam();
         public static FormStartExam formStartExam = new FormStartExam();
         public static FormExamResult formExamResult = new FormExamResult();
+        public static FormAdministrativeTools formAdministrativeTools = new FormAdministrativeTools();
         public static Form formMain;
+
+        public static int leftPos;
+        public static int topPos;
 
         public static string ExamenSeleccionado;
 
@@ -30,7 +34,7 @@ namespace Vista
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-            
+            obtenerPosicion();
         }
         private void BtnContinueExam_Click(object sender, EventArgs e)
         {
@@ -49,12 +53,19 @@ namespace Vista
             formStartExam.Show();
             this.Hide();
         }
+        private void BtnHerramientasAdm_Click(object sender, EventArgs e)
+        {            
+            formMain = FormMain.ActiveForm;
+            formAdministrativeTools.Left = leftPos;
+            formAdministrativeTools.Top = topPos;
+            formAdministrativeTools.Show();
+            this.Hide();
+        }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             BorrarTemporales();
         }
-
 
         private void BorrarTemporales()
         {
@@ -69,6 +80,17 @@ namespace Vista
             {
                 dir.Delete(true);
             }
+        }
+
+        private void obtenerPosicion()
+        {
+            leftPos = this.Left;
+            topPos = this.Top;
+        }
+
+        private void FormMain_Move(object sender, EventArgs e)
+        {
+            obtenerPosicion();
         }
     }
 }

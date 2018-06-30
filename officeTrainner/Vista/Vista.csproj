@@ -87,6 +87,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DsReportes\DsImprPuntuacion.cs">
+      <DependentUpon>DsImprPuntuacion.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DsReportes\DsImprPuntuacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsImprPuntuacion.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DsReportes\DsImprResultados.Designer.cs">
       <DependentUpon>DsImprResultados.xsd</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -97,6 +105,12 @@
     </Compile>
     <Compile Include="FormContinueToExam.Designer.cs">
       <DependentUpon>FormContinueToExam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataBase.Designer.cs">
+      <DependentUpon>FormDataBase.cs</DependentUpon>
     </Compile>
     <Compile Include="FormExamResult.cs">
       <SubType>Form</SubType>
@@ -109,6 +123,12 @@
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAdministrativeTools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdministrativeTools.Designer.cs">
+      <DependentUpon>FormAdministrativeTools.cs</DependentUpon>
     </Compile>
     <Compile Include="FormQuestionsPanel.cs">
       <SubType>Form</SubType>
@@ -128,11 +148,6 @@
     <Compile Include="FormTest.Designer.cs">
       <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="OfficeTrainnerDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OfficeTrainnerDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reportes\CrsRprImprResultados.cs">
@@ -147,14 +162,26 @@
       <DependentUpon>CrsRptImprCertificado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\CrsRptImprPuntuacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrsRptImprPuntuacion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reportes\FrmReportes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reportes\FrmReportes.Designer.cs">
       <DependentUpon>FrmReportes.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormAdministrativeTools.resx">
+      <DependentUpon>FormAdministrativeTools.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormContinueToExam.resx">
       <DependentUpon>FormContinueToExam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataBase.resx">
+      <DependentUpon>FormDataBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormExamResult.resx">
       <DependentUpon>FormExamResult.cs</DependentUpon>
@@ -189,9 +216,24 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrsRptImprCertificado.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CrsRptImprPuntuacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrsRptImprPuntuacion.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\FrmReportes.resx">
       <DependentUpon>FrmReportes.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="DsReportes\DsImprPuntuacion.xsc">
+      <DependentUpon>DsImprPuntuacion.xsd</DependentUpon>
+    </None>
+    <None Include="DsReportes\DsImprPuntuacion.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsImprPuntuacion.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DsReportes\DsImprPuntuacion.xss">
+      <DependentUpon>DsImprPuntuacion.xsd</DependentUpon>
+    </None>
     <None Include="DsReportes\DsImprResultados.xsc">
       <DependentUpon>DsImprResultados.xsd</DependentUpon>
     </None>
@@ -202,17 +244,6 @@
     </None>
     <None Include="DsReportes\DsImprResultados.xss">
       <DependentUpon>DsImprResultados.xsd</DependentUpon>
-    </None>
-    <None Include="OfficeTrainnerDataSet.xsc">
-      <DependentUpon>OfficeTrainnerDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="OfficeTrainnerDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>OfficeTrainnerDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="OfficeTrainnerDataSet.xss">
-      <DependentUpon>OfficeTrainnerDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
