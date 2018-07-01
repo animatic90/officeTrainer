@@ -32,6 +32,10 @@
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.PnlOptions = new System.Windows.Forms.Panel();
+            this.BtnAcept = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.RbFinishQuestions = new System.Windows.Forms.RadioButton();
+            this.RbContineLatter = new System.Windows.Forms.RadioButton();
             this.TxtQuestion = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -49,17 +53,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.LblTitleOfQuestion = new System.Windows.Forms.Label();
             this.LblNumberOfQuestion = new System.Windows.Forms.Label();
-            this.PnlOptions = new System.Windows.Forms.Panel();
-            this.RbContineLatter = new System.Windows.Forms.RadioButton();
-            this.RbFinishQuestions = new System.Windows.Forms.RadioButton();
-            this.BtnAcept = new Bunifu.Framework.UI.BunifuFlatButton();
             this.TableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.PnlOptions.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.PnlOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // TableLayoutPanel1
@@ -103,6 +103,79 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(778, 100);
             this.panel7.TabIndex = 5;
+            // 
+            // PnlOptions
+            // 
+            this.PnlOptions.Controls.Add(this.BtnAcept);
+            this.PnlOptions.Controls.Add(this.RbFinishQuestions);
+            this.PnlOptions.Controls.Add(this.RbContineLatter);
+            this.PnlOptions.Location = new System.Drawing.Point(7, 7);
+            this.PnlOptions.Name = "PnlOptions";
+            this.PnlOptions.Size = new System.Drawing.Size(764, 86);
+            this.PnlOptions.TabIndex = 0;
+            this.PnlOptions.Visible = false;
+            // 
+            // BtnAcept
+            // 
+            this.BtnAcept.Activecolor = System.Drawing.Color.Yellow;
+            this.BtnAcept.BackColor = System.Drawing.Color.Yellow;
+            this.BtnAcept.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BtnAcept.BorderRadius = 0;
+            this.BtnAcept.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BtnAcept.ButtonText = "Aceptar";
+            this.BtnAcept.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnAcept.DisabledColor = System.Drawing.Color.Gray;
+            this.BtnAcept.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAcept.Iconcolor = System.Drawing.Color.Transparent;
+            this.BtnAcept.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnAcept.Iconimage")));
+            this.BtnAcept.Iconimage_right = null;
+            this.BtnAcept.Iconimage_right_Selected = null;
+            this.BtnAcept.Iconimage_Selected = null;
+            this.BtnAcept.IconMarginLeft = 0;
+            this.BtnAcept.IconMarginRight = 0;
+            this.BtnAcept.IconRightVisible = false;
+            this.BtnAcept.IconRightZoom = 0D;
+            this.BtnAcept.IconVisible = false;
+            this.BtnAcept.IconZoom = 90D;
+            this.BtnAcept.IsTab = false;
+            this.BtnAcept.Location = new System.Drawing.Point(630, 54);
+            this.BtnAcept.Margin = new System.Windows.Forms.Padding(5);
+            this.BtnAcept.Name = "BtnAcept";
+            this.BtnAcept.Normalcolor = System.Drawing.Color.Yellow;
+            this.BtnAcept.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnAcept.OnHoverTextColor = System.Drawing.Color.White;
+            this.BtnAcept.selected = false;
+            this.BtnAcept.Size = new System.Drawing.Size(86, 27);
+            this.BtnAcept.TabIndex = 8;
+            this.BtnAcept.Text = "Aceptar";
+            this.BtnAcept.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnAcept.Textcolor = System.Drawing.Color.Black;
+            this.BtnAcept.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAcept.Click += new System.EventHandler(this.BtnAcept_Click);
+            // 
+            // RbFinishQuestions
+            // 
+            this.RbFinishQuestions.AutoSize = true;
+            this.RbFinishQuestions.ForeColor = System.Drawing.SystemColors.Control;
+            this.RbFinishQuestions.Location = new System.Drawing.Point(271, 21);
+            this.RbFinishQuestions.Name = "RbFinishQuestions";
+            this.RbFinishQuestions.Size = new System.Drawing.Size(449, 21);
+            this.RbFinishQuestions.TabIndex = 1;
+            this.RbFinishQuestions.Text = "Ir directamente a resultados sin responder las preguntas restantes";
+            this.RbFinishQuestions.UseVisualStyleBackColor = true;
+            // 
+            // RbContineLatter
+            // 
+            this.RbContineLatter.AutoSize = true;
+            this.RbContineLatter.Checked = true;
+            this.RbContineLatter.ForeColor = System.Drawing.SystemColors.Control;
+            this.RbContineLatter.Location = new System.Drawing.Point(41, 21);
+            this.RbContineLatter.Name = "RbContineLatter";
+            this.RbContineLatter.Size = new System.Drawing.Size(150, 21);
+            this.RbContineLatter.TabIndex = 0;
+            this.RbContineLatter.TabStop = true;
+            this.RbContineLatter.Text = "Continuar Despues";
+            this.RbContineLatter.UseVisualStyleBackColor = true;
             // 
             // TxtQuestion
             // 
@@ -392,79 +465,6 @@
             this.LblNumberOfQuestion.TabIndex = 0;
             this.LblNumberOfQuestion.Text = "00";
             // 
-            // PnlOptions
-            // 
-            this.PnlOptions.Controls.Add(this.BtnAcept);
-            this.PnlOptions.Controls.Add(this.RbFinishQuestions);
-            this.PnlOptions.Controls.Add(this.RbContineLatter);
-            this.PnlOptions.Location = new System.Drawing.Point(7, 7);
-            this.PnlOptions.Name = "PnlOptions";
-            this.PnlOptions.Size = new System.Drawing.Size(764, 86);
-            this.PnlOptions.TabIndex = 0;
-            this.PnlOptions.Visible = false;
-            // 
-            // RbContineLatter
-            // 
-            this.RbContineLatter.AutoSize = true;
-            this.RbContineLatter.Checked = true;
-            this.RbContineLatter.ForeColor = System.Drawing.SystemColors.Control;
-            this.RbContineLatter.Location = new System.Drawing.Point(0, 21);
-            this.RbContineLatter.Name = "RbContineLatter";
-            this.RbContineLatter.Size = new System.Drawing.Size(150, 21);
-            this.RbContineLatter.TabIndex = 0;
-            this.RbContineLatter.TabStop = true;
-            this.RbContineLatter.Text = "Continuar Despues";
-            this.RbContineLatter.UseVisualStyleBackColor = true;
-            // 
-            // RbFinishQuestions
-            // 
-            this.RbFinishQuestions.AutoSize = true;
-            this.RbFinishQuestions.ForeColor = System.Drawing.SystemColors.Control;
-            this.RbFinishQuestions.Location = new System.Drawing.Point(271, 21);
-            this.RbFinishQuestions.Name = "RbFinishQuestions";
-            this.RbFinishQuestions.Size = new System.Drawing.Size(449, 21);
-            this.RbFinishQuestions.TabIndex = 1;
-            this.RbFinishQuestions.Text = "Ir directamente a resultados sin responder las preguntas restantes";
-            this.RbFinishQuestions.UseVisualStyleBackColor = true;
-            // 
-            // BtnAcept
-            // 
-            this.BtnAcept.Activecolor = System.Drawing.Color.Yellow;
-            this.BtnAcept.BackColor = System.Drawing.Color.Yellow;
-            this.BtnAcept.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.BtnAcept.BorderRadius = 0;
-            this.BtnAcept.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BtnAcept.ButtonText = "Aceptar";
-            this.BtnAcept.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAcept.DisabledColor = System.Drawing.Color.Gray;
-            this.BtnAcept.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAcept.Iconcolor = System.Drawing.Color.Transparent;
-            this.BtnAcept.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnAcept.Iconimage")));
-            this.BtnAcept.Iconimage_right = null;
-            this.BtnAcept.Iconimage_right_Selected = null;
-            this.BtnAcept.Iconimage_Selected = null;
-            this.BtnAcept.IconMarginLeft = 0;
-            this.BtnAcept.IconMarginRight = 0;
-            this.BtnAcept.IconRightVisible = false;
-            this.BtnAcept.IconRightZoom = 0D;
-            this.BtnAcept.IconVisible = false;
-            this.BtnAcept.IconZoom = 90D;
-            this.BtnAcept.IsTab = false;
-            this.BtnAcept.Location = new System.Drawing.Point(630, 54);
-            this.BtnAcept.Margin = new System.Windows.Forms.Padding(5);
-            this.BtnAcept.Name = "BtnAcept";
-            this.BtnAcept.Normalcolor = System.Drawing.Color.Yellow;
-            this.BtnAcept.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.BtnAcept.OnHoverTextColor = System.Drawing.Color.White;
-            this.BtnAcept.selected = false;
-            this.BtnAcept.Size = new System.Drawing.Size(86, 27);
-            this.BtnAcept.TabIndex = 8;
-            this.BtnAcept.Text = "Aceptar";
-            this.BtnAcept.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnAcept.Textcolor = System.Drawing.Color.Black;
-            this.BtnAcept.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAcept.Click += new System.EventHandler(this.BtnAcept_Click);
-            // 
             // FormQuestionsPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -481,12 +481,12 @@
             this.panel1.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.PnlOptions.ResumeLayout(false);
+            this.PnlOptions.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.PnlOptions.ResumeLayout(false);
-            this.PnlOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -48,6 +48,18 @@ namespace Vista
             FormMain.formMain.Top = this.Top;
             FormMain.formMain.Show();
         }
+        private void FormExamResult_VisibleChanged(object sender, EventArgs e)
+        {
+            idAlumnoActual = FormMain.idAlumnoActual;
+            idExamenActual = FormMain.idExamenActual;
+            NUMERO_DE_PREGUNTAS = FormMain.NUMERO_DE_PREGUNTAS;
+            ExamenSeleccionado = FormMain.ExamenSeleccionado;
+
+            var temp = FormMain.idAlumnoActual;
+
+            rellenarLabel();
+            rellenarResultados();
+        }
         #endregion
 
 
@@ -128,7 +140,7 @@ namespace Vista
 
         private void BtnImprResultados_Click(object sender, EventArgs e)
         {
-            Reportes.FrmReportes frmImprResultadeos = new Reportes.FrmReportes();
+            Reportes.FrmReportes frmImprResultados = new Reportes.FrmReportes();
             Reportes.CrsRprImprResultados cr = new Reportes.CrsRprImprResultados();
 
             using (ModelContainer conexion = new ModelContainer())
@@ -150,9 +162,11 @@ namespace Vista
             correctas.Text = LblCorrect.Text;
             numeroPreguntas.Text = LblTotal.Text;
 
-            frmImprResultadeos.crystalReportViewer1.ReportSource = cr;
-            frmImprResultadeos.Show();
+            frmImprResultados.crystalReportViewer1.ReportSource = cr;
+            frmImprResultados.Show();
         }
+
+
     }
 
 }

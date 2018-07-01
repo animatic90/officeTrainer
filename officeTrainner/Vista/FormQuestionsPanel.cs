@@ -71,17 +71,27 @@ namespace Vista
         }
 
         private void BtNext_Click(object sender, EventArgs e)
-        {            
-            ComprobarCorrectoIncorrecto(sender, e);
-            if (guardarCorrecto)
+        {
+            if (this.preguntasResueltas != FormMain.NUMERO_DE_PREGUNTAS)
             {
-                GuardarAvance();
+                ComprobarCorrectoIncorrecto(sender, e);
+                if (guardarCorrecto)
+                {
+                    GuardarAvance();
 
-                RellenarLabelPregunta();        //rellenar label antes de MostrarPreguntaYEjercicio ya que el contador cambia;
-                MostrarPreguntaYEjercicio();
+                    RellenarLabelPregunta();    //rellenar label antes de MostrarPreguntaYEjercicio ya que el contador cambia;
+                    MostrarPreguntaYEjercicio();
 
-                guardarCorrecto = false;
+                    guardarCorrecto = false;
+                }
             }
+            else
+            {
+                FormMain.formExamResult.Show();
+                FormMain.formExamResult.Activate();
+                this.Hide();
+            }
+
 
         }
 
@@ -155,7 +165,10 @@ namespace Vista
             }
            if(RbFinishQuestions.Checked == true)
             {
-                contadorDeAvance = FormMain.NUMERO_DE_PREGUNTAS -1;
+                while (this.preguntasResueltas <= FormMain.NUMERO_DE_PREGUNTAS)
+                {
+                    GuardarNoResueltas();
+                };
 
                 FormMain.formExamResult.Show();
                 FormMain.formExamResult.Activate();
@@ -166,10 +179,130 @@ namespace Vista
         #endregion
 
         #region Methods
+        private void GuardarNoResueltas()
+        {
+            //int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance];
+            string numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance -1].ToString();
+            switch (ExamenSeleccionado)
+            {
+                case "Word":
+                    rutaPregunta = Application.StartupPath + @"\Documentos\Word\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @".docx";
+                    if (!GuardarNoResueltasWord(numeroDePregunta))
+                    {
+                        contadorDeAvance++;
+                        GuardarNoResueltas();
+                    }
+                    else
+                    {                        
+                        contadorDeAvance++;
+                        this.preguntasResueltas++;
+                    }
+                    break;
+                case "Excel":
+                    rutaPregunta = Application.StartupPath + @"\Documentos\Excel\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @".docx";
+                    if (!GuardarNoResueltasExcel(numeroDePregunta))
+                    {
+                        contadorDeAvance++;
+                        GuardarNoResueltas();
+                    }
+                    else
+                    {
+                        contadorDeAvance++;
+                        this.preguntasResueltas++;
+                    }
+                    break;
+                case "Power Point":
+                    rutaPregunta = Application.StartupPath + @"\Documentos\Power Point\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @".docx";
+
+
+                    if (!GuardarNoResueltasPowerPoint(numeroDePregunta))
+                    {
+                        contadorDeAvance++;
+                        GuardarNoResueltas();
+                    }
+                    else
+                    {
+                        contadorDeAvance++;
+                        this.preguntasResueltas++;
+                    }
+                    break;
+            }
+
+        }
+        private bool GuardarNoResueltasWord(string numeroDePregunta)
+        {
+
+            string ruta = Application.StartupPath + @"\Documentos\Word\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.docx";
+
+            object fileName = ruta;
+
+            object missing = Type.Missing;
+
+            if (System.IO.File.Exists(ruta))
+            {
+                IncorrectoTodo(numeroDePregunta);
+            }
+            else
+            {
+                return false;
+            }
+
+
+            return true;
+        }
+
+        private bool GuardarNoResueltasExcel(string numeroDePregunta)
+        {
+            string ruta = Application.StartupPath + @"\Documentos\Excel\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.xlsx";
+            if (System.IO.File.Exists(ruta))
+            {
+                IncorrectoTodo(numeroDePregunta);
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool GuardarNoResueltasPowerPoint(string numeroDePregunta)
+        {
+            string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
+            if (System.IO.File.Exists(ruta))
+            {
+                IncorrectoTodo(numeroDePregunta);
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void IncorrectoTodo(string numeroPregunta)
+        {
+            PuntajePregunta puntajePregunta = new PuntajePregunta
+            {
+                sp1 = "INCORRECTO",
+                sp2 = "NO EXISTE",
+                sp3 = "NO EXISTE",
+                sp4 = "NO EXISTE",
+                sp5 = "NO EXISTE",
+                numeroDePregunta = numeroPregunta,
+                ExamenIdExamen = FormMain.idExamenActual
+            };
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                conexion.PuntajePreguntas.Add(puntajePregunta);
+                conexion.SaveChanges();
+            }
+        }
+
         private void RellenarLabelPregunta()
         {
             LblQuestions.Text = FormMain.NUMERO_DE_PREGUNTAS.ToString();
-            LblNumberOfQuestion.Text = (contadorDeAvance + 1).ToString();
+            // LblNumberOfQuestion.Text = (contadorDeAvance + 1).ToString(); = FormMain.NUMERO_DE_PREGUNTAS
+            LblNumberOfQuestion.Text = (this.preguntasResueltas + 1).ToString();
         }
 
         private void CerrarExcels()
@@ -398,6 +531,7 @@ namespace Vista
                     .Where(p => p.IdExamen == examenIdExamen).
                     FirstOrDefault();
                 examen.avance = contadorDeAvance;
+                examen.preguntasResueltas = this.preguntasResueltas;
                 conexion.SaveChanges();
             }
         }
@@ -411,11 +545,13 @@ namespace Vista
                         .Where(p => p.IdExamen == examenIdExamen).
                         FirstOrDefault();
                     contadorDeAvance = examen.avance;
+                    this.preguntasResueltas = examen.preguntasResueltas;
                 }
             }
             else
             {
                 contadorDeAvance = FormStartExam.irAPregunta-1;
+                this.preguntasResueltas = FormStartExam.irAPregunta - 1;
             }            
         }
         private void MostrarPreguntaYEjercicio()
@@ -435,6 +571,7 @@ namespace Vista
                     {
                         MostrarPregunta(numeroDePregunta);
                         contadorDeAvance++;
+                        this.preguntasResueltas++;
                     }
                     break;
                 case "Excel":
@@ -448,6 +585,7 @@ namespace Vista
                     {
                         MostrarPregunta(numeroDePregunta);
                         contadorDeAvance++;
+                        this.preguntasResueltas++;
                     }
                     break;
                 case "Power Point":
@@ -463,6 +601,7 @@ namespace Vista
                     {
                         MostrarPregunta(numeroDePregunta);
                         contadorDeAvance++;
+                        this.preguntasResueltas++;
                     }
                     break;
             }
@@ -501,6 +640,8 @@ namespace Vista
             {
                 return false;
             }
+
+
             return true;
         }
 

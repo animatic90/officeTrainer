@@ -17,8 +17,12 @@ namespace Vista
         string nombreAlumno;
         string apellidoAlumno;
         int preguntasCorrectas;
-
+        int idExamenImprimir = 0;
         //******* Exclusivos para el reporte******//
+        string examen;
+        string fecha;
+        string numeroPreguntas;
+        string porcentaje;
 
         //***************************************//
 
@@ -100,6 +104,8 @@ namespace Vista
             int idAlumno = 0;
             foreach (DataGridViewRow row in DgvDetalleAlumno.SelectedRows)
             {
+                nombreAlumno = row.Cells[0].Value.ToString();
+                apellidoAlumno = row.Cells[1].Value.ToString();
                 idAlumno = Convert.ToInt32(row.Cells[2].Value);
             }
             using (ModelContainer conexion = new ModelContainer())
@@ -118,14 +124,14 @@ namespace Vista
 
                 contarCorrectas(idExamen);
 
-                string examen = row.Cells[0].Value.ToString();
-                string fecha = row.Cells[1].Value.ToString();
-                string numeroPreguntas = row.Cells[3].Value.ToString();
+                examen = row.Cells[0].Value.ToString();
+                fecha = row.Cells[1].Value.ToString();
+                numeroPreguntas = row.Cells[3].Value.ToString();
 
                 double calculoPorcentaje = (double)(preguntasCorrectas * 100) / Convert.ToInt32(numeroPreguntas);
                 double aproxPorcentaje = Math.Round(calculoPorcentaje, 2);
 
-                string porcentaje = aproxPorcentaje.ToString() + " %";
+                porcentaje = aproxPorcentaje.ToString() + " %";
 
 
 
@@ -145,6 +151,7 @@ namespace Vista
             foreach (DataGridViewRow row in DgvDetalleExamen.SelectedRows)
             {
                 idExamen = Convert.ToInt32(row.Cells["idExamen"].Value);
+                idExamenImprimir = idExamen;
             }
 
             using (ModelContainer conexion = new ModelContainer())
@@ -187,6 +194,17 @@ namespace Vista
             foreach (DataGridViewRow row in DgvTodoExamen.SelectedRows)
             {
                 idExamen = Convert.ToInt32(row.Cells["idExamen"].Value);
+
+                idExamenImprimir = idExamen;
+
+                nombreAlumno = row.Cells["Nombres"].Value.ToString();
+                apellidoAlumno = row.Cells["Apellidos"].Value.ToString();
+                examen = row.Cells["Examen"].Value.ToString();
+                fecha = row.Cells["Fecha"].Value.ToString();
+                preguntasCorrectas = Convert.ToInt32(row.Cells["Correctas"].Value);
+                numeroPreguntas = row.Cells["Total"].Value.ToString();
+                porcentaje = row.Cells["Porcentaje"].Value.ToString();
+
             }
 
             using (ModelContainer conexion = new ModelContainer())
@@ -215,7 +233,11 @@ namespace Vista
             {
                 case "rptPuntuacion":
                     ImprimirPuntuacion();
-                    break; 
+                    break;
+
+                case "rptDetalles":
+                    ImprimirDetalles();
+                    break;
 
             }
 
@@ -224,6 +246,37 @@ namespace Vista
 
         private void BtnTotalTrouble_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void ImprimirDetalles()
+        {
+            Reportes.FrmReportes frmImprDetalles = new Reportes.FrmReportes();
+            Reportes.CrsRprImprDetalles cr = new Reportes.CrsRprImprDetalles();
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                var dt = conexion.PuntajePreguntas.Where(p => p.ExamenIdExamen == idExamenImprimir).Select(p => new { p.numeroDePregunta, p.sp1 });
+
+                cr.SetDataSource(dt);
+            }
+
+            TextObject alumno = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptAlumno"];
+            TextObject porcentaje = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptPorcentaje"];
+            TextObject examenSelecionado = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptExamenSelecionado"];
+            TextObject correctas = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptCorrectas"];
+            TextObject numeroPreguntas = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptTotalPreguntas"];
+            TextObject fecha = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptFecha"];
+
+            alumno.Text = nombreAlumno + "  " + apellidoAlumno;
+            porcentaje.Text = this.porcentaje;
+            examenSelecionado.Text = examen;
+            correctas.Text = preguntasCorrectas.ToString();
+            numeroPreguntas.Text = this.numeroPreguntas;
+            fecha.Text = this.fecha;
+
+            frmImprDetalles.crystalReportViewer1.ReportSource = cr;
+            frmImprDetalles.Show();
 
         }
 

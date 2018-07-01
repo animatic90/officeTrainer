@@ -55,8 +55,8 @@
             this.GbScore = new System.Windows.Forms.GroupBox();
             this.GbDetailByCandidate = new System.Windows.Forms.GroupBox();
             this.GbDetailAll = new System.Windows.Forms.GroupBox();
-            this.DgvTodoExamen = new System.Windows.Forms.DataGridView();
             this.DgvTodoDetalle = new System.Windows.Forms.DataGridView();
+            this.DgvTodoExamen = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.PnlSelectExam.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -68,8 +68,8 @@
             this.GbScore.SuspendLayout();
             this.GbDetailByCandidate.SuspendLayout();
             this.GbDetailAll.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvTodoExamen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvTodoDetalle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvTodoExamen)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnPrint
@@ -95,14 +95,14 @@
             this.BtnPrint.IconVisible = false;
             this.BtnPrint.IconZoom = 90D;
             this.BtnPrint.IsTab = false;
-            this.BtnPrint.Location = new System.Drawing.Point(955, 598);
+            this.BtnPrint.Location = new System.Drawing.Point(1058, 559);
             this.BtnPrint.Margin = new System.Windows.Forms.Padding(5);
             this.BtnPrint.Name = "BtnPrint";
             this.BtnPrint.Normalcolor = System.Drawing.Color.Yellow;
             this.BtnPrint.OnHovercolor = System.Drawing.Color.RoyalBlue;
             this.BtnPrint.OnHoverTextColor = System.Drawing.Color.White;
             this.BtnPrint.selected = false;
-            this.BtnPrint.Size = new System.Drawing.Size(190, 61);
+            this.BtnPrint.Size = new System.Drawing.Size(183, 60);
             this.BtnPrint.TabIndex = 32;
             this.BtnPrint.Text = "IMPRIMIR >>";
             this.BtnPrint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -164,7 +164,7 @@
             this.PnlSelectExam.Controls.Add(this.BtnThisWeek);
             this.PnlSelectExam.Controls.Add(this.BtnToday);
             this.PnlSelectExam.Controls.Add(this.label2);
-            this.PnlSelectExam.Location = new System.Drawing.Point(163, 121);
+            this.PnlSelectExam.Location = new System.Drawing.Point(163, 105);
             this.PnlSelectExam.Margin = new System.Windows.Forms.Padding(4);
             this.PnlSelectExam.Name = "PnlSelectExam";
             this.PnlSelectExam.Size = new System.Drawing.Size(293, 175);
@@ -299,7 +299,7 @@
             this.panel1.Controls.Add(this.BtnDetailsAll);
             this.panel1.Controls.Add(this.BtnDetailsByCandidate);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(163, 305);
+            this.panel1.Location = new System.Drawing.Point(163, 289);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(293, 136);
@@ -397,7 +397,7 @@
             this.panel2.Controls.Add(this.BtnTotalTrouble);
             this.panel2.Controls.Add(this.BtnTotalCumulative);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Location = new System.Drawing.Point(163, 452);
+            this.panel2.Location = new System.Drawing.Point(163, 436);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(292, 132);
@@ -503,7 +503,7 @@
             this.DgvPuntuacion.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DgvPuntuacion.RowTemplate.Height = 24;
             this.DgvPuntuacion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvPuntuacion.Size = new System.Drawing.Size(730, 174);
+            this.DgvPuntuacion.Size = new System.Drawing.Size(730, 406);
             this.DgvPuntuacion.TabIndex = 36;
             // 
             // DgvDetalleAlumno
@@ -516,14 +516,14 @@
             this.Nombres,
             this.Apellidos,
             this.IdAlumno});
-            this.DgvDetalleAlumno.Location = new System.Drawing.Point(6, 21);
+            this.DgvDetalleAlumno.Location = new System.Drawing.Point(6, 12);
             this.DgvDetalleAlumno.Name = "DgvDetalleAlumno";
             this.DgvDetalleAlumno.ReadOnly = true;
             this.DgvDetalleAlumno.RowHeadersVisible = false;
             this.DgvDetalleAlumno.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DgvDetalleAlumno.RowTemplate.Height = 24;
             this.DgvDetalleAlumno.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvDetalleAlumno.Size = new System.Drawing.Size(199, 198);
+            this.DgvDetalleAlumno.Size = new System.Drawing.Size(205, 406);
             this.DgvDetalleAlumno.TabIndex = 37;
             this.DgvDetalleAlumno.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvDetalleAlumno_CellClick);
             // 
@@ -555,14 +555,14 @@
             this.DgvDetalleExamen.AllowUserToDeleteRows = false;
             this.DgvDetalleExamen.AllowUserToResizeRows = false;
             this.DgvDetalleExamen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvDetalleExamen.Location = new System.Drawing.Point(211, 21);
+            this.DgvDetalleExamen.Location = new System.Drawing.Point(224, 12);
             this.DgvDetalleExamen.Name = "DgvDetalleExamen";
             this.DgvDetalleExamen.ReadOnly = true;
             this.DgvDetalleExamen.RowHeadersVisible = false;
             this.DgvDetalleExamen.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DgvDetalleExamen.RowTemplate.Height = 24;
             this.DgvDetalleExamen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvDetalleExamen.Size = new System.Drawing.Size(525, 101);
+            this.DgvDetalleExamen.Size = new System.Drawing.Size(525, 224);
             this.DgvDetalleExamen.TabIndex = 38;
             this.DgvDetalleExamen.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvDetalleExamen_CellClick);
             // 
@@ -572,22 +572,22 @@
             this.DgvDetalle.AllowUserToDeleteRows = false;
             this.DgvDetalle.AllowUserToResizeRows = false;
             this.DgvDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvDetalle.Location = new System.Drawing.Point(211, 128);
+            this.DgvDetalle.Location = new System.Drawing.Point(224, 242);
             this.DgvDetalle.Name = "DgvDetalle";
             this.DgvDetalle.ReadOnly = true;
             this.DgvDetalle.RowHeadersVisible = false;
             this.DgvDetalle.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DgvDetalle.RowTemplate.Height = 24;
             this.DgvDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvDetalle.Size = new System.Drawing.Size(525, 141);
+            this.DgvDetalle.Size = new System.Drawing.Size(525, 176);
             this.DgvDetalle.TabIndex = 39;
             // 
             // GbScore
             // 
             this.GbScore.Controls.Add(this.DgvPuntuacion);
-            this.GbScore.Location = new System.Drawing.Point(492, 9);
+            this.GbScore.Location = new System.Drawing.Point(492, 121);
             this.GbScore.Name = "GbScore";
-            this.GbScore.Size = new System.Drawing.Size(749, 142);
+            this.GbScore.Size = new System.Drawing.Size(749, 429);
             this.GbScore.TabIndex = 40;
             this.GbScore.TabStop = false;
             this.GbScore.Text = "groupBox1";
@@ -598,9 +598,9 @@
             this.GbDetailByCandidate.Controls.Add(this.DgvDetalleAlumno);
             this.GbDetailByCandidate.Controls.Add(this.DgvDetalleExamen);
             this.GbDetailByCandidate.Controls.Add(this.DgvDetalle);
-            this.GbDetailByCandidate.Location = new System.Drawing.Point(492, 157);
+            this.GbDetailByCandidate.Location = new System.Drawing.Point(475, 126);
             this.GbDetailByCandidate.Name = "GbDetailByCandidate";
-            this.GbDetailByCandidate.Size = new System.Drawing.Size(749, 225);
+            this.GbDetailByCandidate.Size = new System.Drawing.Size(760, 424);
             this.GbDetailByCandidate.TabIndex = 41;
             this.GbDetailByCandidate.TabStop = false;
             this.GbDetailByCandidate.Text = "groupBox1";
@@ -608,32 +608,16 @@
             // 
             // GbDetailAll
             // 
+            this.GbDetailAll.BackColor = System.Drawing.Color.Transparent;
             this.GbDetailAll.Controls.Add(this.DgvTodoDetalle);
             this.GbDetailAll.Controls.Add(this.DgvTodoExamen);
-            this.GbDetailAll.Location = new System.Drawing.Point(492, 389);
+            this.GbDetailAll.Location = new System.Drawing.Point(492, 122);
             this.GbDetailAll.Name = "GbDetailAll";
-            this.GbDetailAll.Size = new System.Drawing.Size(749, 201);
+            this.GbDetailAll.Size = new System.Drawing.Size(749, 428);
             this.GbDetailAll.TabIndex = 41;
             this.GbDetailAll.TabStop = false;
             this.GbDetailAll.Text = "groupBox1";
             this.GbDetailAll.Visible = false;
-            // 
-            // DgvTodoExamen
-            // 
-            this.DgvTodoExamen.AllowUserToAddRows = false;
-            this.DgvTodoExamen.AllowUserToDeleteRows = false;
-            this.DgvTodoExamen.AllowUserToResizeRows = false;
-            this.DgvTodoExamen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvTodoExamen.Location = new System.Drawing.Point(6, 15);
-            this.DgvTodoExamen.Name = "DgvTodoExamen";
-            this.DgvTodoExamen.ReadOnly = true;
-            this.DgvTodoExamen.RowHeadersVisible = false;
-            this.DgvTodoExamen.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.DgvTodoExamen.RowTemplate.Height = 24;
-            this.DgvTodoExamen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvTodoExamen.Size = new System.Drawing.Size(730, 87);
-            this.DgvTodoExamen.TabIndex = 36;
-            this.DgvTodoExamen.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTodoExamen_CellClick);
             // 
             // DgvTodoDetalle
             // 
@@ -641,15 +625,32 @@
             this.DgvTodoDetalle.AllowUserToDeleteRows = false;
             this.DgvTodoDetalle.AllowUserToResizeRows = false;
             this.DgvTodoDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DgvTodoDetalle.Location = new System.Drawing.Point(6, 108);
+            this.DgvTodoDetalle.Location = new System.Drawing.Point(7, 225);
             this.DgvTodoDetalle.Name = "DgvTodoDetalle";
             this.DgvTodoDetalle.ReadOnly = true;
             this.DgvTodoDetalle.RowHeadersVisible = false;
             this.DgvTodoDetalle.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DgvTodoDetalle.RowTemplate.Height = 24;
             this.DgvTodoDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvTodoDetalle.Size = new System.Drawing.Size(729, 100);
+            this.DgvTodoDetalle.Size = new System.Drawing.Size(729, 197);
             this.DgvTodoDetalle.TabIndex = 40;
+            // 
+            // DgvTodoExamen
+            // 
+            this.DgvTodoExamen.AllowUserToAddRows = false;
+            this.DgvTodoExamen.AllowUserToDeleteRows = false;
+            this.DgvTodoExamen.AllowUserToResizeRows = false;
+            this.DgvTodoExamen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvTodoExamen.Location = new System.Drawing.Point(7, 17);
+            this.DgvTodoExamen.Name = "DgvTodoExamen";
+            this.DgvTodoExamen.ReadOnly = true;
+            this.DgvTodoExamen.RowHeadersVisible = false;
+            this.DgvTodoExamen.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.DgvTodoExamen.RowTemplate.Height = 24;
+            this.DgvTodoExamen.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvTodoExamen.Size = new System.Drawing.Size(730, 202);
+            this.DgvTodoExamen.TabIndex = 36;
+            this.DgvTodoExamen.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTodoExamen_CellClick);
             // 
             // FormDataBase
             // 
@@ -658,15 +659,15 @@
             this.BackColor = System.Drawing.Color.Navy;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.ControlBox = false;
-            this.Controls.Add(this.GbDetailAll);
-            this.Controls.Add(this.GbDetailByCandidate);
-            this.Controls.Add(this.GbScore);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PnlSelectExam);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.BtnPrint);
             this.Controls.Add(this.BtnBack);
+            this.Controls.Add(this.GbScore);
+            this.Controls.Add(this.GbDetailAll);
+            this.Controls.Add(this.GbDetailByCandidate);
+            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormDataBase";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -685,8 +686,8 @@
             this.GbScore.ResumeLayout(false);
             this.GbDetailByCandidate.ResumeLayout(false);
             this.GbDetailAll.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvTodoExamen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvTodoDetalle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvTodoExamen)).EndInit();
             this.ResumeLayout(false);
 
         }

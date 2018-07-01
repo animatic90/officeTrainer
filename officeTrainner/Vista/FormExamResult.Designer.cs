@@ -310,12 +310,16 @@
             // 
             // TxtResults
             // 
+            this.TxtResults.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.TxtResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtResults.Location = new System.Drawing.Point(331, 267);
             this.TxtResults.Multiline = true;
             this.TxtResults.Name = "TxtResults";
+            this.TxtResults.ReadOnly = true;
+            this.TxtResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.TxtResults.Size = new System.Drawing.Size(743, 360);
             this.TxtResults.TabIndex = 28;
+            this.TxtResults.WordWrap = false;
             // 
             // FormExamResult
             // 
@@ -328,9 +332,11 @@
             this.Controls.Add(this.PnlScoreExam);
             this.Controls.Add(this.BtnBack);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormExamResult";
             this.Text = "FormExamResult";
             this.Load += new System.EventHandler(this.FormExamResult_Load);
+            this.VisibleChanged += new System.EventHandler(this.FormExamResult_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.PnlScoreExam.ResumeLayout(false);
             this.PnlScoreExam.PerformLayout();

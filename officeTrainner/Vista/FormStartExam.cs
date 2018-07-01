@@ -16,7 +16,7 @@
         //****************************************************
         public static int[] arrayOrdenDePreguntas;
         //public static int[] arrayOrdenDePreguntas = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public static int irAPregunta;            
+        public static int irAPregunta;      //ir directamente a la pregunta ....       
         #endregion
 
         public FormStartExam()
@@ -53,8 +53,9 @@
             {
                 CargarParametros();
                 formQuestionsPanel.Show();
+                this.Hide();
             }
-            this.Hide();
+            
         }
 
         private void BtnWord_Click(object sender, EventArgs e)
