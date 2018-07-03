@@ -110,7 +110,7 @@ namespace Vista
             }
             using (ModelContainer conexion = new ModelContainer())
             {
-                this.DgvDetalleExamen.DataSource = conexion.Examenes.Where(p => p.alumnoIdAlumno == idAlumno).Select(p => new { p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
+                this.DgvDetalleExamen.DataSource = conexion.Examenes.Where(p => p.alumnoIdAlumno == idAlumno && p.preguntasResueltas == p.numeroDePreguntas).Select(p => new { p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
             }
 
             DataTable dt = new DataTable();
@@ -314,7 +314,7 @@ namespace Vista
 
            using (ModelContainer conexion = new ModelContainer())
            {
-               this.DgvTodoExamen.DataSource = conexion.Examenes.Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
+               this.DgvTodoExamen.DataSource = conexion.Examenes.Where(p => p.preguntasResueltas == p.numeroDePreguntas).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
            }
 
             DataTable dt = new DataTable();
@@ -354,13 +354,12 @@ namespace Vista
         private void MostrarPuntuacionsDgv(string time)
         {
             DateTime dateTime = DateTime.Today;
-
             switch (time)
             {
                 case "Hoy":                    
                     using (ModelContainer conexion = new ModelContainer())
                     {
-                        this.DgvPuntuacion.DataSource = conexion.Examenes.Where(p => p.fecha == dateTime).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
+                        this.DgvPuntuacion.DataSource = conexion.Examenes.Where(p => p.fecha == dateTime && p.preguntasResueltas == p.numeroDePreguntas).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
                     }
                     break;
                 case "Esta Semana":
@@ -368,13 +367,13 @@ namespace Vista
                     DateTime end = start.AddDays(7); // next sunday 00:00
                     using (ModelContainer conexion = new ModelContainer())
                     {
-                        this.DgvPuntuacion.DataSource = conexion.Examenes.Where(p => p.fecha >= start && p.fecha < end).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
+                        this.DgvPuntuacion.DataSource = conexion.Examenes.Where(p => p.fecha >= start && p.fecha < end && p.preguntasResueltas == p.numeroDePreguntas).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
                     }
                     break;
                 case "Este Mes":
                     using (ModelContainer conexion = new ModelContainer())
                     {
-                        this.DgvPuntuacion.DataSource = conexion.Examenes.Where(p => p.fecha.Month == dateTime.Month).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
+                        this.DgvPuntuacion.DataSource = conexion.Examenes.Where(p => p.fecha.Month == dateTime.Month && p.preguntasResueltas == p.numeroDePreguntas).Select(p => new { p.alumnoIdAlumno, p.nombreExamen, p.fecha, p.IdExamen, p.numeroDePreguntas }).OrderByDescending(p => p.fecha).ToList();
                     }
                     break;
 

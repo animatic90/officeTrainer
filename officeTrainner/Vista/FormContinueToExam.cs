@@ -77,7 +77,7 @@ namespace Vista
             }
             using (ModelContainer conexion = new ModelContainer())
             {
-                this.DgvExams.DataSource = conexion.Examenes.Where(p => p.alumnoIdAlumno == idAlumno).Where(p => p.banderaReanudar == true).ToList();
+                this.DgvExams.DataSource = conexion.Examenes.Where(p => p.alumnoIdAlumno == idAlumno).Where(p => p.banderaReanudar == true ).ToList();
             }
             FormMain.idAlumnoActual = idAlumno;
 
@@ -129,6 +129,13 @@ namespace Vista
         private void DgvExams_CellClick(object sender, DataGridViewCellEventArgs e)
         {
            BtnGoToExam.Enabled = true;
+        }
+
+        private void FormContinueToExam_VisibleChanged(object sender, EventArgs e)
+        {
+            DgvAlumnos.Visible = false;
+            DgvExams.Visible = false;
+            TxtSearch.Text = "";
         }
     }
 }

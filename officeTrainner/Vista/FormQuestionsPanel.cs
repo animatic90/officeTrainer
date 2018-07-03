@@ -153,6 +153,7 @@ namespace Vista
 
             if (RbContineLatter.Checked == true)
             {
+                /*
                 using (ModelContainer conexion = new ModelContainer())
                 {
                     var examen = conexion.Examenes
@@ -160,7 +161,9 @@ namespace Vista
                         FirstOrDefault();
                     examen.banderaReanudar= true;
                     conexion.SaveChanges();
-                }
+                }*/
+
+
                 Application.Exit();
             }
            if(RbFinishQuestions.Checked == true)
@@ -169,6 +172,17 @@ namespace Vista
                 {
                     GuardarNoResueltas();
                 };
+
+                using (ModelContainer conexion = new ModelContainer())
+                {
+                    var examen = conexion.Examenes
+                        .Where(p => p.IdExamen == examenIdExamen).
+                        FirstOrDefault();
+                    examen.avance = contadorDeAvance - 1;
+                    examen.preguntasResueltas = this.preguntasResueltas - 1;
+                    examen.banderaReanudar = false;
+                    conexion.SaveChanges();
+                }
 
                 FormMain.formExamResult.Show();
                 FormMain.formExamResult.Activate();
@@ -182,7 +196,7 @@ namespace Vista
         private void GuardarNoResueltas()
         {
             //int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance];
-            string numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance -1].ToString();
+            string numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance-1].ToString();
             switch (ExamenSeleccionado)
             {
                 case "Word":
@@ -532,6 +546,7 @@ namespace Vista
                     FirstOrDefault();
                 examen.avance = contadorDeAvance;
                 examen.preguntasResueltas = this.preguntasResueltas;
+                examen.banderaReanudar = true;
                 conexion.SaveChanges();
             }
         }

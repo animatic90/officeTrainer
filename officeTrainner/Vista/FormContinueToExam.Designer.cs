@@ -365,6 +365,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Continue Exam";
             this.Load += new System.EventHandler(this.FormContinueToExam_Load);
+            this.VisibleChanged += new System.EventHandler(this.FormContinueToExam_VisibleChanged);
             this.PnlNames.ResumeLayout(false);
             this.PnlNames.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

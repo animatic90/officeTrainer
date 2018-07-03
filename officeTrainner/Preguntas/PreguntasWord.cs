@@ -655,20 +655,17 @@ namespace Preguntas
         private void Pregunta18()
         {
             BorrarTemporales();
-            //no esta completo
-            Word.Shapes temp1 = docAlumno.Shapes;//7
-            foreach (Word.Shape shape in temp1)
-            {
-                if (shape.Name == "Text Box 1")
-                {
-                    var temp2 = shape.TextFrame.ContainingRange.Text;//"La empatía con los personajes\r"
-                    var temp3 = shape.RelativeHorizontalPosition;
-                    var temp4 = shape.RelativeVerticalPosition;
-                }
-            }
+            string textPdf = obtenerTextoDePdf();
 
-            //scaled=\"0\"/></w14:gradFill></w14:textFill></w:rPr><w:lastRenderedPageBreak/><w:t>Las series de Televisión
+            /********no es efecitvo************
+            Word.Shapes temp1 = docAlumno.Shapes;//7
+            Word.ShapeRange rango = temp1.Range(7);
+            float start = rango.Top;//-999999
+            float end = rango.TopRelative;
+            ***********************************/
+
             CerrarWords();
+
             string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
 
             Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
@@ -678,10 +675,14 @@ namespace Preguntas
             string cadenaAchequear1 = "scaled=\"0\"/></w14:gradFill></w14:textFill></w:rPr><w:lastRenderedPageBreak/><w:t>Las series de Televisión";
             string cadenaAchequear2 = "val=\"C5C7CA\"/></w14:gs>";
 
+            string cadenaAchequear3 = "TV \n \n \n \nLa";//TV \n \n \n \nLa
+
             String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+            string contenidoDeArchivo2 = textPdf;
 
             if (contenidoDeArchivo1[1].Contains(cadenaAchequear1) &&
-                contenidoDeArchivo1[1].Contains(cadenaAchequear2))
+                contenidoDeArchivo1[1].Contains(cadenaAchequear2) &&
+                contenidoDeArchivo2.Contains(cadenaAchequear3))
                 p1 = "CORRECTO";
             else
                 p1 = "INCORRECTO";
@@ -719,8 +720,39 @@ namespace Preguntas
 
         private void Pregunta20()
         {
+            p1 = "INCORRECTO";
+
+            string cadenaAchequear = "anticonceptivas. \n  \nDepósitos";//anticonceptivas. \n  \nDepósitos
+
+            string textPdf = obtenerTextoDePdf();
+
+            Word.Shapes temp = docAlumno.Shapes;
+            if (temp.Count == 5 && textPdf.Contains(cadenaAchequear))
+            {
+                Word.Shape shape = temp[5];
+                string cadenaAchequear1 = "5-Point Star";
+                string cadenaAchequear2 = "Depósitos Biliares";
+
+                string texto = shape.TextFrame.TextRange.Text; //Depósitos Biliares 
+
+                if (shape.Name.Contains(cadenaAchequear1) && texto.Contains(cadenaAchequear2))  //5-Point Star 7 //5-Point Star 8
+                {
+                    float size = shape.TextFrame.TextRange.Font.Size; //9  
+                    float top = shape.Top;//-999997 --abajo
+                    float left = shape.Left;//-999998 --izquierda
+
+                    if (size == 9 && top == -999997 && left == -999998)
+                    {
+                        p1 = "CORRECTO";
+                    }
+                } ;
+
+            }
+
             CerrarWords();
+            GuardarPuntaje();
         }
+
         private void Pregunta21()
         {
             string textPdf = obtenerTextoDePdf();
@@ -751,7 +783,7 @@ namespace Preguntas
 
             string cadenaAchequear1 = "Page Numbers (Bottom of Page)";
             string cadenaAchequear2 = "Cinta: curvada e inclinada hacia abajo";  
-            
+             
             string cadenaAchequear3 = "Cinta curvada hacia abajo";
 
             string ruta1 = Path.Combine(ruta_ResTem, @"word\footer1.xml");
@@ -786,18 +818,41 @@ namespace Preguntas
             GuardarPuntaje();
         }
         private void Pregunta23()
-        {//no funciona
-            //var temp1 = iShapes[1].IsPictureBullet;
-            var listas = docAlumno.Content.ListParagraphs;
-           // var temp1 = listas[1].Format;
+        {
+            p1 = "INCORRECTO";
 
-            var temp2 = docAlumno.Content.ListFormat;
-            var temp3 = temp2.ListPictureBullet;
+            BorrarTemporales();
 
-            Word.InlineShapes iShapes = docAlumno.InlineShapes;
-            Word.Shapes shapes = docAlumno.Shapes;
+            int listas = docAlumno.Content.ListParagraphs.Count; //4
+            //imagedata r:id="rId1" o:title="tv"          ---->     imagedata r:id=\"rId1\" o:title=\"tv\"
+            //<w:numPicBullet w:numPicBulletId="0">       ---->     w:numPicBullet w:numPicBulletId=\"0\"
 
             CerrarWords();
+
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+            ComprobarDescompresion();
+
+            string ruta = Path.Combine(ruta_ResTem, @"word\_rels\numbering.xml.rels");
+
+            if (File.Exists(ruta))
+            {
+                string cadenaAchequear1 = "imagedata r:id=\"rId1\" o:title=\"tv\"";
+                string cadenaAchequear2 = "w:numPicBullet w:numPicBulletId=\"0\"";
+
+                String[] contenidoDeArchivo = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\numbering.xml"));
+                int index = contenidoDeArchivo.Length - 1;
+
+                if (contenidoDeArchivo[index].Contains(cadenaAchequear1) &&
+                    contenidoDeArchivo[index].Contains(cadenaAchequear2) &&
+                    listas == 4)
+                {
+                    p1 = "CORRECTO";
+                }
+
+            }
+
+            GuardarPuntaje();
         }
         private void Pregunta24()
         {
@@ -1015,28 +1070,35 @@ namespace Preguntas
 
             CerrarWords();
         }
+
         private void Pregunta32()
         {
-            //no funciona
-            //<wp:effectExtent l="38100" t="57150" r="38100" b="38100"/>
-            var temp = docAlumno.Shapes;
-          /*  var tmp1 = temp[1];
-            var tmp2 = temp[2];
-            var tmp3 = temp[3];
-            var tmp4 = temp[4];
-            var tmp5 = temp[5];
-            var tmp6 = temp[6];
+            //a:bevelT w="139700" h="139700" prst="divot"  ------>          a:bevelT w=\"139700\" h=\"139700\" prst=\"divot\"
+            //effectExtent l="38100" t="57150" r="38100" b="38100" ------>  effectExtent l=\"38100\" t=\"57150\" r=\"38100\" b=\"38100\"
 
-            var temp1 = tmp2.Fill;
-            var tmp7 = temp1.PictureEffects;
-
-            var temp2 = tmp2.Shadow;
-            var temp3 = temp2.Type;
-
-            var temp4 = tmp2.AutoShapeType;
-            var temp5 = tmp2.Fill;*/
             CerrarWords();
+            BorrarTemporales();
+
+            string ruta_ResTem = Application.StartupPath + @"\Documentos\Temp\Ejercicio\";
+
+            Task task1 = Task.Factory.StartNew(() => DescomprimirZipWord());
+
+            ComprobarDescompresion();
+            //
+            string cadenaAchequear1 = "a:bevelT w=\"139700\" h=\"139700\" prst=\"divot\"";
+            string cadenaAchequear2 = "effectExtent l=\"38100\" t=\"57150\" r=\"38100\" b=\"38100\"";
+
+            String[] contenidoDeArchivo1 = File.ReadAllLines(Path.Combine(ruta_ResTem, @"word\document.xml"));
+
+            int index = contenidoDeArchivo1.Length - 1;
+            if (contenidoDeArchivo1[index].Contains(cadenaAchequear1) && contenidoDeArchivo1[index].Contains(cadenaAchequear2))
+                p1 = "CORRECTO";
+            else
+                p1 = "INCORRECTO";
+
+            GuardarPuntaje();
         }
+
         private void Pregunta33()
         {
             p1 = "INCORRECTO";
