@@ -475,6 +475,7 @@
             // label222
             // 
             this.label222.AutoSize = true;
+            this.label222.Enabled = false;
             this.label222.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label222.ForeColor = System.Drawing.Color.White;
             this.label222.Location = new System.Drawing.Point(61, 60);

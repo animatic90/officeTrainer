@@ -333,8 +333,10 @@
             this.Controls.Add(this.BtnBack);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FormExamResult";
             this.Text = "FormExamResult";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormExamResult_FormClosing);
             this.Load += new System.EventHandler(this.FormExamResult_Load);
             this.VisibleChanged += new System.EventHandler(this.FormExamResult_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

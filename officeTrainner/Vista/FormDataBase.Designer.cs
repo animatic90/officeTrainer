@@ -451,7 +451,6 @@
             this.BtnTotalCumulative.ButtonText = "Puntuación acumulada";
             this.BtnTotalCumulative.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnTotalCumulative.DisabledColor = System.Drawing.Color.Gray;
-            this.BtnTotalCumulative.Enabled = false;
             this.BtnTotalCumulative.Iconcolor = System.Drawing.Color.Transparent;
             this.BtnTotalCumulative.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnTotalCumulative.Iconimage")));
             this.BtnTotalCumulative.Iconimage_right = null;

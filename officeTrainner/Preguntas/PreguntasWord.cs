@@ -119,11 +119,26 @@ namespace Preguntas
 
             foreach (FileInfo file in di.GetFiles())
             {
-                file.Delete();
+                file.Attributes = FileAttributes.Normal;
+                file.Delete();                
             }
             foreach (DirectoryInfo dir in di.GetDirectories())
             {
+                dir.Attributes = FileAttributes.Normal;
                 dir.Delete(true);
+            }
+        }
+
+        private void BorrarPreguntasTemporales()
+        {
+            string rutaEjercicio = @"C:\OfficeTrainnerResources\Temp";
+            //string rutaEjercicio = Application.StartupPath + @"\Documentos\Temp\Ejercicio";
+            DirectoryInfo di = new DirectoryInfo(rutaEjercicio);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Attributes = FileAttributes.Normal;
+                file.Delete();
             }
         }
 
@@ -133,6 +148,7 @@ namespace Preguntas
             string ruta_7z = Application.StartupPath + @"\Documentos\Temp\7z";
             ProcessStartInfo info = new ProcessStartInfo();
             info.UseShellExecute = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
             info.FileName = "7z.exe";
             info.WorkingDirectory = ruta_7z;
             info.Arguments = "x " + ruta_ResTem + "Ejercicio.docx" + " " + "-o" + ruta_ResTem + "Ejercicio";
@@ -255,7 +271,7 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
-
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta2()
@@ -297,6 +313,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta3()
@@ -325,11 +343,11 @@ namespace Preguntas
                     }                    
                 }  
             }
-
-
-
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
+
         }
         private void Pregunta4()
         {
@@ -351,6 +369,8 @@ namespace Preguntas
             
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta5()
         {
@@ -372,7 +392,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta6()
         {
@@ -398,6 +419,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta7()
         {
@@ -417,6 +440,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta8()
         {
@@ -439,6 +464,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta9()
@@ -461,6 +488,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta10()
         {
@@ -476,6 +505,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta11()
         {
@@ -504,6 +535,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta12()
         {
@@ -550,6 +583,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta14()
         {
@@ -581,6 +616,8 @@ namespace Preguntas
             }
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
             
         private void Pregunta15()
@@ -596,6 +633,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta16()
         {
@@ -623,11 +662,12 @@ namespace Preguntas
                 {
                     p1 = "CORRECTO";
                 }
-            }
-                
+            }                
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta17()
         {
@@ -651,6 +691,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta18()
         {
@@ -688,6 +730,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta19()
         {
@@ -716,6 +760,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
             
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta20()
@@ -751,6 +797,8 @@ namespace Preguntas
 
             CerrarWords();
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta21()
@@ -767,6 +815,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta22()
         {
@@ -816,6 +866,8 @@ namespace Preguntas
             }
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta23()
         {
@@ -853,6 +905,8 @@ namespace Preguntas
             }
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta24()
         {
@@ -882,6 +936,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta25()
         {
@@ -915,6 +971,8 @@ namespace Preguntas
             GuardarPuntaje();
 
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta26()
         {
@@ -932,6 +990,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta27()
         {
@@ -971,6 +1031,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta28()
         {
@@ -996,6 +1058,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta29()
         {
@@ -1025,6 +1089,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta30()
         {
@@ -1047,6 +1113,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta31()
         {
@@ -1067,8 +1135,9 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta32()
@@ -1097,6 +1166,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta33()
@@ -1122,6 +1193,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta34()
         {
@@ -1159,6 +1232,8 @@ namespace Preguntas
 
             CerrarWords();
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta35()
         {
@@ -1194,6 +1269,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarWords();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta36()
         {

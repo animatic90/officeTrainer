@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace Vista
 
         public static string ExamenSeleccionado;
 
+        Process[] allExcelProcsOld;//para capturar todos los excel abiertos antes de iniciar el programa
+        Process[] allWordProcsOld;//para capturar todos los Word abiertos antes de iniciar el programa
+        Process[] allPowerPointProcOld;//
+
 
         public FormMain()
         {
@@ -34,7 +39,11 @@ namespace Vista
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-            obtenerPosicion();
+            obtenerPosicionVentana();
+
+            allExcelProcsOld = Process.GetProcessesByName("EXCEL");
+            allWordProcsOld = Process.GetProcessesByName("WINWORD");
+            allPowerPointProcOld = Process.GetProcessesByName("POWERPNT");
         }
         private void BtnContinueExam_Click(object sender, EventArgs e)
         {
@@ -65,6 +74,10 @@ namespace Vista
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             BorrarTemporales();
+
+            DestruirExcels();
+            DestruirPowerPoints();
+            DestruirWords();
         }
 
         private void BorrarTemporales()
@@ -82,7 +95,7 @@ namespace Vista
             }
         }
 
-        private void obtenerPosicion()
+        private void obtenerPosicionVentana()
         {
             leftPos = this.Left;
             topPos = this.Top;
@@ -90,7 +103,67 @@ namespace Vista
 
         private void FormMain_Move(object sender, EventArgs e)
         {
-            obtenerPosicion();
+            obtenerPosicionVentana();
+        }
+
+        private void DestruirExcels()
+        {
+            Process[] allExcelProcsNew = Process.GetProcessesByName("EXCEL");
+            foreach (Process procNew in allExcelProcsNew)
+            {
+                int exist = 0;
+                foreach (Process procOld in allExcelProcsOld)
+                {
+                    if (procNew.Id == procOld.Id)
+                    {
+                        exist++;
+                    }
+                }
+                if (exist == 0)
+                {
+                    procNew.Kill();
+                }
+            }
+        }
+
+        private void DestruirPowerPoints()
+        {
+              Process[] allPowerPointProcsNew = Process.GetProcessesByName("POWERPNT");
+               foreach (Process procNew in allPowerPointProcsNew)
+               {
+                   int exist = 0;
+                   foreach (Process procOld in allPowerPointProcOld)
+                   {
+                       if (procNew.Id == procOld.Id)
+                       {
+                           exist++;
+                       }
+                   }
+                   if (exist == 0)
+                   {
+                       procNew.Kill();
+                   }
+               }
+        }
+   
+        private void DestruirWords()
+        {
+            Process[] allWordProcsNew = Process.GetProcessesByName("WINWORD");
+            foreach (Process procNew in allWordProcsNew)
+            {
+                int exist = 0;
+                foreach (Process procOld in allWordProcsOld)
+                {
+                    if (procNew.Id == procOld.Id)
+                    {
+                        exist++;
+                    }
+                }
+                if (exist == 0)
+                {
+                    procNew.Kill();
+                }
+            }
         }
     }
 }

@@ -154,11 +154,26 @@ namespace Preguntas
 
             foreach (FileInfo file in di.GetFiles())
             {
+                file.Attributes = FileAttributes.Normal;
                 file.Delete();
             }
             foreach (DirectoryInfo dir in di.GetDirectories())
             {
+                dir.Attributes = FileAttributes.Normal;
                 dir.Delete(true);
+            }
+        }
+
+        private void BorrarPreguntasTemporales()
+        {
+            string rutaEjercicio = @"C:\OfficeTrainnerResources\Temp";
+            //string rutaEjercicio = Application.StartupPath + @"\Documentos\Temp\Ejercicio";
+            DirectoryInfo di = new DirectoryInfo(rutaEjercicio);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Attributes = FileAttributes.Normal;
+                file.Delete();
             }
         }
 
@@ -168,6 +183,7 @@ namespace Preguntas
             string ruta_7z = Application.StartupPath + @"\Documentos\Temp\7z";
             ProcessStartInfo info = new ProcessStartInfo();
             info.UseShellExecute = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
             info.FileName = "7z.exe";
             info.WorkingDirectory = ruta_7z;
             info.Arguments = "x " + ruta_ResTem + "Ejercicio.xlsx" + " " + "-o" + ruta_ResTem + "Ejercicio";
@@ -249,6 +265,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta2()
@@ -283,6 +301,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
    
         private void Pregunta3()
@@ -317,6 +337,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta5()
         {            
@@ -338,7 +360,9 @@ namespace Preguntas
             else
                 p1 = "INCORRECTO";
 
-            GuardarPuntaje();            
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta6()
@@ -355,6 +379,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta7()
         {
@@ -377,6 +403,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta8()
         {
@@ -392,7 +420,9 @@ namespace Preguntas
             }
 
             GuardarPuntaje();
-            CerrarExcels();            
+            CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta9()
@@ -417,7 +447,9 @@ namespace Preguntas
                     p1 = "CORRECTO";
             }
 
-            GuardarPuntaje();            
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta10()
         {
@@ -443,6 +475,8 @@ namespace Preguntas
             
             GuardarPuntaje();
             BorrarTemporales();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta11()
         {
@@ -463,7 +497,8 @@ namespace Preguntas
                 p1 = "INCORRECTO";
 
             GuardarPuntaje();
-            
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta12()
         {
@@ -487,7 +522,9 @@ namespace Preguntas
             else
                 p1 = "INCORRECTO";
 
-            GuardarPuntaje();            
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta13()
         {
@@ -505,6 +542,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta14()
         {
@@ -538,6 +577,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta15()
         {
@@ -588,6 +629,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta16()
         {
@@ -604,6 +647,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta17()
         {
@@ -648,6 +693,8 @@ namespace Preguntas
             
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta18()
         {
@@ -680,6 +727,7 @@ namespace Preguntas
             GuardarPuntaje();
             CerrarExcels();
 
+            BorrarPreguntasTemporales();
         }
         private void Pregunta19()
         {
@@ -706,6 +754,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
 
         private void Pregunta20()
@@ -739,6 +789,7 @@ namespace Preguntas
 
             GuardarPuntaje();
 
+            BorrarPreguntasTemporales();
         }
         private void Pregunta21()
         {
@@ -764,6 +815,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta22()
         {
@@ -783,6 +836,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta23()
         {
@@ -796,6 +851,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta24()
         {
@@ -809,6 +866,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta25()
         {
@@ -838,12 +897,7 @@ namespace Preguntas
             wbookAlumno = ObjExcelAlumno.Workbooks.Open(ruta);
             wsheetAlumno = (Excel.Worksheet)wbookAlumno.ActiveSheet;
 
-            //Ahora falta hacer las otras verificaciones
-            //wsheetAlumno = (Excel.Worksheet)wbookAlumno.Sheets[1];
-            //if ((wsheetAlumno.Cells[19, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E5:E18)"
-            //    && (wsheetAlumno.Cells[29, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E20:E28)"
-            //    && (wsheetAlumno.Cells[44, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E30:E43)"
-            //    && (wsheetAlumno.Cells[45, 5] as Excel.Range).Formula == "=SUBTOTAL(9,E5:E43)"
+
 
             if ((wsheetAlumno.Cells[19, 5] as Excel.Range).Value != null &&
                 (wsheetAlumno.Cells[29, 5] as Excel.Range).Value != null &&
@@ -862,6 +916,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta26()
         {
@@ -888,7 +944,9 @@ namespace Preguntas
                  p1 = "CORRECTO";
                 }
             
-            GuardarPuntaje();           
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta27()
         {
@@ -902,6 +960,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta28()
         {
@@ -947,18 +1007,9 @@ namespace Preguntas
                 }
             }
             
-            GuardarPuntaje();     
+            GuardarPuntaje();
 
-            /******************************ESTO DE ABAJO SÍ FUNCIONA**********************************/
-            //var charts = wsheetAlumno.ChartObjects() as Excel.ChartObjects;
-            //var chart = charts. Item(1);
-            //MessageBox.Show(chart.ChartTitle.ToString());  
-
-            //foreach (Excel.ChartObject obj in wsheetAlumno.ChartObjects())
-            //{
-            //    //MessageBox.Show(obj.TableStyle.Name);
-            //    MessageBox.Show(obj.Chart.ChartTitle.Caption);
-            //}
+            BorrarPreguntasTemporales();
         }
         private void Pregunta29()
         {
@@ -974,6 +1025,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta30()
         {
@@ -993,7 +1046,9 @@ namespace Preguntas
             if (contenidoDeArchivo[contenidoDeArchivo.Length - 1].Contains(cadenaAchequear1))
                 p1 = "CORRECTO";
 
-            GuardarPuntaje();   
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta31()
         {
@@ -1024,6 +1079,8 @@ namespace Preguntas
             }
             
             GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta32()
         {
@@ -1046,7 +1103,9 @@ namespace Preguntas
                     p1 = "CORRECTO";
             }
             
-            GuardarPuntaje();            
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta33()
         {
@@ -1064,10 +1123,10 @@ namespace Preguntas
                     p1 = "CORRECTO";
                 }
             }
-
-
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta34()
         {
@@ -1085,6 +1144,8 @@ namespace Preguntas
 
             GuardarPuntaje();
             CerrarExcels();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta35()
         {
@@ -1112,7 +1173,9 @@ namespace Preguntas
                 }
             } 
 
-            GuardarPuntaje();            
+            GuardarPuntaje();
+
+            BorrarPreguntasTemporales();
         }
         private void Pregunta36()
         {

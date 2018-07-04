@@ -10,6 +10,7 @@ namespace Vista
     using PowerPoint = Microsoft.Office.Interop.PowerPoint;
     using Preguntas;
     using System.Diagnostics;
+    using System.IO;
 
     public partial class FormQuestionsPanel : Form
     {
@@ -72,27 +73,30 @@ namespace Vista
 
         private void BtNext_Click(object sender, EventArgs e)
         {
-            if (this.preguntasResueltas != FormMain.NUMERO_DE_PREGUNTAS)
+            if (this.preguntasResueltas < FormMain.NUMERO_DE_PREGUNTAS)
             {
                 ComprobarCorrectoIncorrecto(sender, e);
                 if (guardarCorrecto)
                 {
                     GuardarAvance();
-
                     RellenarLabelPregunta();    //rellenar label antes de MostrarPreguntaYEjercicio ya que el contador cambia;
-                    MostrarPreguntaYEjercicio();
-
+                    MostrarPreguntaYEjercicio();     
                     guardarCorrecto = false;
                 }
             }
             else
             {
+                ComprobarCorrectoIncorrecto(sender, e);
+                if (guardarCorrecto)
+                {
+                    GuardarAvance();
+                    guardarCorrecto = false;
+                }
+
                 FormMain.formExamResult.Show();
                 FormMain.formExamResult.Activate();
                 this.Hide();
             }
-
-
         }
 
         private void BtnReset_Click(object sender, EventArgs e)
@@ -103,13 +107,7 @@ namespace Vista
             switch (ExamenSeleccionado)
             {
                 case "Word":
-                    //CerrarWords();
-                    try
-                    {
-                        doc.Close();
-                        ObjWord.Quit();
-                    }
-                    catch (Exception){}
+                    CerrarWords();
                     AbrirEjercicioWord(numeroDePregunta);
                     break;
                 case "Excel":
@@ -134,13 +132,9 @@ namespace Vista
             switch (ExamenSeleccionado)
             {
                 case "Word":
-                    try
-                    {
-                        doc.Close();
-                        ObjWord.Quit();
-                    }
-                    catch (Exception) { }
+
                     CerrarWords();
+                    DestruirWords();
                     break;
                 case "Excel":
                     CerrarExcels();
@@ -153,17 +147,6 @@ namespace Vista
 
             if (RbContineLatter.Checked == true)
             {
-                /*
-                using (ModelContainer conexion = new ModelContainer())
-                {
-                    var examen = conexion.Examenes
-                        .Where(p => p.IdExamen == examenIdExamen).
-                        FirstOrDefault();
-                    examen.banderaReanudar= true;
-                    conexion.SaveChanges();
-                }*/
-
-
                 Application.Exit();
             }
            if(RbFinishQuestions.Checked == true)
@@ -193,6 +176,7 @@ namespace Vista
         #endregion
 
         #region Methods
+
         private void GuardarNoResueltas()
         {
             //int numeroDePregunta = FormStartExam.arrayOrdenDePreguntas[contadorDeAvance];
@@ -201,7 +185,7 @@ namespace Vista
             {
                 case "Word":
                     rutaPregunta = Application.StartupPath + @"\Documentos\Word\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @".docx";
-                    if (!GuardarNoResueltasWord(numeroDePregunta))
+                    if (!GuardarNoResueltas(numeroDePregunta, ExamenSeleccionado, "docx"))
                     {
                         contadorDeAvance++;
                         GuardarNoResueltas();
@@ -214,7 +198,7 @@ namespace Vista
                     break;
                 case "Excel":
                     rutaPregunta = Application.StartupPath + @"\Documentos\Excel\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @".docx";
-                    if (!GuardarNoResueltasExcel(numeroDePregunta))
+                    if (!GuardarNoResueltas(numeroDePregunta, ExamenSeleccionado, "xlsx"))
                     {
                         contadorDeAvance++;
                         GuardarNoResueltas();
@@ -229,7 +213,7 @@ namespace Vista
                     rutaPregunta = Application.StartupPath + @"\Documentos\Power Point\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @".docx";
 
 
-                    if (!GuardarNoResueltasPowerPoint(numeroDePregunta))
+                    if (!GuardarNoResueltas(numeroDePregunta, ExamenSeleccionado, "pptx"))
                     {
                         contadorDeAvance++;
                         GuardarNoResueltas();
@@ -243,45 +227,11 @@ namespace Vista
             }
 
         }
-        private bool GuardarNoResueltasWord(string numeroDePregunta)
+        private bool GuardarNoResueltas(string numeroDePregunta, string examen, string tipo)
         {
+            string ruta = Application.StartupPath + @"\Documentos\"+ examen + @"\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio." +tipo;
 
-            string ruta = Application.StartupPath + @"\Documentos\Word\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.docx";
-
-            object fileName = ruta;
-
-            object missing = Type.Missing;
-
-            if (System.IO.File.Exists(ruta))
-            {
-                IncorrectoTodo(numeroDePregunta);
-            }
-            else
-            {
-                return false;
-            }
-
-
-            return true;
-        }
-
-        private bool GuardarNoResueltasExcel(string numeroDePregunta)
-        {
-            string ruta = Application.StartupPath + @"\Documentos\Excel\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.xlsx";
-            if (System.IO.File.Exists(ruta))
-            {
-                IncorrectoTodo(numeroDePregunta);
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
-        private bool GuardarNoResueltasPowerPoint(string numeroDePregunta)
-        {
-            string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
-            if (System.IO.File.Exists(ruta))
+             if (System.IO.File.Exists(ruta))
             {
                 IncorrectoTodo(numeroDePregunta);
             }
@@ -341,23 +291,6 @@ namespace Vista
 
         private void CerrarPowerPoints()
         {
-            /*  Process[] powerPointProcsNew = Process.GetProcessesByName("POWERPNT");
-               foreach (Process procNew in powerPointProcsNew)
-               {
-                   int exist = 0;
-                   foreach (Process procOld in powerPointProcOld)
-                   {
-                       if (procNew.Id == procOld.Id)
-                       {
-                           exist++;
-                       }
-                   }
-                   if (exist == 0)
-                   {
-                       procNew.Kill();
-                   }
-               }*/
-
             try
             {
                 ppt.Close();
@@ -386,7 +319,7 @@ namespace Vista
                }
         }
 
-        private void CerrarWords()
+        private void DestruirWords()
         {
             Process[] wordProcsNew = Process.GetProcessesByName("WINWORD");
             foreach (Process procNew in wordProcsNew)
@@ -403,10 +336,17 @@ namespace Vista
                 {
                     procNew.Kill();
                 }
-            }
+            } 
+        }
 
-            //doc.Close();
-            //ObjWord.Quit();
+        private void CerrarWords()
+        {
+            try
+            {
+                doc.Close();
+                ObjWord.Quit();
+            }
+            catch (Exception) { }
         }
 
         private void ComprobarCorrectoIncorrecto(object sender, EventArgs e)
@@ -441,11 +381,9 @@ namespace Vista
                 doc.SaveAs(ruta, Word.WdSaveFormat.wdFormatDocumentDefault, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                 Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
-                CerrarWords();
+                DestruirWords();
 
-                guardarCorrecto = true;
-
-           
+                guardarCorrecto = true;           
             }
             catch (Exception)
             {
@@ -457,12 +395,11 @@ namespace Vista
                 int numeroDePregunta = arrayOrdenPreguntas[contadorDeAvance - 1];
                 PreguntasWord preguntasWord = new PreguntasWord();
                 preguntasWord.Pregunta(numeroDePregunta, examenIdExamen);
-            }
-            
+            }            
         }
+
         private void ComprobarCorrectoIncorrectoExcel(object sender, EventArgs e)
         {
-
             string ruta = Application.StartupPath + @"\Documentos\Temp\Ejercicio.xlsx";
 
             if (System.IO.File.Exists(ruta))
@@ -477,9 +414,6 @@ namespace Vista
 
                 CerrarExcels();
                 guardarCorrecto = true;
-
-                //comparar cambio en los archivos ejercicio y respuesta
-
             }
             catch (Exception)
             {
@@ -536,6 +470,7 @@ namespace Vista
             }
             
         }
+
         private void GuardarAvance()
         {
             
@@ -624,22 +559,49 @@ namespace Vista
         }
         private bool AbrirEjercicioWord(int numeroDePregunta)
         {
+            if (numeroDePregunta == 16 || numeroDePregunta == 23 ||
+                numeroDePregunta == 31 || numeroDePregunta == 34)
+            {
+                string fileName = "";
+
+                switch (numeroDePregunta)
+                {
+                    case 16:
+                        fileName = "Tratamiento.docx";
+                        break;
+                    case 23:
+                        fileName = "tv.png";
+                        break;
+                    case 31:
+                        fileName = "Info.docx";
+                        break;
+                    case 34:
+                        fileName = "Eleven.jpg";
+                        break;
+                }
+                
+                CopiarDatosParaPregunta(fileName, numeroDePregunta, "Word");
+            }
+
+
             int WidthScreen = screenExcel.Bounds.Width;
             int HeightScreen = screenExcel.Bounds.Height;
             int newHeightScreen = HeightScreen - HeightScreen * 200 / 1080;
 
             ObjWord = new Word.Application();
 
-            string ruta = Application.StartupPath + @"\Documentos\Word\pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.docx";
+            CopiarPregunta(numeroDePregunta, "Word", "docx");
 
-            object fileName = ruta;
+            string ruta = @"C:\OfficeTrainnerResources\Temp\Pregunta " + numeroDePregunta + @" Ejercicio.docx";
+
+            object objRuta = ruta;
 
             object missing = Type.Missing;
             
             if (System.IO.File.Exists(ruta))
             {
                 ObjWord.Visible = true;
-                doc = ObjWord.Documents.Open(ref fileName,
+                doc = ObjWord.Documents.Open(ref objRuta,
                     ref missing, ref missing, ref missing, ref missing,
                     ref missing, ref missing, ref missing, ref missing,
                     ref missing, ref missing, ref missing, ref missing,
@@ -662,11 +624,21 @@ namespace Vista
 
         private bool AbrirEjercicioExcel(int numeroDePregunta)
         {
+            if (numeroDePregunta == 17)
+            {
+                string fileName = "Alumnado.txt";
+                CopiarDatosParaPregunta(fileName, numeroDePregunta , "Excel");
+            }
+
             int WidthScreen = screenExcel.Bounds.Width;
             int HeightScreen = screenExcel.Bounds.Height;
             int newHeightScreen = HeightScreen - HeightScreen * 200 / 1080;            
             ObjExcel = new Excel.Application();
-            string ruta = Application.StartupPath + @"\Documentos\Excel\pregunta "+ numeroDePregunta + @"\Pregunta "+ numeroDePregunta + @" Ejercicio.xlsx";
+
+            CopiarPregunta(numeroDePregunta, "Excel", "xlsx");
+
+            string ruta = @"C:\OfficeTrainnerResources\Temp\Pregunta " + numeroDePregunta + @" Ejercicio.xlsx";
+
             if (System.IO.File.Exists(ruta))
             {
                 ObjExcel.Visible = true;
@@ -685,13 +657,40 @@ namespace Vista
         }
         private bool AbrirEjercicioPowerPoint(int numeroDePregunta)
         {
+            if (numeroDePregunta == 2 || numeroDePregunta == 18 ||
+                numeroDePregunta == 20 || numeroDePregunta == 30)
+            {
+                string fileName = "";
+
+                switch (numeroDePregunta)
+                {
+                    case 2:
+                        fileName = "El ajedrez.pptx";
+                        break;
+                    case 18:
+                        fileName = "Tabla.xlsx";
+                        break;
+                    case 20:
+                        fileName = "Foto.docx";
+                        break;
+                    case 30:
+                        fileName = "Extras.docx";
+                        break;
+
+                }
+
+                CopiarDatosParaPregunta(fileName, numeroDePregunta, "Power Point");
+            }
+
             int WidthScreen = screenPowerPoint.Bounds.Width;
             int HeightScreen = screenPowerPoint.Bounds.Height;
             int newHeightScreen = HeightScreen - HeightScreen * 200 / 1080;
             ObjPowerPoint = new PowerPoint.Application();
-           // ppts = ObjPowerPoint.Presentations;
 
-            string ruta = Application.StartupPath + @"\Documentos\Power Point\Pregunta " + numeroDePregunta + @"\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
+            CopiarPregunta(numeroDePregunta, "Power Point", "pptx");
+
+            string ruta = @"C:\OfficeTrainnerResources\Temp\Pregunta " + numeroDePregunta + @" Ejercicio.pptx";
+
             if (System.IO.File.Exists(ruta))
             {
                 ppt = ObjPowerPoint.Presentations.Open(ruta);
@@ -707,6 +706,59 @@ namespace Vista
                 return false;
             }
             return true;
+        }
+
+        private void CopiarDatosParaPregunta(string FileName, int NumeroPregunta, string Examen)
+        {
+            string fileName = FileName;
+            string sourcePath = Application.StartupPath + @"\Documentos\" + Examen + @"\Pregunta " + NumeroPregunta;
+            string targetPath = @"C:\OfficeTrainnerResources";
+            string sourceFile = Path.Combine(sourcePath, fileName);
+            string destFile = Path.Combine(targetPath, fileName);
+
+            if (!Directory.Exists(targetPath))
+            {
+                Directory.CreateDirectory(targetPath);
+            }
+
+            // To copy a file to another location and 
+            // overwrite the destination file if it already exists.
+            if (Directory.Exists(sourcePath))
+            {
+                if (File.Exists(destFile))
+                {
+                    File.SetAttributes(destFile, FileAttributes.Normal);
+                    File.Delete(destFile);
+                }
+                File.Copy(sourceFile, destFile, true);
+                File.SetAttributes(destFile, FileAttributes.Normal);
+            }
+        }
+
+        private void CopiarPregunta(int NumeroPregunta, string Examen, string tipo)
+        {
+            string fileName = @"Pregunta " + NumeroPregunta + @" Ejercicio." + tipo;
+            string sourcePath = Application.StartupPath + @"\Documentos\" + Examen + @"\Pregunta " + NumeroPregunta;
+            string targetPath = @"C:\OfficeTrainnerResources\Temp";
+            
+            string sourceFile = Path.Combine(sourcePath, fileName);
+            string destFile = Path.Combine(targetPath, fileName);
+
+            if (!Directory.Exists(targetPath))
+            {
+                Directory.CreateDirectory(targetPath);
+            }
+
+            if (Directory.Exists(sourcePath))
+            {
+                if (File.Exists(destFile))
+                {
+                    File.SetAttributes(destFile, FileAttributes.Normal);
+                    File.Delete(destFile);
+                }
+                File.Copy(sourceFile, destFile, true);
+                File.SetAttributes(destFile, FileAttributes.Normal);
+            }
         }
 
         private void CargarArrayOrdenPreguntas()

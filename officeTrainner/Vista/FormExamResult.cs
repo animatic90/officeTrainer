@@ -22,6 +22,8 @@ namespace Vista
         string ExamenSeleccionado;
         int preguntasCorrectas;
 
+        bool BanderaBaseDatos;
+
         public FormExamResult()
         {
             InitializeComponent();
@@ -39,15 +41,83 @@ namespace Vista
 
             rellenarLabel();
             rellenarResultados();
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                var examen = conexion.Examenes
+                    .Where(p => p.IdExamen == idExamenActual).FirstOrDefault();
+                examen.banderaReanudar = false;
+                conexion.SaveChanges();
+            }
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
+
             FormMain.formExamResult.Hide();
+            BorrarBaseDatos();
+
             FormMain.formMain.Left = this.Left;
             FormMain.formMain.Top = this.Top;
             FormMain.formMain.Show();
+
         }
+
+        private void BtnImprCertificado_Click(object sender, EventArgs e)
+        {
+            Reportes.FrmReportes frmImprCertificado = new Reportes.FrmReportes();
+            Reportes.CrsRptImprCertificado cr = new Reportes.CrsRptImprCertificado();
+
+            TextObject alumno = (TextObject)cr.ReportDefinition.Sections["Section3"].ReportObjects["TxtRptAlumno"];
+            TextObject porcentaje = (TextObject)cr.ReportDefinition.Sections["Section4"].ReportObjects["TxtRptPorcentaje"];
+            TextObject examenSelecionado = (TextObject)cr.ReportDefinition.Sections["Section5"].ReportObjects["TxtRptExamenSelecionado"];
+
+            alumno.Text = LblAlumno.Text;
+            porcentaje.Text = LblPercentage.Text;
+            examenSelecionado.Text = LblSelectedExam.Text;
+
+            frmImprCertificado.crystalReportViewer1.ReportSource = cr;
+            frmImprCertificado.Show();
+        }
+
+        private void BtnImprResultados_Click(object sender, EventArgs e)
+        {
+            Reportes.FrmReportes frmImprResultados = new Reportes.FrmReportes();
+            Reportes.CrsRprImprResultados cr = new Reportes.CrsRprImprResultados();
+
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                var dt = conexion.PuntajePreguntas.Where(p => p.ExamenIdExamen == idExamenActual).Select(p => new { p.numeroDePregunta, p.sp1 });
+
+                cr.SetDataSource(dt);
+            }
+
+            TextObject alumno = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptAlumno"];
+            TextObject porcentaje = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptPorcentaje"];
+            TextObject examenSelecionado = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptExamenSelecionado"];
+            TextObject correctas = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptCorrectas"];
+            TextObject numeroPreguntas = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptTotalPreguntas"];
+
+            alumno.Text = LblAlumno.Text;
+            porcentaje.Text = LblPercentage.Text;
+            examenSelecionado.Text = LblSelectedExam.Text;
+            correctas.Text = LblCorrect.Text;
+            numeroPreguntas.Text = LblTotal.Text;
+
+            frmImprResultados.crystalReportViewer1.ReportSource = cr;
+            frmImprResultados.Show();
+        }
+
+        private void FormExamResult_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        #endregion
+
+
+        #region Methods
+
         private void FormExamResult_VisibleChanged(object sender, EventArgs e)
         {
             idAlumnoActual = FormMain.idAlumnoActual;
@@ -60,10 +130,6 @@ namespace Vista
             rellenarLabel();
             rellenarResultados();
         }
-        #endregion
-
-
-        #region Methods
 
         private void rellenarLabel()
         {
@@ -119,53 +185,34 @@ namespace Vista
 
             }
         }
-        #endregion
 
-        private void BtnImprCertificado_Click(object sender, EventArgs e)
+        private void BorrarBaseDatos()
         {
-            Reportes.FrmReportes frmImprCertificado = new Reportes.FrmReportes();
-            Reportes.CrsRptImprCertificado cr = new Reportes.CrsRptImprCertificado();
-
-            TextObject alumno = (TextObject)cr.ReportDefinition.Sections["Section3"].ReportObjects["TxtRptAlumno"];
-            TextObject porcentaje = (TextObject)cr.ReportDefinition.Sections["Section4"].ReportObjects["TxtRptPorcentaje"];
-            TextObject examenSelecionado = (TextObject)cr.ReportDefinition.Sections["Section5"].ReportObjects["TxtRptExamenSelecionado"];
-
-            alumno.Text = LblAlumno.Text;
-            porcentaje.Text = LblPercentage.Text;
-            examenSelecionado.Text = LblSelectedExam.Text;
-
-            frmImprCertificado.crystalReportViewer1.ReportSource = cr;
-            frmImprCertificado.Show();
-        }
-
-        private void BtnImprResultados_Click(object sender, EventArgs e)
-        {
-            Reportes.FrmReportes frmImprResultados = new Reportes.FrmReportes();
-            Reportes.CrsRprImprResultados cr = new Reportes.CrsRprImprResultados();
-
             using (ModelContainer conexion = new ModelContainer())
             {
-              var dt = conexion.PuntajePreguntas.Where(p => p.ExamenIdExamen == idExamenActual).Select(p => new { p.numeroDePregunta, p.sp1 });
-
-                cr.SetDataSource(dt);
+                var examen = conexion.Examenes
+                    .Where(p => p.IdExamen == idExamenActual).FirstOrDefault();
+                BanderaBaseDatos = examen.banderaGuardar ;
             }
 
-            TextObject alumno = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptAlumno"];
-            TextObject porcentaje = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptPorcentaje"];
-            TextObject examenSelecionado = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptExamenSelecionado"];
-            TextObject correctas = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptCorrectas"];
-            TextObject numeroPreguntas = (TextObject)cr.ReportDefinition.Sections["Section1"].ReportObjects["TxtRptTotalPreguntas"];
+            if (!BanderaBaseDatos)
+            {
+                using (ModelContainer conexion = new ModelContainer())
+                {
+                    var puntaje = conexion.PuntajePreguntas.Where(p => p.ExamenIdExamen == idExamenActual);
+                    conexion.PuntajePreguntas.RemoveRange(puntaje);
 
-            alumno.Text = LblAlumno.Text;
-            porcentaje.Text = LblPercentage.Text;
-            examenSelecionado.Text = LblSelectedExam.Text;
-            correctas.Text = LblCorrect.Text;
-            numeroPreguntas.Text = LblTotal.Text;
+                    var arrayPreguntas = conexion.ArrayOrdenPreguntas.Where(p => p.ExamenIdExamen == idExamenActual);
+                    conexion.ArrayOrdenPreguntas.RemoveRange(arrayPreguntas);
 
-            frmImprResultados.crystalReportViewer1.ReportSource = cr;
-            frmImprResultados.Show();
+                    var examen = conexion.Examenes.Where(p => p.IdExamen == idExamenActual);
+                    conexion.Examenes.RemoveRange(examen);
+
+                    conexion.SaveChanges();
+                }
+            }
         }
-
+        #endregion
 
     }
 
