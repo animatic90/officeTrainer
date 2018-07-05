@@ -57,6 +57,8 @@
             this.GbDetailAll = new System.Windows.Forms.GroupBox();
             this.DgvTodoDetalle = new System.Windows.Forms.DataGridView();
             this.DgvTodoExamen = new System.Windows.Forms.DataGridView();
+            this.GbTroubleProblems = new System.Windows.Forms.GroupBox();
+            this.DgvProblematicas = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.PnlSelectExam.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -70,6 +72,8 @@
             this.GbDetailAll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvTodoDetalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvTodoExamen)).BeginInit();
+            this.GbTroubleProblems.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvProblematicas)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnPrint
@@ -413,7 +417,6 @@
             this.BtnTotalTrouble.ButtonText = "Preguntas problemáticas";
             this.BtnTotalTrouble.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnTotalTrouble.DisabledColor = System.Drawing.Color.Gray;
-            this.BtnTotalTrouble.Enabled = false;
             this.BtnTotalTrouble.Iconcolor = System.Drawing.Color.Transparent;
             this.BtnTotalTrouble.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnTotalTrouble.Iconimage")));
             this.BtnTotalTrouble.Iconimage_right = null;
@@ -451,6 +454,7 @@
             this.BtnTotalCumulative.ButtonText = "Puntuación acumulada";
             this.BtnTotalCumulative.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnTotalCumulative.DisabledColor = System.Drawing.Color.Gray;
+            this.BtnTotalCumulative.Enabled = false;
             this.BtnTotalCumulative.Iconcolor = System.Drawing.Color.Transparent;
             this.BtnTotalCumulative.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnTotalCumulative.Iconimage")));
             this.BtnTotalCumulative.Iconimage_right = null;
@@ -651,6 +655,33 @@
             this.DgvTodoExamen.TabIndex = 36;
             this.DgvTodoExamen.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvTodoExamen_CellClick);
             // 
+            // GbTroubleProblems
+            // 
+            this.GbTroubleProblems.Controls.Add(this.DgvProblematicas);
+            this.GbTroubleProblems.Location = new System.Drawing.Point(561, 105);
+            this.GbTroubleProblems.Name = "GbTroubleProblems";
+            this.GbTroubleProblems.Size = new System.Drawing.Size(598, 451);
+            this.GbTroubleProblems.TabIndex = 43;
+            this.GbTroubleProblems.TabStop = false;
+            this.GbTroubleProblems.Text = "groupBox1";
+            this.GbTroubleProblems.Visible = false;
+            // 
+            // DgvProblematicas
+            // 
+            this.DgvProblematicas.AllowUserToAddRows = false;
+            this.DgvProblematicas.AllowUserToDeleteRows = false;
+            this.DgvProblematicas.AllowUserToResizeRows = false;
+            this.DgvProblematicas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvProblematicas.Location = new System.Drawing.Point(28, 21);
+            this.DgvProblematicas.Name = "DgvProblematicas";
+            this.DgvProblematicas.ReadOnly = true;
+            this.DgvProblematicas.RowHeadersVisible = false;
+            this.DgvProblematicas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.DgvProblematicas.RowTemplate.Height = 24;
+            this.DgvProblematicas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvProblematicas.Size = new System.Drawing.Size(543, 406);
+            this.DgvProblematicas.TabIndex = 36;
+            // 
             // FormDataBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -658,6 +689,7 @@
             this.BackColor = System.Drawing.Color.Navy;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.ControlBox = false;
+            this.Controls.Add(this.GbTroubleProblems);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PnlSelectExam);
@@ -687,6 +719,8 @@
             this.GbDetailAll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DgvTodoDetalle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvTodoExamen)).EndInit();
+            this.GbTroubleProblems.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvProblematicas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -721,5 +755,7 @@
         private System.Windows.Forms.GroupBox GbDetailAll;
         private System.Windows.Forms.DataGridView DgvTodoExamen;
         private System.Windows.Forms.DataGridView DgvTodoDetalle;
+        private System.Windows.Forms.GroupBox GbTroubleProblems;
+        private System.Windows.Forms.DataGridView DgvProblematicas;
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/04/2018 11:25:10
+-- Date Created: 07/04/2018 21:59:47
 -- Generated from EDMX file: C:\OfficeTrainner\officeTrainer\officeTrainner\Datos\Model.edmx
 -- --------------------------------------------------
 
@@ -142,6 +142,17 @@ CREATE TABLE [dbo].[PuntajePreguntas] (
 );
 GO
 
+-- Creating table 'Usuarios'
+CREATE TABLE [dbo].[Usuarios] (
+    [IdUsuario] int IDENTITY(1,1) NOT NULL,
+    [nombre] nvarchar(max)  NOT NULL,
+    [apellidos] nvarchar(max)  NOT NULL,
+    [nombreUsuario] nvarchar(max)  NOT NULL,
+    [password] nvarchar(max)  NOT NULL,
+    [nivelUsuario] nvarchar(max)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -168,6 +179,12 @@ GO
 ALTER TABLE [dbo].[PuntajePreguntas]
 ADD CONSTRAINT [PK_PuntajePreguntas]
     PRIMARY KEY CLUSTERED ([IdPuntajePreguntas] ASC);
+GO
+
+-- Creating primary key on [IdUsuario] in table 'Usuarios'
+ALTER TABLE [dbo].[Usuarios]
+ADD CONSTRAINT [PK_Usuarios]
+    PRIMARY KEY CLUSTERED ([IdUsuario] ASC);
 GO
 
 -- --------------------------------------------------

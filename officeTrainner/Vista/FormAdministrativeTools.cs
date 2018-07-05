@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Vista.Login;
 
 namespace Vista
 {
@@ -34,6 +35,13 @@ namespace Vista
             formDataBase.Top = this.Top;
             formDataBase.Show();
             this.Hide();
+        }
+
+        private void BtnGestionarUsuarios_Click(object sender, EventArgs e)
+        {
+            FormCrearUsuario crearUsuario = new FormCrearUsuario();
+
+            crearUsuario.ShowDialog();
         }
     }
 }

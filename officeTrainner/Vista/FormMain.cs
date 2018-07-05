@@ -39,11 +39,19 @@ namespace Vista
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
+            if (FormLogin.nivelDeusuario == "Administrador")
+            {
+                BtnHerramientasAdm.Visible = true;
+            }
+
             obtenerPosicionVentana();
 
             allExcelProcsOld = Process.GetProcessesByName("EXCEL");
             allWordProcsOld = Process.GetProcessesByName("WINWORD");
             allPowerPointProcOld = Process.GetProcessesByName("POWERPNT");
+
+
+
         }
         private void BtnContinueExam_Click(object sender, EventArgs e)
         {

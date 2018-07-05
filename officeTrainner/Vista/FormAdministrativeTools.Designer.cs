@@ -35,8 +35,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.PnlOptions = new System.Windows.Forms.Panel();
-            this.bunifuFlatButton1 = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.BtnGestionarUsuarios = new Bunifu.Framework.UI.BunifuFlatButton();
             this.BtnAbrirBD = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.BtnConfigurarParametros = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.PnlSelectExam.SuspendLayout();
             this.PnlOptions.SuspendLayout();
@@ -91,6 +93,7 @@
             // 
             // PnlSelectExam
             // 
+            this.PnlSelectExam.Controls.Add(this.label3);
             this.PnlSelectExam.Controls.Add(this.label2);
             this.PnlSelectExam.Controls.Add(this.label1);
             this.PnlSelectExam.Location = new System.Drawing.Point(631, 182);
@@ -104,12 +107,12 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(4, 85);
+            this.label2.Location = new System.Drawing.Point(4, 99);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 29);
+            this.label2.Size = new System.Drawing.Size(274, 58);
             this.label2.TabIndex = 3;
-            this.label2.Text = "contraseña";
+            this.label2.Text = "Crea / Modifica / Elimina\r\nUsuarios";
             // 
             // label1
             // 
@@ -125,7 +128,8 @@
             // 
             // PnlOptions
             // 
-            this.PnlOptions.Controls.Add(this.bunifuFlatButton1);
+            this.PnlOptions.Controls.Add(this.BtnConfigurarParametros);
+            this.PnlOptions.Controls.Add(this.BtnGestionarUsuarios);
             this.PnlOptions.Controls.Add(this.BtnAbrirBD);
             this.PnlOptions.Location = new System.Drawing.Point(331, 171);
             this.PnlOptions.Margin = new System.Windows.Forms.Padding(4);
@@ -133,43 +137,43 @@
             this.PnlOptions.Size = new System.Drawing.Size(278, 338);
             this.PnlOptions.TabIndex = 33;
             // 
-            // bunifuFlatButton1
+            // BtnGestionarUsuarios
             // 
-            this.bunifuFlatButton1.Activecolor = System.Drawing.Color.Yellow;
-            this.bunifuFlatButton1.BackColor = System.Drawing.Color.Yellow;
-            this.bunifuFlatButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.bunifuFlatButton1.BorderRadius = 0;
-            this.bunifuFlatButton1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bunifuFlatButton1.ButtonText = "Establecer Contraseña >>";
-            this.bunifuFlatButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.bunifuFlatButton1.DisabledColor = System.Drawing.Color.Gray;
-            this.bunifuFlatButton1.Enabled = false;
-            this.bunifuFlatButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuFlatButton1.Iconcolor = System.Drawing.Color.Transparent;
-            this.bunifuFlatButton1.Iconimage = ((System.Drawing.Image)(resources.GetObject("bunifuFlatButton1.Iconimage")));
-            this.bunifuFlatButton1.Iconimage_right = null;
-            this.bunifuFlatButton1.Iconimage_right_Selected = null;
-            this.bunifuFlatButton1.Iconimage_Selected = null;
-            this.bunifuFlatButton1.IconMarginLeft = 0;
-            this.bunifuFlatButton1.IconMarginRight = 0;
-            this.bunifuFlatButton1.IconRightVisible = false;
-            this.bunifuFlatButton1.IconRightZoom = 0D;
-            this.bunifuFlatButton1.IconVisible = false;
-            this.bunifuFlatButton1.IconZoom = 90D;
-            this.bunifuFlatButton1.IsTab = false;
-            this.bunifuFlatButton1.Location = new System.Drawing.Point(0, 96);
-            this.bunifuFlatButton1.Margin = new System.Windows.Forms.Padding(5);
-            this.bunifuFlatButton1.Name = "bunifuFlatButton1";
-            this.bunifuFlatButton1.Normalcolor = System.Drawing.Color.Yellow;
-            this.bunifuFlatButton1.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.bunifuFlatButton1.OnHoverTextColor = System.Drawing.Color.White;
-            this.bunifuFlatButton1.selected = false;
-            this.bunifuFlatButton1.Size = new System.Drawing.Size(278, 31);
-            this.bunifuFlatButton1.TabIndex = 8;
-            this.bunifuFlatButton1.Text = "Establecer Contraseña >>";
-            this.bunifuFlatButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bunifuFlatButton1.Textcolor = System.Drawing.Color.Black;
-            this.bunifuFlatButton1.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnGestionarUsuarios.Activecolor = System.Drawing.Color.Yellow;
+            this.BtnGestionarUsuarios.BackColor = System.Drawing.Color.Yellow;
+            this.BtnGestionarUsuarios.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BtnGestionarUsuarios.BorderRadius = 0;
+            this.BtnGestionarUsuarios.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BtnGestionarUsuarios.ButtonText = "Gestionar Usuarios >>";
+            this.BtnGestionarUsuarios.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnGestionarUsuarios.DisabledColor = System.Drawing.Color.Gray;
+            this.BtnGestionarUsuarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnGestionarUsuarios.Iconcolor = System.Drawing.Color.Transparent;
+            this.BtnGestionarUsuarios.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnGestionarUsuarios.Iconimage")));
+            this.BtnGestionarUsuarios.Iconimage_right = null;
+            this.BtnGestionarUsuarios.Iconimage_right_Selected = null;
+            this.BtnGestionarUsuarios.Iconimage_Selected = null;
+            this.BtnGestionarUsuarios.IconMarginLeft = 0;
+            this.BtnGestionarUsuarios.IconMarginRight = 0;
+            this.BtnGestionarUsuarios.IconRightVisible = false;
+            this.BtnGestionarUsuarios.IconRightZoom = 0D;
+            this.BtnGestionarUsuarios.IconVisible = false;
+            this.BtnGestionarUsuarios.IconZoom = 90D;
+            this.BtnGestionarUsuarios.IsTab = false;
+            this.BtnGestionarUsuarios.Location = new System.Drawing.Point(0, 123);
+            this.BtnGestionarUsuarios.Margin = new System.Windows.Forms.Padding(5);
+            this.BtnGestionarUsuarios.Name = "BtnGestionarUsuarios";
+            this.BtnGestionarUsuarios.Normalcolor = System.Drawing.Color.Yellow;
+            this.BtnGestionarUsuarios.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnGestionarUsuarios.OnHoverTextColor = System.Drawing.Color.White;
+            this.BtnGestionarUsuarios.selected = false;
+            this.BtnGestionarUsuarios.Size = new System.Drawing.Size(278, 31);
+            this.BtnGestionarUsuarios.TabIndex = 8;
+            this.BtnGestionarUsuarios.Text = "Gestionar Usuarios >>";
+            this.BtnGestionarUsuarios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnGestionarUsuarios.Textcolor = System.Drawing.Color.Black;
+            this.BtnGestionarUsuarios.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnGestionarUsuarios.Click += new System.EventHandler(this.BtnGestionarUsuarios_Click);
             // 
             // BtnAbrirBD
             // 
@@ -209,6 +213,55 @@
             this.BtnAbrirBD.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAbrirBD.Click += new System.EventHandler(this.BtnAbrirBD_Click);
             // 
+            // BtnConfigurarParametros
+            // 
+            this.BtnConfigurarParametros.Activecolor = System.Drawing.Color.Yellow;
+            this.BtnConfigurarParametros.BackColor = System.Drawing.Color.Yellow;
+            this.BtnConfigurarParametros.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BtnConfigurarParametros.BorderRadius = 0;
+            this.BtnConfigurarParametros.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BtnConfigurarParametros.ButtonText = "Configurar Parametros >>";
+            this.BtnConfigurarParametros.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnConfigurarParametros.DisabledColor = System.Drawing.Color.Gray;
+            this.BtnConfigurarParametros.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnConfigurarParametros.Iconcolor = System.Drawing.Color.Transparent;
+            this.BtnConfigurarParametros.Iconimage = ((System.Drawing.Image)(resources.GetObject("BtnConfigurarParametros.Iconimage")));
+            this.BtnConfigurarParametros.Iconimage_right = null;
+            this.BtnConfigurarParametros.Iconimage_right_Selected = null;
+            this.BtnConfigurarParametros.Iconimage_Selected = null;
+            this.BtnConfigurarParametros.IconMarginLeft = 0;
+            this.BtnConfigurarParametros.IconMarginRight = 0;
+            this.BtnConfigurarParametros.IconRightVisible = false;
+            this.BtnConfigurarParametros.IconRightZoom = 0D;
+            this.BtnConfigurarParametros.IconVisible = false;
+            this.BtnConfigurarParametros.IconZoom = 90D;
+            this.BtnConfigurarParametros.IsTab = false;
+            this.BtnConfigurarParametros.Location = new System.Drawing.Point(0, 228);
+            this.BtnConfigurarParametros.Margin = new System.Windows.Forms.Padding(5);
+            this.BtnConfigurarParametros.Name = "BtnConfigurarParametros";
+            this.BtnConfigurarParametros.Normalcolor = System.Drawing.Color.Yellow;
+            this.BtnConfigurarParametros.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BtnConfigurarParametros.OnHoverTextColor = System.Drawing.Color.White;
+            this.BtnConfigurarParametros.selected = false;
+            this.BtnConfigurarParametros.Size = new System.Drawing.Size(278, 31);
+            this.BtnConfigurarParametros.TabIndex = 9;
+            this.BtnConfigurarParametros.Text = "Configurar Parametros >>";
+            this.BtnConfigurarParametros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnConfigurarParametros.Textcolor = System.Drawing.Color.Black;
+            this.BtnConfigurarParametros.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.Location = new System.Drawing.Point(4, 204);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(248, 58);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Establece parametros\r\nde conexión";
+            // 
             // FormAdministrativeTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -238,8 +291,10 @@
         private System.Windows.Forms.Panel PnlSelectExam;
         private System.Windows.Forms.Panel PnlOptions;
         private Bunifu.Framework.UI.BunifuFlatButton BtnAbrirBD;
-        private Bunifu.Framework.UI.BunifuFlatButton bunifuFlatButton1;
+        private Bunifu.Framework.UI.BunifuFlatButton BtnGestionarUsuarios;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private Bunifu.Framework.UI.BunifuFlatButton BtnConfigurarParametros;
     }
 }

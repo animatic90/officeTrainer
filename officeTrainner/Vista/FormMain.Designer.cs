@@ -83,6 +83,7 @@
             this.BtnHerramientasAdm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.BtnHerramientasAdm.TabIndex = 3;
             this.BtnHerramientasAdm.TabStop = false;
+            this.BtnHerramientasAdm.Visible = false;
             this.BtnHerramientasAdm.Zoom = 10;
             this.BtnHerramientasAdm.Click += new System.EventHandler(this.BtnHerramientasAdm_Click);
             // 

@@ -10,6 +10,7 @@
     <EntitySet Name="Examenes" EntityType="Model.Store.Examenes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ArrayOrdenPreguntas" EntityType="Model.Store.ArrayOrdenPreguntas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PuntajePreguntas" EntityType="Model.Store.PuntajePreguntas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Usuarios" EntityType="Model.Store.Usuarios" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="AlumnoExamen" Association="Model.Store.AlumnoExamen">
       <End Role="Alumno" EntitySet="Alumnos" />
       <End Role="Examen" EntitySet="Examenes" />
@@ -117,6 +118,17 @@
     <Property Name="sp5" Type="nvarchar(max)" Nullable="false" />
     <Property Name="numeroDePregunta" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="apellidos" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="nombreUsuario" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="nivelUsuario" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <Association Name="AlumnoExamen">
     <End Role="Alumno" Type="Model.Store.Alumnos" Multiplicity="1" />
     <End Role="Examen" Type="Model.Store.Examenes" Multiplicity="*" />
@@ -174,6 +186,7 @@
             <End Role="PuntajePregunta" EntitySet="PuntajePreguntas" />
             <End Role="Examen" EntitySet="Examenes" />
           </AssociationSet>
+          <EntitySet Name="Usuarios" EntityType="Model.Usuario" />
         </EntityContainer>
         <EntityType Name="Alumno">
           <Key>
@@ -307,6 +320,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" />
+          <Property Name="apellidos" Type="String" Nullable="false" />
+          <Property Name="nombreUsuario" Type="String" Nullable="false" />
+          <Property Name="password" Type="String" Nullable="false" />
+          <Property Name="nivelUsuario" Type="String" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -408,6 +432,18 @@
           <ScalarProperty Name="sp4" ColumnName="sp4" />
           <ScalarProperty Name="sp5" ColumnName="sp5" />
           <ScalarProperty Name="numeroDePregunta" ColumnName="numeroDePregunta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Usuario)">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="nombreUsuario" ColumnName="nombreUsuario" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="nivelUsuario" ColumnName="nivelUsuario" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

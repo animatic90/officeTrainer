@@ -186,6 +186,18 @@ namespace Vista
 
             MostrarPuntuacionsTotal();
         }
+
+        private void BtnTotalTrouble_Click(object sender, EventArgs e)
+        {
+            RestablecerDataGrids();
+           // BtnPrint.Enabled = true;
+            GbTroubleProblems.Visible = true;
+
+            imprimir = "rptPreguntasProblematicas";
+
+            MostrarPreguntasProblematicas();
+
+        }
         private void DgvTodoExamen_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             BtnPrint.Enabled = true;
@@ -238,16 +250,16 @@ namespace Vista
                 case "rptDetalles":
                     ImprimirDetalles();
                     break;
+                case "rptPreguntasProblematicas":
+                    ImprimirDetalles();
+                    break;
 
             }
 
 
         }
 
-        private void BtnTotalTrouble_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void ImprimirDetalles()
         {
@@ -305,6 +317,7 @@ namespace Vista
             GbDetailByCandidate.Visible = false;
             GbScore.Visible = false;
             //GbTotals.Visible = false;
+            GbTroubleProblems.Visible = false;
 
             BtnPrint.Enabled = false;
         }
@@ -435,6 +448,26 @@ namespace Vista
             }
         }
 
+        private void MostrarPreguntasProblematicas()
+        {
+            using (ModelContainer conexion = new ModelContainer())
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Pregunta"), new DataColumn("Incorrectas")});
+
+                int maxPreguntas = 35; //poner el numero de prguntas mayor
+
+                for (int i = 1; i < maxPreguntas; i++)
+                {
+                    var correctas = conexion.PuntajePreguntas.Where(p => p.numeroDePregunta == i.ToString()).Where(p => p.sp1 == "INCORRECTO").Select(p => p.sp1).ToList();
+
+                    string numPregunta = "Pregunta " + i.ToString();
+                    string Incorrectas = correctas.Count.ToString();
+                    dt.Rows.Add(numPregunta, Incorrectas);
+                }
+                DgvProblematicas.DataSource = dt;
+            }
+        }
 
     }
 }
